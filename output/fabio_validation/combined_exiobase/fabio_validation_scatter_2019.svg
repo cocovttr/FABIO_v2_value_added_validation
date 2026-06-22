@@ -232,43 +232,43 @@
 <circle cx='349.32' cy='267.98' r='2.24' style='stroke-width: 0.64; stroke: #7570B3; stroke-opacity: 0.90; fill: #7570B3; fill-opacity: 0.90;' />
 <circle cx='268.24' cy='289.94' r='2.24' style='stroke-width: 0.64; stroke: #8C8C8C; stroke-opacity: 0.90; fill: #8C8C8C; fill-opacity: 0.90;' />
 <circle cx='350.24' cy='273.96' r='2.24' style='stroke-width: 0.64; stroke: #8C8C8C; stroke-opacity: 0.90; fill: #8C8C8C; fill-opacity: 0.90;' />
-<line x1='510.28' y1='109.14' x2='512.39' y2='106.86' style='stroke-width: 0.43; stroke: #333333;' />
-<line x1='484.44' y1='131.82' x2='486.46' y2='129.63' style='stroke-width: 0.43; stroke: #333333;' />
-<line x1='457.47' y1='166.17' x2='455.28' y2='168.56' style='stroke-width: 0.43; stroke: #333333;' />
-<line x1='452.89' y1='197.98' x2='450.67' y2='200.40' style='stroke-width: 0.43; stroke: #333333;' />
-<line x1='443.13' y1='176.43' x2='445.30' y2='174.07' style='stroke-width: 0.43; stroke: #333333;' />
-<line x1='284.53' y1='235.93' x2='286.58' y2='233.72' style='stroke-width: 0.43; stroke: #333333;' />
-<line x1='186.49' y1='358.37' x2='186.26' y2='361.93' style='stroke-width: 0.43; stroke: #333333;' />
-<line x1='101.67' y1='353.05' x2='103.67' y2='350.89' style='stroke-width: 0.43; stroke: #333333;' />
-<line x1='148.71' y1='401.15' x2='146.62' y2='403.42' style='stroke-width: 0.43; stroke: #333333;' />
-<line x1='151.40' y1='366.18' x2='153.58' y2='368.56' style='stroke-width: 0.43; stroke: #333333;' />
-<line x1='311.63' y1='245.24' x2='309.64' y2='247.39' style='stroke-width: 0.43; stroke: #333333;' />
-<line x1='129.80' y1='421.21' x2='131.97' y2='418.85' style='stroke-width: 0.43; stroke: #333333;' />
-<line x1='204.39' y1='476.26' x2='206.40' y2='474.08' style='stroke-width: 0.43; stroke: #333333;' />
-<line x1='181.40' y1='369.94' x2='179.32' y2='367.71' style='stroke-width: 0.43; stroke: #333333;' />
-<line x1='160.88' y1='374.65' x2='158.72' y2='372.29' style='stroke-width: 0.43; stroke: #333333;' />
-<line x1='142.42' y1='383.88' x2='144.49' y2='382.77' style='stroke-width: 0.43; stroke: #333333;' />
-<line x1='113.22' y1='406.46' x2='115.49' y2='408.95' style='stroke-width: 0.43; stroke: #333333;' />
-<line x1='271.00' y1='286.96' x2='268.96' y2='289.16' style='stroke-width: 0.43; stroke: #333333;' />
-<text x='505.89' y='116.03' text-anchor='middle' style='font-size: 7.40px;fill: #333333; font-family: "Liberation Sans";' textLength='16.03px' lengthAdjust='spacingAndGlyphs'>CHN</text>
-<text x='480.05' y='138.70' text-anchor='middle' style='font-size: 7.40px;fill: #333333; font-family: "Liberation Sans";' textLength='12.73px' lengthAdjust='spacingAndGlyphs'>IND</text>
-<text x='461.87' y='164.37' text-anchor='middle' style='font-size: 7.40px;fill: #333333; font-family: "Liberation Sans";' textLength='15.19px' lengthAdjust='spacingAndGlyphs'>USA</text>
-<text x='457.30' y='196.18' text-anchor='middle' style='font-size: 7.40px;fill: #333333; font-family: "Liberation Sans";' textLength='16.02px' lengthAdjust='spacingAndGlyphs'>NGA</text>
-<text x='438.72' y='183.31' text-anchor='middle' style='font-size: 7.40px;fill: #333333; font-family: "Liberation Sans";' textLength='12.73px' lengthAdjust='spacingAndGlyphs'>IDN</text>
-<text x='279.97' y='242.81' text-anchor='middle' style='font-size: 7.40px;fill: #333333; font-family: "Liberation Sans";' textLength='16.44px' lengthAdjust='spacingAndGlyphs'>COD</text>
-<text x='193.42' y='358.31' text-anchor='middle' style='font-size: 7.40px;fill: #333333; font-family: "Liberation Sans";' textLength='10.27px' lengthAdjust='spacingAndGlyphs'>FJI</text>
-<text x='97.11' y='359.93' text-anchor='middle' style='font-size: 7.40px;fill: #333333; font-family: "Liberation Sans";' textLength='12.31px' lengthAdjust='spacingAndGlyphs'>KIR</text>
-<text x='153.33' y='399.35' text-anchor='middle' style='font-size: 7.40px;fill: #333333; font-family: "Liberation Sans";' textLength='14.38px' lengthAdjust='spacingAndGlyphs'>LUX</text>
-<text x='147.00' y='364.38' text-anchor='middle' style='font-size: 7.40px;fill: #333333; font-family: "Liberation Sans";' textLength='16.42px' lengthAdjust='spacingAndGlyphs'>MDV</text>
-<text x='316.00' y='243.44' text-anchor='middle' style='font-size: 7.40px;fill: #333333; font-family: "Liberation Sans";' textLength='15.17px' lengthAdjust='spacingAndGlyphs'>MWI</text>
-<text x='139.33' y='413.92' text-anchor='middle' style='font-size: 7.40px;fill: #333333; font-family: "Liberation Sans";' textLength='14.80px' lengthAdjust='spacingAndGlyphs'>NCL</text>
-<text x='125.39' y='428.10' text-anchor='middle' style='font-size: 7.40px;fill: #333333; font-family: "Liberation Sans";' textLength='14.36px' lengthAdjust='spacingAndGlyphs'>PYF</text>
-<text x='199.82' y='483.14' text-anchor='middle' style='font-size: 7.40px;fill: #333333; font-family: "Liberation Sans";' textLength='15.59px' lengthAdjust='spacingAndGlyphs'>SGP</text>
-<text x='186.48' y='376.82' text-anchor='middle' style='font-size: 7.40px;fill: #333333; font-family: "Liberation Sans";' textLength='13.95px' lengthAdjust='spacingAndGlyphs'>SLB</text>
-<text x='165.33' y='381.53' text-anchor='middle' style='font-size: 7.40px;fill: #333333; font-family: "Liberation Sans";' textLength='13.55px' lengthAdjust='spacingAndGlyphs'>TLS</text>
-<text x='133.23' y='386.72' text-anchor='middle' style='font-size: 7.40px;fill: #333333; font-family: "Liberation Sans";' textLength='14.78px' lengthAdjust='spacingAndGlyphs'>VUT</text>
-<text x='108.81' y='404.66' text-anchor='middle' style='font-size: 7.40px;fill: #333333; font-family: "Liberation Sans";' textLength='18.05px' lengthAdjust='spacingAndGlyphs'>WSM</text>
-<text x='275.56' y='285.16' text-anchor='middle' style='font-size: 7.40px;fill: #333333; font-family: "Liberation Sans";' textLength='15.59px' lengthAdjust='spacingAndGlyphs'>ZMB</text>
+<line x1='516.08' y1='102.83' x2='513.83' y2='105.29' style='stroke-width: 0.43; stroke: #333333;' />
+<line x1='484.29' y1='132.00' x2='486.46' y2='129.63' style='stroke-width: 0.43; stroke: #333333;' />
+<line x1='457.48' y1='166.16' x2='455.28' y2='168.56' style='stroke-width: 0.43; stroke: #333333;' />
+<line x1='447.23' y1='204.12' x2='449.23' y2='201.97' style='stroke-width: 0.43; stroke: #333333;' />
+<line x1='443.05' y1='176.53' x2='445.30' y2='174.07' style='stroke-width: 0.43; stroke: #333333;' />
+<line x1='284.37' y1='236.14' x2='286.58' y2='233.72' style='stroke-width: 0.43; stroke: #333333;' />
+<line x1='186.51' y1='358.33' x2='186.26' y2='361.93' style='stroke-width: 0.43; stroke: #333333;' />
+<line x1='107.10' y1='347.19' x2='105.12' y2='349.33' style='stroke-width: 0.43; stroke: #333333;' />
+<line x1='148.74' y1='401.12' x2='146.62' y2='403.42' style='stroke-width: 0.43; stroke: #333333;' />
+<line x1='151.59' y1='366.41' x2='153.58' y2='368.56' style='stroke-width: 0.43; stroke: #333333;' />
+<line x1='306.00' y1='251.35' x2='308.19' y2='248.96' style='stroke-width: 0.43; stroke: #333333;' />
+<line x1='129.79' y1='421.22' x2='131.97' y2='418.85' style='stroke-width: 0.43; stroke: #333333;' />
+<line x1='210.06' y1='470.10' x2='207.85' y2='472.51' style='stroke-width: 0.43; stroke: #333333;' />
+<line x1='181.52' y1='370.08' x2='179.32' y2='367.71' style='stroke-width: 0.43; stroke: #333333;' />
+<line x1='160.93' y1='374.72' x2='158.72' y2='372.30' style='stroke-width: 0.43; stroke: #333333;' />
+<line x1='142.51' y1='383.81' x2='144.49' y2='382.77' style='stroke-width: 0.43; stroke: #333333;' />
+<line x1='113.40' y1='406.68' x2='115.49' y2='408.95' style='stroke-width: 0.43; stroke: #333333;' />
+<line x1='270.91' y1='287.06' x2='268.96' y2='289.16' style='stroke-width: 0.43; stroke: #333333;' />
+<text x='520.49' y='101.03' text-anchor='middle' style='font-size: 7.40px;fill: #333333; font-family: "Liberation Sans";' textLength='16.03px' lengthAdjust='spacingAndGlyphs'>CHN</text>
+<text x='479.87' y='138.88' text-anchor='middle' style='font-size: 7.40px;fill: #333333; font-family: "Liberation Sans";' textLength='12.73px' lengthAdjust='spacingAndGlyphs'>IND</text>
+<text x='461.89' y='164.36' text-anchor='middle' style='font-size: 7.40px;fill: #333333; font-family: "Liberation Sans";' textLength='15.19px' lengthAdjust='spacingAndGlyphs'>USA</text>
+<text x='442.67' y='211.00' text-anchor='middle' style='font-size: 7.40px;fill: #333333; font-family: "Liberation Sans";' textLength='16.02px' lengthAdjust='spacingAndGlyphs'>NGA</text>
+<text x='438.62' y='183.41' text-anchor='middle' style='font-size: 7.40px;fill: #333333; font-family: "Liberation Sans";' textLength='12.73px' lengthAdjust='spacingAndGlyphs'>IDN</text>
+<text x='279.96' y='243.02' text-anchor='middle' style='font-size: 7.40px;fill: #333333; font-family: "Liberation Sans";' textLength='16.44px' lengthAdjust='spacingAndGlyphs'>COD</text>
+<text x='193.45' y='358.28' text-anchor='middle' style='font-size: 7.40px;fill: #333333; font-family: "Liberation Sans";' textLength='10.27px' lengthAdjust='spacingAndGlyphs'>FJI</text>
+<text x='111.65' y='345.39' text-anchor='middle' style='font-size: 7.40px;fill: #333333; font-family: "Liberation Sans";' textLength='12.31px' lengthAdjust='spacingAndGlyphs'>KIR</text>
+<text x='153.39' y='399.32' text-anchor='middle' style='font-size: 7.40px;fill: #333333; font-family: "Liberation Sans";' textLength='14.38px' lengthAdjust='spacingAndGlyphs'>LUX</text>
+<text x='147.22' y='364.61' text-anchor='middle' style='font-size: 7.40px;fill: #333333; font-family: "Liberation Sans";' textLength='16.42px' lengthAdjust='spacingAndGlyphs'>MDV</text>
+<text x='301.59' y='258.24' text-anchor='middle' style='font-size: 7.40px;fill: #333333; font-family: "Liberation Sans";' textLength='15.17px' lengthAdjust='spacingAndGlyphs'>MWI</text>
+<text x='139.46' y='413.88' text-anchor='middle' style='font-size: 7.40px;fill: #333333; font-family: "Liberation Sans";' textLength='14.80px' lengthAdjust='spacingAndGlyphs'>NCL</text>
+<text x='125.38' y='428.11' text-anchor='middle' style='font-size: 7.40px;fill: #333333; font-family: "Liberation Sans";' textLength='14.36px' lengthAdjust='spacingAndGlyphs'>PYF</text>
+<text x='214.47' y='468.30' text-anchor='middle' style='font-size: 7.40px;fill: #333333; font-family: "Liberation Sans";' textLength='15.59px' lengthAdjust='spacingAndGlyphs'>SGP</text>
+<text x='186.57' y='376.97' text-anchor='middle' style='font-size: 7.40px;fill: #333333; font-family: "Liberation Sans";' textLength='13.95px' lengthAdjust='spacingAndGlyphs'>SLB</text>
+<text x='165.14' y='381.60' text-anchor='middle' style='font-size: 7.40px;fill: #333333; font-family: "Liberation Sans";' textLength='13.55px' lengthAdjust='spacingAndGlyphs'>TLS</text>
+<text x='133.32' y='386.63' text-anchor='middle' style='font-size: 7.40px;fill: #333333; font-family: "Liberation Sans";' textLength='14.78px' lengthAdjust='spacingAndGlyphs'>VUT</text>
+<text x='109.03' y='404.88' text-anchor='middle' style='font-size: 7.40px;fill: #333333; font-family: "Liberation Sans";' textLength='18.05px' lengthAdjust='spacingAndGlyphs'>WSM</text>
+<text x='275.28' y='285.26' text-anchor='middle' style='font-size: 7.40px;fill: #333333; font-family: "Liberation Sans";' textLength='15.59px' lengthAdjust='spacingAndGlyphs'>ZMB</text>
 </g>
 <g clip-path='url(#cpMC4wMHw1NzYuMDB8MC4wMHw2MzMuNjA=)'>
 <text x='30.43' y='489.42' style='font-size: 8.00px;fill: #4D4D4D; font-family: "Liberation Sans";' textLength='8.91px' lengthAdjust='spacingAndGlyphs'>10</text>

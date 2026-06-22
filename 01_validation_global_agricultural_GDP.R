@@ -1720,7 +1720,7 @@ make_scatter_chart <- function(year_select, pipelines_all, out_dir, source_name,
     message("[scatter ", year_select, "/", source_name, "] ", msg)
     list(summary = data.frame(
       source = source_name, year = year_select, n = 0L, n_dropped = NA_integer_,
-      rmsle = NA_real_, bias_dex = NA_real_, gm_ratio = NA_real_,
+      rmsle = NA_real_, bias_dex = NA_real_, med_ratio = NA_real_,
       median_fold = NA_real_, r2_identity = NA_real_, pearson_log = NA_real_,
       ols_slope = NA_real_, ols_intercept = NA_real_, rmse_usd = NA_real_),
       per_country = data.frame())
@@ -1733,11 +1733,11 @@ make_scatter_chart <- function(year_select, pipelines_all, out_dir, source_name,
   if (nrow(pos) < 2L) return(invisible(na_row("fewer than 2 positive pairs; skipping.")))
   
   # Fit metrics in log10 space (a USD RMSE would be size-dominated).
-  lr       <- log10(pos$y) - log10(pos$x)
-  rmsle    <- sqrt(mean(lr^2))
-  bias_dex <- mean(lr)
-  gm_ratio <- 10^bias_dex
-  med_fold <- 10^stats::median(abs(lr))
+  lr        <- log10(pos$y) - log10(pos$x)
+  rmsle     <- sqrt(mean(lr^2))
+  bias_dex  <- stats::median(lr)
+  med_ratio <- 10^bias_dex
+  med_fold  <- 10^stats::median(abs(lr))
   pear     <- if (nrow(pos) >= 3L) stats::cor(log10(pos$x), log10(pos$y)) else NA_real_
   rmse_usd <- sqrt(mean((pos$y - pos$x)^2))
   ss_tot   <- sum((log10(pos$y) - mean(log10(pos$y)))^2)
@@ -1833,7 +1833,7 @@ make_scatter_chart <- function(year_select, pipelines_all, out_dir, source_name,
                         sprintf("fabio_validation_scatter_%d.svg", year_select))
   ggsave(out_file, p, width = 8, height = 8.8, device = "svg")
   message(sprintf("[scatter %d/%s] wrote %s  (n=%d, RMSLE=%.3f, bias=%.2fx)",
-                  year_select, source_name, out_file, nrow(pos), rmsle, gm_ratio))
+                  year_select, source_name, out_file, nrow(pos), rmsle, med_ratio))
   
   # GIF frame: same plot, fixed pixel size, year stamped large so it reads.
   if (!is.null(frame_dir)) {
@@ -1851,7 +1851,7 @@ make_scatter_chart <- function(year_select, pipelines_all, out_dir, source_name,
   invisible(list(
     summary = data.frame(
       source = source_name, year = year_select, n = nrow(pos), n_dropped = n_drop,
-      rmsle = rmsle, bias_dex = bias_dex, gm_ratio = gm_ratio, median_fold = med_fold,
+      rmsle = rmsle, bias_dex = bias_dex, med_ratio = med_ratio, median_fold = med_fold,
       r2_identity = r2_id, pearson_log = pear,
       ols_slope     = if (!is.null(ols)) unname(stats::coef(ols)[2]) else NA_real_,
       ols_intercept = if (!is.null(ols)) unname(stats::coef(ols)[1]) else NA_real_,
