@@ -1,0 +1,1576 @@
+iso3c,year,source,isic,jpn_iot_code,category,strand,value_usd
+JPN,2011,Japan IOT (MIC),A,011101,Rice,wages,1102233865.98547
+JPN,2011,Japan IOT (MIC),A,011101,Rice,capital,15288492197.7922
+JPN,2011,Japan IOT (MIC),A,011101,Rice,tls,-1652135367.04995
+JPN,2011,Japan IOT (MIC),A,011102,"Wheat, barley and the like",wages,101407119.5396
+JPN,2011,Japan IOT (MIC),A,011102,"Wheat, barley and the like",capital,1430914225.88208
+JPN,2011,Japan IOT (MIC),A,011102,"Wheat, barley and the like",tls,-1916122169.7758
+JPN,2011,Japan IOT (MIC),A,011201,Potatoes and sweet potatoes,wages,226734440.636235
+JPN,2011,Japan IOT (MIC),A,011201,Potatoes and sweet potatoes,capital,1057563610.0657
+JPN,2011,Japan IOT (MIC),A,011201,Potatoes and sweet potatoes,tls,38079357.0098657
+JPN,2011,Japan IOT (MIC),A,011202,Pulses,wages,269587813.776657
+JPN,2011,Japan IOT (MIC),A,011202,Pulses,capital,729660124.185093
+JPN,2011,Japan IOT (MIC),A,011202,Pulses,tls,-980001510.726754
+JPN,2011,Japan IOT (MIC),A,011301,Vegetables (outdoor),wages,1098512388.84433
+JPN,2011,Japan IOT (MIC),A,011301,Vegetables (outdoor),capital,8069265101.88922
+JPN,2011,Japan IOT (MIC),A,011301,Vegetables (outdoor),tls,1217925443.23854
+JPN,2011,Japan IOT (MIC),A,011302,Vegetables (under facilities),wages,672359400.39236
+JPN,2011,Japan IOT (MIC),A,011302,Vegetables (under facilities),capital,3593042323.98124
+JPN,2011,Japan IOT (MIC),A,011302,Vegetables (under facilities),tls,517272792.392654
+JPN,2011,Japan IOT (MIC),A,011401,Fruits,wages,720137152.376111
+JPN,2011,Japan IOT (MIC),A,011401,Fruits,capital,4322401722.74078
+JPN,2011,Japan IOT (MIC),A,011401,Fruits,tls,620396552.903083
+JPN,2011,Japan IOT (MIC),A,011501,Sugar crops,wages,60057373.5269122
+JPN,2011,Japan IOT (MIC),A,011501,Sugar crops,capital,406856440.312714
+JPN,2011,Japan IOT (MIC),A,011501,Sugar crops,tls,-252433934.294424
+JPN,2011,Japan IOT (MIC),A,011502,Crops for beverages,wages,63465595.0164428
+JPN,2011,Japan IOT (MIC),A,011502,Crops for beverages,capital,385429753.742504
+JPN,2011,Japan IOT (MIC),A,011502,Crops for beverages,tls,56999998.3671862
+JPN,2011,Japan IOT (MIC),A,011509,Miscellaneous edible crops,wages,29145305.8259123
+JPN,2011,Japan IOT (MIC),A,011509,Miscellaneous edible crops,capital,302918215.108096
+JPN,2011,Japan IOT (MIC),A,011509,Miscellaneous edible crops,tls,-216885682.949577
+JPN,2011,Japan IOT (MIC),A,011601,Feed and forage crops,wages,19497031.7562853
+JPN,2011,Japan IOT (MIC),A,011601,Feed and forage crops,capital,1735624263.31739
+JPN,2011,Japan IOT (MIC),A,011601,Feed and forage crops,tls,-533887872.154115
+JPN,2011,Japan IOT (MIC),A,011609,Miscellaneous inedible crops,wages,22980434.6022026
+JPN,2011,Japan IOT (MIC),A,011609,Miscellaneous inedible crops,capital,398962397.89211
+JPN,2011,Japan IOT (MIC),A,011609,Miscellaneous inedible crops,tls,33468233.8181478
+JPN,2011,Japan IOT (MIC),A,012101,Dairy cattle farming,wages,397220696.469152
+JPN,2011,Japan IOT (MIC),A,012101,Dairy cattle farming,capital,3678385693.70621
+JPN,2011,Japan IOT (MIC),A,012101,Dairy cattle farming,tls,201523625.794561
+JPN,2011,Japan IOT (MIC),A,012102,Beef cattle,wages,332877985.628197
+JPN,2011,Japan IOT (MIC),A,012102,Beef cattle,capital,966819712.906952
+JPN,2011,Japan IOT (MIC),A,012102,Beef cattle,tls,-48278961.0263286
+JPN,2011,Japan IOT (MIC),A,012103,Hogs,wages,514829398.310086
+JPN,2011,Japan IOT (MIC),A,012103,Hogs,capital,1291164614.58526
+JPN,2011,Japan IOT (MIC),A,012103,Hogs,tls,-39808528.2067599
+JPN,2011,Japan IOT (MIC),A,012104,Hen eggs,wages,691906553.052903
+JPN,2011,Japan IOT (MIC),A,012104,Hen eggs,capital,578269932.8744
+JPN,2011,Japan IOT (MIC),A,012104,Hen eggs,tls,-54719497.2234562
+JPN,2011,Japan IOT (MIC),A,012105,Chickens,wages,236432835.61012
+JPN,2011,Japan IOT (MIC),A,012105,Chickens,capital,103587378.874814
+JPN,2011,Japan IOT (MIC),A,012105,Chickens,tls,-89566055.9086936
+JPN,2011,Japan IOT (MIC),A,012109,Miscellaneous livestock,wages,132218945.432084
+JPN,2011,Japan IOT (MIC),A,012109,Miscellaneous livestock,capital,62926795.2956714
+JPN,2011,Japan IOT (MIC),A,012109,Miscellaneous livestock,tls,2455924.30863234
+JPN,2011,Japan IOT (MIC),A,017101,Marine fishery,wages,2850375825.14125
+JPN,2011,Japan IOT (MIC),A,017101,Marine fishery,capital,3294772822.74305
+JPN,2011,Japan IOT (MIC),A,017101,Marine fishery,tls,602866766.638917
+JPN,2011,Japan IOT (MIC),A,017102,Marine aquaculture,wages,1027378295.47644
+JPN,2011,Japan IOT (MIC),A,017102,Marine aquaculture,capital,822734643.391833
+JPN,2011,Japan IOT (MIC),A,017102,Marine aquaculture,tls,185422285.301741
+JPN,2011,Japan IOT (MIC),A,017201,Inland water fishery,wages,12630467.8729663
+JPN,2011,Japan IOT (MIC),A,017201,Inland water fishery,capital,144398325.16673
+JPN,2011,Japan IOT (MIC),A,017201,Inland water fishery,tls,12780830.5857397
+JPN,2011,Japan IOT (MIC),A,017202,Inland water aquaculture,wages,138759723.437727
+JPN,2011,Japan IOT (MIC),A,017202,Inland water aquaculture,capital,89077377.09218
+JPN,2011,Japan IOT (MIC),A,017202,Inland water aquaculture,tls,31701471.9430603
+JPN,2011,Japan IOT (MIC),C,111101,Meat,wages,2384426838.70858
+JPN,2011,Japan IOT (MIC),C,111101,Meat,capital,844148799.735979
+JPN,2011,Japan IOT (MIC),C,111101,Meat,tls,-807121981.715527
+JPN,2011,Japan IOT (MIC),C,111201,Processed meat products,wages,1957948064.37894
+JPN,2011,Japan IOT (MIC),C,111201,Processed meat products,capital,700414576.550665
+JPN,2011,Japan IOT (MIC),C,111201,Processed meat products,tls,20637282.3281503
+JPN,2011,Japan IOT (MIC),C,111202,Bottled or canned meat products,wages,86045062.384583
+JPN,2011,Japan IOT (MIC),C,111202,Bottled or canned meat products,capital,130402062.652738
+JPN,2011,Japan IOT (MIC),C,111202,Bottled or canned meat products,tls,4698834.77416901
+JPN,2011,Japan IOT (MIC),C,111203,Dairy farm products,wages,2652160179.0277
+JPN,2011,Japan IOT (MIC),C,111203,Dairy farm products,capital,3344806015.41841
+JPN,2011,Japan IOT (MIC),C,111203,Dairy farm products,tls,-79003075.3363617
+JPN,2011,Japan IOT (MIC),C,111503,Confectionery,wages,7002930333.5784
+JPN,2011,Japan IOT (MIC),C,111503,Confectionery,capital,8407443373.14268
+JPN,2011,Japan IOT (MIC),C,111503,Confectionery,tls,552269713.790665
+JPN,2011,Japan IOT (MIC),C,111701,Sugar,wages,662585824.062089
+JPN,2011,Japan IOT (MIC),C,111701,Sugar,capital,825253218.830788
+JPN,2011,Japan IOT (MIC),C,111701,Sugar,tls,208979110.302909
+JPN,2011,Japan IOT (MIC),C,111703,"Dextrose, syrup and isomerized sugar",wages,191988123.759514
+JPN,2011,Japan IOT (MIC),C,111703,"Dextrose, syrup and isomerized sugar",capital,299221798.419083
+JPN,2011,Japan IOT (MIC),C,111703,"Dextrose, syrup and isomerized sugar",tls,13820839.3490891
+JPN,2011,Japan IOT (MIC),C,111704,"Animal oil and fats, vegetable oil and meal",wages,674451948.145123
+JPN,2011,Japan IOT (MIC),C,111704,"Animal oil and fats, vegetable oil and meal",capital,400340722.7592
+JPN,2011,Japan IOT (MIC),C,111704,"Animal oil and fats, vegetable oil and meal",tls,113536378.369988
+JPN,2011,Japan IOT (MIC),C,112101,Refined sake,wages,873269045.109763
+JPN,2011,Japan IOT (MIC),C,112101,Refined sake,capital,548711129.588361
+JPN,2011,Japan IOT (MIC),C,112101,Refined sake,tls,1044532174.95867
+JPN,2011,Japan IOT (MIC),C,112102,Malt liquors,wages,871903250.468738
+JPN,2011,Japan IOT (MIC),C,112102,Malt liquors,capital,2538473437.94494
+JPN,2011,Japan IOT (MIC),C,112102,Malt liquors,tls,9551064575.81903
+JPN,2011,Japan IOT (MIC),C,112103,Whiskey and brandy,wages,39482742.3290842
+JPN,2011,Japan IOT (MIC),C,112103,Whiskey and brandy,capital,178217405.314682
+JPN,2011,Japan IOT (MIC),C,112103,Whiskey and brandy,tls,397120454.660636
+JPN,2011,Japan IOT (MIC),C,112109,Miscellaneous liquors,wages,1194857297.05389
+JPN,2011,Japan IOT (MIC),C,112109,Miscellaneous liquors,capital,2700226126.21093
+JPN,2011,Japan IOT (MIC),C,112109,Miscellaneous liquors,tls,5906873869.04271
+JPN,2011,Japan IOT (MIC),C,112901,Tea and roasted coffee,wages,1327226605.19875
+JPN,2011,Japan IOT (MIC),C,112901,Tea and roasted coffee,capital,2610622479.62405
+JPN,2011,Japan IOT (MIC),C,112901,Tea and roasted coffee,tls,240705642.698098
+JPN,2011,Japan IOT (MIC),C,113101,Feeds,wages,637525371.933187
+JPN,2011,Japan IOT (MIC),C,113101,Feeds,capital,851403800.627296
+JPN,2011,Japan IOT (MIC),C,113101,Feeds,tls,133020879.900209
+JPN,2015,Japan IOT (MIC),A,011101,Rice,wages,781310762.369993
+JPN,2015,Japan IOT (MIC),A,011101,Rice,capital,7691118951.27592
+JPN,2015,Japan IOT (MIC),A,011101,Rice,tls,-1398937279.39685
+JPN,2015,Japan IOT (MIC),A,011102,"Wheat, barley and the like",wages,71858152.0211286
+JPN,2015,Japan IOT (MIC),A,011102,"Wheat, barley and the like",capital,1216863031.01864
+JPN,2015,Japan IOT (MIC),A,011102,"Wheat, barley and the like",tls,-1627820942.50852
+JPN,2015,Japan IOT (MIC),A,011201,Potatoes and sweet potatoes,wages,163783382.825808
+JPN,2015,Japan IOT (MIC),A,011201,Potatoes and sweet potatoes,capital,767448037.710134
+JPN,2015,Japan IOT (MIC),A,011201,Potatoes and sweet potatoes,tls,12293047.8509358
+JPN,2015,Japan IOT (MIC),A,011202,Pulses,wages,192896756.902889
+JPN,2015,Japan IOT (MIC),A,011202,Pulses,capital,663601524.614527
+JPN,2015,Japan IOT (MIC),A,011202,Pulses,tls,-787457286.29546
+JPN,2015,Japan IOT (MIC),A,011301,Vegetables (outdoor),wages,901738019.441962
+JPN,2015,Japan IOT (MIC),A,011301,Vegetables (outdoor),capital,6095088094.87654
+JPN,2015,Japan IOT (MIC),A,011301,Vegetables (outdoor),tls,767993293.864812
+JPN,2015,Japan IOT (MIC),A,011302,Vegetables (under facilities),wages,566876387.357298
+JPN,2015,Japan IOT (MIC),A,011302,Vegetables (under facilities),capital,3137494790.04646
+JPN,2015,Japan IOT (MIC),A,011302,Vegetables (under facilities),tls,305698689.266248
+JPN,2015,Japan IOT (MIC),A,011401,Fruits,wages,575534394.177044
+JPN,2015,Japan IOT (MIC),A,011401,Fruits,capital,3166310751.67554
+JPN,2015,Japan IOT (MIC),A,011401,Fruits,tls,352392443.60327
+JPN,2015,Japan IOT (MIC),A,011501,Sugar crops,wages,41918632.2551399
+JPN,2015,Japan IOT (MIC),A,011501,Sugar crops,capital,350930165.733905
+JPN,2015,Japan IOT (MIC),A,011501,Sugar crops,tls,-223224565.142664
+JPN,2015,Japan IOT (MIC),A,011502,Crops for beverages,wages,36639561.3030243
+JPN,2015,Japan IOT (MIC),A,011502,Crops for beverages,capital,192434115.317101
+JPN,2015,Japan IOT (MIC),A,011502,Crops for beverages,tls,41001610.5404531
+JPN,2015,Japan IOT (MIC),A,011509,Miscellaneous edible crops,wages,18464356.1470709
+JPN,2015,Japan IOT (MIC),A,011509,Miscellaneous edible crops,capital,225835185.51961
+JPN,2015,Japan IOT (MIC),A,011509,Miscellaneous edible crops,tls,-153522653.369583
+JPN,2015,Japan IOT (MIC),A,011601,Feed and forage crops,wages,19695313.2235423
+JPN,2015,Japan IOT (MIC),A,011601,Feed and forage crops,capital,1023627554.3833
+JPN,2015,Japan IOT (MIC),A,011601,Feed and forage crops,tls,-408429905.68183
+JPN,2015,Japan IOT (MIC),A,011609,Miscellaneous inedible crops,wages,14003169.4269732
+JPN,2015,Japan IOT (MIC),A,011609,Miscellaneous inedible crops,capital,220746128.075943
+JPN,2015,Japan IOT (MIC),A,011609,Miscellaneous inedible crops,tls,29906473.9384325
+JPN,2015,Japan IOT (MIC),A,012101,Dairy cattle farming,wages,232816116.590874
+JPN,2015,Japan IOT (MIC),A,012101,Dairy cattle farming,capital,2820866193.31597
+JPN,2015,Japan IOT (MIC),A,012101,Dairy cattle farming,tls,89190688.5743969
+JPN,2015,Japan IOT (MIC),A,012102,Beef cattle,wages,223720252.556009
+JPN,2015,Japan IOT (MIC),A,012102,Beef cattle,capital,823749866.409144
+JPN,2015,Japan IOT (MIC),A,012102,Beef cattle,tls,39241920.2230813
+JPN,2015,Japan IOT (MIC),A,012103,Hogs,wages,400416292.499432
+JPN,2015,Japan IOT (MIC),A,012103,Hogs,capital,985583545.409131
+JPN,2015,Japan IOT (MIC),A,012103,Hogs,tls,16985555.3639274
+JPN,2015,Japan IOT (MIC),A,012104,Hen eggs,wages,558499270.071782
+JPN,2015,Japan IOT (MIC),A,012104,Hen eggs,capital,555996048.634394
+JPN,2015,Japan IOT (MIC),A,012104,Hen eggs,tls,3255014.01429348
+JPN,2015,Japan IOT (MIC),A,012105,Chickens,wages,181950326.524872
+JPN,2015,Japan IOT (MIC),A,012105,Chickens,capital,171920917.861541
+JPN,2015,Japan IOT (MIC),A,012105,Chickens,tls,-16555959.6056958
+JPN,2015,Japan IOT (MIC),A,012109,Miscellaneous livestock,wages,62192247.460917
+JPN,2015,Japan IOT (MIC),A,012109,Miscellaneous livestock,capital,90140756.1166399
+JPN,2015,Japan IOT (MIC),A,012109,Miscellaneous livestock,tls,5146887.64189045
+JPN,2015,Japan IOT (MIC),A,017101,Marine fishery,wages,2022900333.85762
+JPN,2015,Japan IOT (MIC),A,017101,Marine fishery,capital,2818586031.21459
+JPN,2015,Japan IOT (MIC),A,017101,Marine fishery,tls,462302866.055454
+JPN,2015,Japan IOT (MIC),A,017102,Marine aquaculture,wages,621121113.29093
+JPN,2015,Japan IOT (MIC),A,017102,Marine aquaculture,capital,875045252.233378
+JPN,2015,Japan IOT (MIC),A,017102,Marine aquaculture,tls,177001713.848319
+JPN,2015,Japan IOT (MIC),A,017201,Inland water fishery,wages,8575392.25085439
+JPN,2015,Japan IOT (MIC),A,017201,Inland water fishery,capital,83093733.3902635
+JPN,2015,Japan IOT (MIC),A,017201,Inland water fishery,tls,12573937.3851641
+JPN,2015,Japan IOT (MIC),A,017202,Inland water aquaculture,wages,84679933.1129648
+JPN,2015,Japan IOT (MIC),A,017202,Inland water aquaculture,capital,81565363.8657856
+JPN,2015,Japan IOT (MIC),A,017202,Inland water aquaculture,tls,19769666.3355439
+JPN,2015,Japan IOT (MIC),C,111101,Meat,wages,2002469750.97095
+JPN,2015,Japan IOT (MIC),C,111101,Meat,capital,1014506905.97776
+JPN,2015,Japan IOT (MIC),C,111101,Meat,tls,-315959418.722472
+JPN,2015,Japan IOT (MIC),C,111102,Dairy farm products,wages,2047560782.67149
+JPN,2015,Japan IOT (MIC),C,111102,Dairy farm products,capital,2571618038.97274
+JPN,2015,Japan IOT (MIC),C,111102,Dairy farm products,tls,-55558297.578994
+JPN,2015,Japan IOT (MIC),C,111403,Confectionery,wages,5182411906.51345
+JPN,2015,Japan IOT (MIC),C,111403,Confectionery,capital,4843989586.5096
+JPN,2015,Japan IOT (MIC),C,111403,Confectionery,tls,497199259.954884
+JPN,2015,Japan IOT (MIC),C,111601,Sugar,wages,322709029.000842
+JPN,2015,Japan IOT (MIC),C,111601,Sugar,capital,656761038.310377
+JPN,2015,Japan IOT (MIC),C,111601,Sugar,tls,-69726696.1437486
+JPN,2015,Japan IOT (MIC),C,111602,Starch,wages,150284162.269068
+JPN,2015,Japan IOT (MIC),C,111602,Starch,capital,129894886.666844
+JPN,2015,Japan IOT (MIC),C,111602,Starch,tls,15746336.8305669
+JPN,2015,Japan IOT (MIC),C,111603,"Dextrose, syrup and isomerized sugar",wages,121146003.821319
+JPN,2015,Japan IOT (MIC),C,111603,"Dextrose, syrup and isomerized sugar",capital,248355916.999215
+JPN,2015,Japan IOT (MIC),C,111603,"Dextrose, syrup and isomerized sugar",tls,10078977.4046651
+JPN,2015,Japan IOT (MIC),C,111604,"Animal oil and fats, vegetable oil and meal",wages,428323493.87071
+JPN,2015,Japan IOT (MIC),C,111604,"Animal oil and fats, vegetable oil and meal",capital,288110047.549418
+JPN,2015,Japan IOT (MIC),C,111604,"Animal oil and fats, vegetable oil and meal",tls,38944507.7750748
+JPN,2015,Japan IOT (MIC),C,112101,Refined sake,wages,440913954.169652
+JPN,2015,Japan IOT (MIC),C,112101,Refined sake,capital,395955105.779335
+JPN,2015,Japan IOT (MIC),C,112101,Refined sake,tls,733823908.17162
+JPN,2015,Japan IOT (MIC),C,112102,Malt liquors,wages,556970900.547304
+JPN,2015,Japan IOT (MIC),C,112102,Malt liquors,capital,1416071540.98478
+JPN,2015,Japan IOT (MIC),C,112102,Malt liquors,tls,6499808606.41518
+JPN,2015,Japan IOT (MIC),C,112103,Whiskey and brandy,wages,47486854.1983729
+JPN,2015,Japan IOT (MIC),C,112103,Whiskey and brandy,capital,463632960.614594
+JPN,2015,Japan IOT (MIC),C,112103,Whiskey and brandy,tls,289803646.211677
+JPN,2015,Japan IOT (MIC),C,112109,Miscellaneous liquors,wages,739416914.48552
+JPN,2015,Japan IOT (MIC),C,112109,Miscellaneous liquors,capital,2260293297.56504
+JPN,2015,Japan IOT (MIC),C,112109,Miscellaneous liquors,tls,4074054850.27585
+JPN,2015,Japan IOT (MIC),C,112901,Tea and roasted coffee,wages,888602302.988341
+JPN,2015,Japan IOT (MIC),C,112901,Tea and roasted coffee,capital,1707122667.1867
+JPN,2015,Japan IOT (MIC),C,112901,Tea and roasted coffee,tls,127804738.073909
+JPN,2015,Japan IOT (MIC),C,113101,Feeds,wages,598096432.941093
+JPN,2015,Japan IOT (MIC),C,113101,Feeds,capital,1303352223.19031
+JPN,2015,Japan IOT (MIC),C,113101,Feeds,tls,180017145.61283
+JPN,2020,Japan IOT (MIC),A,011101,Rice,wages,1990174022.90507
+JPN,2020,Japan IOT (MIC),A,011101,Rice,capital,8409304730.19514
+JPN,2020,Japan IOT (MIC),A,011101,Rice,tls,-1195040966.22441
+JPN,2020,Japan IOT (MIC),A,011102,"Wheat, barley and the like",wages,244440197.636812
+JPN,2020,Japan IOT (MIC),A,011102,"Wheat, barley and the like",capital,1655824787.05702
+JPN,2020,Japan IOT (MIC),A,011102,"Wheat, barley and the like",tls,-2161563126.99525
+JPN,2020,Japan IOT (MIC),A,011201,Potatoes and sweet potatoes,wages,341841655.698989
+JPN,2020,Japan IOT (MIC),A,011201,Potatoes and sweet potatoes,capital,802625476.531599
+JPN,2020,Japan IOT (MIC),A,011201,Potatoes and sweet potatoes,tls,-85226275.8044055
+JPN,2020,Japan IOT (MIC),A,011202,Pulses,wages,192929811.161621
+JPN,2020,Japan IOT (MIC),A,011202,Pulses,capital,800752371.568865
+JPN,2020,Japan IOT (MIC),A,011202,Pulses,tls,-911265564.370182
+JPN,2020,Japan IOT (MIC),A,011301,Vegetables,wages,5302760149.50049
+JPN,2020,Japan IOT (MIC),A,011301,Vegetables,capital,5675508037.08459
+JPN,2020,Japan IOT (MIC),A,011301,Vegetables,tls,461720373.313977
+JPN,2020,Japan IOT (MIC),A,011401,Fruits,wages,1756035902.5633
+JPN,2020,Japan IOT (MIC),A,011401,Fruits,capital,3140260470.02387
+JPN,2020,Japan IOT (MIC),A,011401,Fruits,tls,237884330.267242
+JPN,2020,Japan IOT (MIC),A,011501,Sugar crops,wages,110513192.801317
+JPN,2020,Japan IOT (MIC),A,011501,Sugar crops,capital,503865234.975496
+JPN,2020,Japan IOT (MIC),A,011501,Sugar crops,tls,-320300948.627546
+JPN,2020,Japan IOT (MIC),A,011502,Crops for beverages,wages,110513192.801317
+JPN,2020,Japan IOT (MIC),A,011502,Crops for beverages,capital,105830430.394482
+JPN,2020,Japan IOT (MIC),A,011502,Crops for beverages,tls,6555867.36956966
+JPN,2020,Japan IOT (MIC),A,011509,Miscellaneous edible crops,wages,45891071.5869876
+JPN,2020,Japan IOT (MIC),A,011509,Miscellaneous edible crops,capital,237884330.267242
+JPN,2020,Japan IOT (MIC),A,011509,Miscellaneous edible crops,tls,-245376750.118179
+JPN,2020,Japan IOT (MIC),A,011601,Feed and forage crops,wages,198549126.049824
+JPN,2020,Japan IOT (MIC),A,011601,Feed and forage crops,capital,1702652411.12538
+JPN,2020,Japan IOT (MIC),A,011601,Feed and forage crops,tls,-915011774.295651
+JPN,2020,Japan IOT (MIC),A,011609,Miscellaneous inedible crops,wages,33715889.3292154
+JPN,2020,Japan IOT (MIC),A,011609,Miscellaneous inedible crops,capital,191056706.198887
+JPN,2020,Japan IOT (MIC),A,011609,Miscellaneous inedible crops,tls,19667602.108709
+JPN,2020,Japan IOT (MIC),A,012101,Dairy cattle farming,wages,1126672635.08461
+JPN,2020,Japan IOT (MIC),A,012101,Dairy cattle farming,capital,3008206570.15111
+JPN,2020,Japan IOT (MIC),A,012101,Dairy cattle farming,tls,210724308.307596
+JPN,2020,Japan IOT (MIC),A,012102,Beef cattle,wages,730510935.466333
+JPN,2020,Japan IOT (MIC),A,012102,Beef cattle,capital,1041446359.28021
+JPN,2020,Japan IOT (MIC),A,012102,Beef cattle,tls,103957325.431747
+JPN,2020,Japan IOT (MIC),A,012103,Hogs,wages,841960680.749017
+JPN,2020,Japan IOT (MIC),A,012103,Hogs,capital,931869718.960258
+JPN,2020,Japan IOT (MIC),A,012103,Hogs,tls,155467711.906938
+JPN,2020,Japan IOT (MIC),A,012104,Hen eggs,wages,630299819.960054
+JPN,2020,Japan IOT (MIC),A,012104,Hen eggs,capital,549756306.562484
+JPN,2020,Japan IOT (MIC),A,012104,Hen eggs,tls,3746209.92546837
+JPN,2020,Japan IOT (MIC),A,012105,Chickens,wages,236947777.785875
+JPN,2020,Japan IOT (MIC),A,012105,Chickens,capital,115195955.208153
+JPN,2020,Japan IOT (MIC),A,012105,Chickens,tls,-14048287.2205064
+JPN,2020,Japan IOT (MIC),A,012109,Miscellaneous livestock,wages,120815270.096355
+JPN,2020,Japan IOT (MIC),A,012109,Miscellaneous livestock,capital,265044352.226888
+JPN,2020,Japan IOT (MIC),A,012109,Miscellaneous livestock,tls,42144861.6615192
+JPN,2020,Japan IOT (MIC),A,017101,Marine fishery,wages,1691413781.34897
+JPN,2020,Japan IOT (MIC),A,017101,Marine fishery,capital,2793736051.91804
+JPN,2020,Japan IOT (MIC),A,017101,Marine fishery,tls,295950584.112002
+JPN,2020,Japan IOT (MIC),A,017102,Marine aquaculture,wages,729574382.984966
+JPN,2020,Japan IOT (MIC),A,017102,Marine aquaculture,capital,766099929.758283
+JPN,2020,Japan IOT (MIC),A,017102,Marine aquaculture,tls,37462099.2546838
+JPN,2020,Japan IOT (MIC),A,017201,Inland water fishery,wages,6555867.36956966
+JPN,2020,Japan IOT (MIC),A,017201,Inland water fishery,capital,98338010.5435448
+JPN,2020,Japan IOT (MIC),A,017201,Inland water fishery,tls,6555867.36956966
+JPN,2020,Japan IOT (MIC),A,017202,Inland water aquaculture,wages,125498032.503191
+JPN,2020,Japan IOT (MIC),A,017202,Inland water aquaculture,capital,329666473.441217
+JPN,2020,Japan IOT (MIC),A,017202,Inland water aquaculture,tls,16857944.6646077
+JPN,2020,Japan IOT (MIC),C,111101,Meat,wages,2244916297.83692
+JPN,2020,Japan IOT (MIC),C,111101,Meat,capital,1654888234.57565
+JPN,2020,Japan IOT (MIC),C,111101,Meat,tls,-309062318.851141
+JPN,2020,Japan IOT (MIC),C,111102,Dairy farm products,wages,2738479455.51738
+JPN,2020,Japan IOT (MIC),C,111102,Dairy farm products,capital,4407415977.31354
+JPN,2020,Japan IOT (MIC),C,111102,Dairy farm products,tls,162960131.757874
+JPN,2020,Japan IOT (MIC),C,111403,Confectionery,wages,6667317114.85234
+JPN,2020,Japan IOT (MIC),C,111403,Confectionery,capital,4431766341.82909
+JPN,2020,Japan IOT (MIC),C,111403,Confectionery,tls,741749565.242738
+JPN,2020,Japan IOT (MIC),C,111601,Sugar,wages,390542384.730078
+JPN,2020,Japan IOT (MIC),C,111601,Sugar,capital,941235243.773929
+JPN,2020,Japan IOT (MIC),C,111601,Sugar,tls,-118005612.652254
+JPN,2020,Japan IOT (MIC),C,111602,Starch,wages,214470518.233065
+JPN,2020,Japan IOT (MIC),C,111602,Starch,capital,165769789.201976
+JPN,2020,Japan IOT (MIC),C,111602,Starch,tls,-6555867.36956966
+JPN,2020,Japan IOT (MIC),C,111603,"Dextrose, syrup and isomerized sugar",wages,229455357.934938
+JPN,2020,Japan IOT (MIC),C,111603,"Dextrose, syrup and isomerized sugar",capital,385859622.323243
+JPN,2020,Japan IOT (MIC),C,111603,"Dextrose, syrup and isomerized sugar",tls,41208309.1801521
+JPN,2020,Japan IOT (MIC),C,111604,"Animal oil and fats, vegetable oil and meal",wages,690239178.767548
+JPN,2020,Japan IOT (MIC),C,111604,"Animal oil and fats, vegetable oil and meal",capital,722081963.134029
+JPN,2020,Japan IOT (MIC),C,111604,"Animal oil and fats, vegetable oil and meal",tls,52446938.9565573
+JPN,2020,Japan IOT (MIC),C,112101,Refined sake,wages,360572705.326331
+JPN,2020,Japan IOT (MIC),C,112101,Refined sake,capital,385859622.323243
+JPN,2020,Japan IOT (MIC),C,112101,Refined sake,tls,651840527.031497
+JPN,2020,Japan IOT (MIC),C,112102,Malt liquors,wages,383986517.360509
+JPN,2020,Japan IOT (MIC),C,112102,Malt liquors,capital,1123862977.64051
+JPN,2020,Japan IOT (MIC),C,112102,Malt liquors,tls,5007746117.86985
+JPN,2020,Japan IOT (MIC),C,112103,Whiskey and brandy,wages,59939358.807494
+JPN,2020,Japan IOT (MIC),C,112103,Whiskey and brandy,capital,857882072.932258
+JPN,2020,Japan IOT (MIC),C,112103,Whiskey and brandy,tls,559121831.376155
+JPN,2020,Japan IOT (MIC),C,112109,Miscellaneous liquors,wages,941235243.773929
+JPN,2020,Japan IOT (MIC),C,112109,Miscellaneous liquors,capital,2792799499.43667
+JPN,2020,Japan IOT (MIC),C,112109,Miscellaneous liquors,tls,5741066710.78029
+JPN,2020,Japan IOT (MIC),C,112901,Tea and roasted coffee,wages,759544062.388713
+JPN,2020,Japan IOT (MIC),C,112901,Tea and roasted coffee,capital,797006161.643397
+JPN,2020,Japan IOT (MIC),C,112901,Tea and roasted coffee,tls,76797303.4721017
+JPN,2020,Japan IOT (MIC),C,113101,Feeds,wages,736130250.354536
+JPN,2020,Japan IOT (MIC),C,113101,Feeds,capital,2243043192.87419
+JPN,2020,Japan IOT (MIC),C,113101,Feeds,tls,416765854.208357
+JPN,2011,GLORIA-FABIOv2 (disagg.),A,011609,Miscellaneous inedible crops,wages,146122642.341362
+JPN,2015,GLORIA-FABIOv2 (disagg.),A,011609,Miscellaneous inedible crops,wages,163625903.164676
+JPN,2020,GLORIA-FABIOv2 (disagg.),A,011609,Miscellaneous inedible crops,wages,253400248.214324
+JPN,2011,GLORIA-FABIOv2 (disagg.),A,011502,Crops for beverages,wages,3236154.65240975
+JPN,2015,GLORIA-FABIOv2 (disagg.),A,011502,Crops for beverages,wages,3073576.47860966
+JPN,2020,GLORIA-FABIOv2 (disagg.),A,011502,Crops for beverages,wages,68546866.9520458
+JPN,2011,GLORIA-FABIOv2 (disagg.),A,012102,Beef cattle,wages,933032.429399632
+JPN,2015,GLORIA-FABIOv2 (disagg.),A,012102,Beef cattle,wages,1528543.40443224
+JPN,2020,GLORIA-FABIOv2 (disagg.),A,012102,Beef cattle,wages,2361704.52499719
+JPN,2011,GLORIA-FABIOv2 (disagg.),A,012109,Miscellaneous livestock,wages,12061222.9425386
+JPN,2015,GLORIA-FABIOv2 (disagg.),A,012109,Miscellaneous livestock,wages,8182434.24932082
+JPN,2020,GLORIA-FABIOv2 (disagg.),A,012109,Miscellaneous livestock,wages,7477881.82631016
+JPN,2011,GLORIA-FABIOv2 (disagg.),A,012103,Hogs,wages,1224996717.49361
+JPN,2015,GLORIA-FABIOv2 (disagg.),A,012103,Hogs,wages,863847499.218011
+JPN,2020,GLORIA-FABIOv2 (disagg.),A,012103,Hogs,wages,1105370939.51993
+JPN,2011,GLORIA-FABIOv2 (disagg.),A,011601,Feed and forage crops,wages,3367936.03179838
+JPN,2015,GLORIA-FABIOv2 (disagg.),A,011601,Feed and forage crops,wages,17006806.5292563
+JPN,2020,GLORIA-FABIOv2 (disagg.),A,011601,Feed and forage crops,wages,0
+JPN,2011,GLORIA-FABIOv2 (disagg.),A,012105,Chickens,wages,425234015.72071
+JPN,2015,GLORIA-FABIOv2 (disagg.),A,012105,Chickens,wages,165356452.982808
+JPN,2020,GLORIA-FABIOv2 (disagg.),A,012105,Chickens,wages,406147689.845431
+JPN,2011,GLORIA-FABIOv2 (disagg.),A,011102,"Wheat, barley and the like",wages,110568864.404878
+JPN,2015,GLORIA-FABIOv2 (disagg.),A,011102,"Wheat, barley and the like",wages,133042613.714034
+JPN,2020,GLORIA-FABIOv2 (disagg.),A,011102,"Wheat, barley and the like",wages,197159494.033811
+JPN,2011,GLORIA-FABIOv2 (disagg.),A,011509,Miscellaneous edible crops,wages,10869765.2184539
+JPN,2015,GLORIA-FABIOv2 (disagg.),A,011509,Miscellaneous edible crops,wages,19832864.4823136
+JPN,2020,GLORIA-FABIOv2 (disagg.),A,011509,Miscellaneous edible crops,wages,4241546.38747395
+JPN,2011,GLORIA-FABIOv2 (disagg.),A,011201,Potatoes and sweet potatoes,wages,365593110.004422
+JPN,2015,GLORIA-FABIOv2 (disagg.),A,011201,Potatoes and sweet potatoes,wages,225078560.106238
+JPN,2020,GLORIA-FABIOv2 (disagg.),A,011201,Potatoes and sweet potatoes,wages,306061634.427871
+JPN,2011,GLORIA-FABIOv2 (disagg.),A,011501,Sugar crops,wages,10832294.1611863
+JPN,2015,GLORIA-FABIOv2 (disagg.),A,011501,Sugar crops,wages,9777402.06471287
+JPN,2020,GLORIA-FABIOv2 (disagg.),A,011501,Sugar crops,wages,11594580.8637964
+JPN,2011,GLORIA-FABIOv2 (disagg.),A,011202,Pulses,wages,206927174.82688
+JPN,2015,GLORIA-FABIOv2 (disagg.),A,011202,Pulses,wages,217943268.702886
+JPN,2020,GLORIA-FABIOv2 (disagg.),A,011202,Pulses,wages,206631909.53192
+JPN,2011,GLORIA-FABIOv2 (disagg.),A,011401,Fruits,wages,512595594.444943
+JPN,2015,GLORIA-FABIOv2 (disagg.),A,011401,Fruits,wages,586852570.108181
+JPN,2020,GLORIA-FABIOv2 (disagg.),A,011401,Fruits,wages,538196578.821333
+JPN,2011,GLORIA-FABIOv2 (disagg.),A,011301,Vegetables (outdoor),wages,3667.14243446949
+JPN,2011,GLORIA-FABIOv2 (disagg.),A,011302,Vegetables (under facilities),wages,1721.76299816067
+JPN,2015,GLORIA-FABIOv2 (disagg.),A,011301,Vegetables (outdoor),wages,0
+JPN,2015,GLORIA-FABIOv2 (disagg.),A,011302,Vegetables (under facilities),wages,0
+JPN,2020,GLORIA-FABIOv2 (disagg.),A,011301,Vegetables,wages,2440412.31707481
+JPN,2011,GLORIA-FABIOv2 (disagg.),A,012104,Hen eggs,wages,0
+JPN,2015,GLORIA-FABIOv2 (disagg.),A,012104,Hen eggs,wages,0
+JPN,2020,GLORIA-FABIOv2 (disagg.),A,012104,Hen eggs,wages,0
+JPN,2011,GLORIA-FABIOv2 (disagg.),A,011101,Rice,wages,565217238.436832
+JPN,2015,GLORIA-FABIOv2 (disagg.),A,011101,Rice,wages,722696825.163295
+JPN,2020,GLORIA-FABIOv2 (disagg.),A,011101,Rice,wages,608039326.846065
+JPN,2011,GLORIA-FABIOv2 (disagg.),A,012101,Dairy cattle farming,wages,0
+JPN,2015,GLORIA-FABIOv2 (disagg.),A,012101,Dairy cattle farming,wages,0
+JPN,2020,GLORIA-FABIOv2 (disagg.),A,012101,Dairy cattle farming,wages,0
+JPN,2011,GLORIA-FABIOv2 (disagg.),A,017101,Marine fishery,wages,0
+JPN,2011,GLORIA-FABIOv2 (disagg.),A,017102,Marine aquaculture,wages,0
+JPN,2011,GLORIA-FABIOv2 (disagg.),A,017201,Inland water fishery,wages,0
+JPN,2011,GLORIA-FABIOv2 (disagg.),A,017202,Inland water aquaculture,wages,0
+JPN,2015,GLORIA-FABIOv2 (disagg.),A,017101,Marine fishery,wages,0
+JPN,2015,GLORIA-FABIOv2 (disagg.),A,017102,Marine aquaculture,wages,0
+JPN,2015,GLORIA-FABIOv2 (disagg.),A,017201,Inland water fishery,wages,0
+JPN,2015,GLORIA-FABIOv2 (disagg.),A,017202,Inland water aquaculture,wages,0
+JPN,2020,GLORIA-FABIOv2 (disagg.),A,017101,Marine fishery,wages,0
+JPN,2020,GLORIA-FABIOv2 (disagg.),A,017102,Marine aquaculture,wages,0
+JPN,2020,GLORIA-FABIOv2 (disagg.),A,017201,Inland water fishery,wages,0
+JPN,2020,GLORIA-FABIOv2 (disagg.),A,017202,Inland water aquaculture,wages,0
+JPN,2011,GLORIA-FABIOv2 (disagg.),A,011609,Miscellaneous inedible crops,capital,2685.29130434237
+JPN,2015,GLORIA-FABIOv2 (disagg.),A,011609,Miscellaneous inedible crops,capital,5070.39537383293
+JPN,2020,GLORIA-FABIOv2 (disagg.),A,011609,Miscellaneous inedible crops,capital,4278.94417591489
+JPN,2011,GLORIA-FABIOv2 (disagg.),A,011502,Crops for beverages,capital,5914.44072294176
+JPN,2015,GLORIA-FABIOv2 (disagg.),A,011502,Crops for beverages,capital,660.493425274021
+JPN,2020,GLORIA-FABIOv2 (disagg.),A,011502,Crops for beverages,capital,1442.73839812093
+JPN,2011,GLORIA-FABIOv2 (disagg.),A,012102,Beef cattle,capital,338.108435970679
+JPN,2015,GLORIA-FABIOv2 (disagg.),A,012102,Beef cattle,capital,424.337232798229
+JPN,2020,GLORIA-FABIOv2 (disagg.),A,012102,Beef cattle,capital,729.778537971658
+JPN,2011,GLORIA-FABIOv2 (disagg.),A,012109,Miscellaneous livestock,capital,47.1104065122142
+JPN,2015,GLORIA-FABIOv2 (disagg.),A,012109,Miscellaneous livestock,capital,26.1003700855771
+JPN,2020,GLORIA-FABIOv2 (disagg.),A,012109,Miscellaneous livestock,capital,52.701896101562
+JPN,2011,GLORIA-FABIOv2 (disagg.),A,012103,Hogs,capital,43364204.9204183
+JPN,2015,GLORIA-FABIOv2 (disagg.),A,012103,Hogs,capital,42587517.9464699
+JPN,2020,GLORIA-FABIOv2 (disagg.),A,012103,Hogs,capital,41519097.7737948
+JPN,2011,GLORIA-FABIOv2 (disagg.),A,011601,Feed and forage crops,capital,43029883.5850391
+JPN,2015,GLORIA-FABIOv2 (disagg.),A,011601,Feed and forage crops,capital,185410753.58084
+JPN,2020,GLORIA-FABIOv2 (disagg.),A,011601,Feed and forage crops,capital,0
+JPN,2011,GLORIA-FABIOv2 (disagg.),A,012105,Chickens,capital,78589460.5491843
+JPN,2015,GLORIA-FABIOv2 (disagg.),A,012105,Chickens,capital,9095860.00243778
+JPN,2020,GLORIA-FABIOv2 (disagg.),A,012105,Chickens,capital,9191.07484776844
+JPN,2011,GLORIA-FABIOv2 (disagg.),A,011102,"Wheat, barley and the like",capital,227442778.137374
+JPN,2015,GLORIA-FABIOv2 (disagg.),A,011102,"Wheat, barley and the like",capital,74474674.7201917
+JPN,2020,GLORIA-FABIOv2 (disagg.),A,011102,"Wheat, barley and the like",capital,17370603.5894248
+JPN,2011,GLORIA-FABIOv2 (disagg.),A,011509,Miscellaneous edible crops,capital,19438448.0970331
+JPN,2015,GLORIA-FABIOv2 (disagg.),A,011509,Miscellaneous edible crops,capital,5528506.53039458
+JPN,2020,GLORIA-FABIOv2 (disagg.),A,011509,Miscellaneous edible crops,capital,3570198.28793037
+JPN,2011,GLORIA-FABIOv2 (disagg.),A,011201,Potatoes and sweet potatoes,capital,3869984762.22864
+JPN,2015,GLORIA-FABIOv2 (disagg.),A,011201,Potatoes and sweet potatoes,capital,2453840194.6537
+JPN,2020,GLORIA-FABIOv2 (disagg.),A,011201,Potatoes and sweet potatoes,capital,2432084586.18515
+JPN,2011,GLORIA-FABIOv2 (disagg.),A,011501,Sugar crops,capital,445557898.861869
+JPN,2015,GLORIA-FABIOv2 (disagg.),A,011501,Sugar crops,capital,351971498.179788
+JPN,2020,GLORIA-FABIOv2 (disagg.),A,011501,Sugar crops,capital,300622656.456493
+JPN,2011,GLORIA-FABIOv2 (disagg.),A,011202,Pulses,capital,665967.773499982
+JPN,2015,GLORIA-FABIOv2 (disagg.),A,011202,Pulses,capital,524117.554331899
+JPN,2020,GLORIA-FABIOv2 (disagg.),A,011202,Pulses,capital,18398.6268300887
+JPN,2011,GLORIA-FABIOv2 (disagg.),A,011401,Fruits,capital,113232816.564324
+JPN,2015,GLORIA-FABIOv2 (disagg.),A,011401,Fruits,capital,87917873.1975616
+JPN,2020,GLORIA-FABIOv2 (disagg.),A,011401,Fruits,capital,40195839.6428032
+JPN,2011,GLORIA-FABIOv2 (disagg.),A,011301,Vegetables (outdoor),capital,34941.5654325854
+JPN,2011,GLORIA-FABIOv2 (disagg.),A,011302,Vegetables (under facilities),capital,16405.4425304423
+JPN,2015,GLORIA-FABIOv2 (disagg.),A,011301,Vegetables (outdoor),capital,0
+JPN,2015,GLORIA-FABIOv2 (disagg.),A,011302,Vegetables (under facilities),capital,0
+JPN,2020,GLORIA-FABIOv2 (disagg.),A,011301,Vegetables,capital,19392463.8460127
+JPN,2011,GLORIA-FABIOv2 (disagg.),A,012104,Hen eggs,capital,0
+JPN,2015,GLORIA-FABIOv2 (disagg.),A,012104,Hen eggs,capital,0
+JPN,2020,GLORIA-FABIOv2 (disagg.),A,012104,Hen eggs,capital,0
+JPN,2011,GLORIA-FABIOv2 (disagg.),A,011101,Rice,capital,11876768427.3375
+JPN,2015,GLORIA-FABIOv2 (disagg.),A,011101,Rice,capital,7342462588.13022
+JPN,2020,GLORIA-FABIOv2 (disagg.),A,011101,Rice,capital,5775428777.18096
+JPN,2011,GLORIA-FABIOv2 (disagg.),A,012101,Dairy cattle farming,capital,0
+JPN,2015,GLORIA-FABIOv2 (disagg.),A,012101,Dairy cattle farming,capital,0
+JPN,2020,GLORIA-FABIOv2 (disagg.),A,012101,Dairy cattle farming,capital,0
+JPN,2011,GLORIA-FABIOv2 (disagg.),A,017101,Marine fishery,capital,0
+JPN,2011,GLORIA-FABIOv2 (disagg.),A,017102,Marine aquaculture,capital,0
+JPN,2011,GLORIA-FABIOv2 (disagg.),A,017201,Inland water fishery,capital,0
+JPN,2011,GLORIA-FABIOv2 (disagg.),A,017202,Inland water aquaculture,capital,0
+JPN,2015,GLORIA-FABIOv2 (disagg.),A,017101,Marine fishery,capital,0
+JPN,2015,GLORIA-FABIOv2 (disagg.),A,017102,Marine aquaculture,capital,0
+JPN,2015,GLORIA-FABIOv2 (disagg.),A,017201,Inland water fishery,capital,0
+JPN,2015,GLORIA-FABIOv2 (disagg.),A,017202,Inland water aquaculture,capital,0
+JPN,2020,GLORIA-FABIOv2 (disagg.),A,017101,Marine fishery,capital,0
+JPN,2020,GLORIA-FABIOv2 (disagg.),A,017102,Marine aquaculture,capital,0
+JPN,2020,GLORIA-FABIOv2 (disagg.),A,017201,Inland water fishery,capital,0
+JPN,2020,GLORIA-FABIOv2 (disagg.),A,017202,Inland water aquaculture,capital,0
+JPN,2011,GLORIA-FABIOv2 (disagg.),A,011609,Miscellaneous inedible crops,tls,688189.954372415
+JPN,2015,GLORIA-FABIOv2 (disagg.),A,011609,Miscellaneous inedible crops,tls,717806.180057709
+JPN,2020,GLORIA-FABIOv2 (disagg.),A,011609,Miscellaneous inedible crops,tls,107245.14213544
+JPN,2011,GLORIA-FABIOv2 (disagg.),A,011502,Crops for beverages,tls,16678.0759969199
+JPN,2015,GLORIA-FABIOv2 (disagg.),A,011502,Crops for beverages,tls,6898.79449606512
+JPN,2020,GLORIA-FABIOv2 (disagg.),A,011502,Crops for beverages,tls,56284.0800213541
+JPN,2011,GLORIA-FABIOv2 (disagg.),A,012102,Beef cattle,tls,321996.812146669
+JPN,2015,GLORIA-FABIOv2 (disagg.),A,012102,Beef cattle,tls,902103.766968542
+JPN,2020,GLORIA-FABIOv2 (disagg.),A,012102,Beef cattle,tls,2401370.35271176
+JPN,2011,GLORIA-FABIOv2 (disagg.),A,012109,Miscellaneous livestock,tls,-81127.9344977559
+JPN,2015,GLORIA-FABIOv2 (disagg.),A,012109,Miscellaneous livestock,tls,-35013.7711997051
+JPN,2020,GLORIA-FABIOv2 (disagg.),A,012109,Miscellaneous livestock,tls,-7291.69020615324
+JPN,2011,GLORIA-FABIOv2 (disagg.),A,012103,Hogs,tls,206428304.965355
+JPN,2015,GLORIA-FABIOv2 (disagg.),A,012103,Hogs,tls,230190946.896457
+JPN,2020,GLORIA-FABIOv2 (disagg.),A,012103,Hogs,tls,172675194.039487
+JPN,2011,GLORIA-FABIOv2 (disagg.),A,011601,Feed and forage crops,tls,259423.662560552
+JPN,2015,GLORIA-FABIOv2 (disagg.),A,011601,Feed and forage crops,tls,1010648.12555183
+JPN,2020,GLORIA-FABIOv2 (disagg.),A,011601,Feed and forage crops,tls,0
+JPN,2011,GLORIA-FABIOv2 (disagg.),A,012105,Chickens,tls,36020069.4124918
+JPN,2015,GLORIA-FABIOv2 (disagg.),A,012105,Chickens,tls,9541166.51407673
+JPN,2020,GLORIA-FABIOv2 (disagg.),A,012105,Chickens,tls,9412872.4986148
+JPN,2011,GLORIA-FABIOv2 (disagg.),A,011102,"Wheat, barley and the like",tls,-1719107.39932853
+JPN,2015,GLORIA-FABIOv2 (disagg.),A,011102,"Wheat, barley and the like",tls,902608.265546315
+JPN,2020,GLORIA-FABIOv2 (disagg.),A,011102,"Wheat, barley and the like",tls,-671796.976313126
+JPN,2011,GLORIA-FABIOv2 (disagg.),A,011509,Miscellaneous edible crops,tls,-3138814.53382172
+JPN,2015,GLORIA-FABIOv2 (disagg.),A,011509,Miscellaneous edible crops,tls,-1066856.89260578
+JPN,2020,GLORIA-FABIOv2 (disagg.),A,011509,Miscellaneous edible crops,tls,-852077.818499878
+JPN,2011,GLORIA-FABIOv2 (disagg.),A,011201,Potatoes and sweet potatoes,tls,28160720.010352
+JPN,2015,GLORIA-FABIOv2 (disagg.),A,011201,Potatoes and sweet potatoes,tls,13375540.2274939
+JPN,2020,GLORIA-FABIOv2 (disagg.),A,011201,Potatoes and sweet potatoes,tls,9957950.84382583
+JPN,2011,GLORIA-FABIOv2 (disagg.),A,011501,Sugar crops,tls,7861614.95672559
+JPN,2015,GLORIA-FABIOv2 (disagg.),A,011501,Sugar crops,tls,4745679.61056631
+JPN,2020,GLORIA-FABIOv2 (disagg.),A,011501,Sugar crops,tls,2660325.86075795
+JPN,2011,GLORIA-FABIOv2 (disagg.),A,011202,Pulses,tls,679763.639959559
+JPN,2015,GLORIA-FABIOv2 (disagg.),A,011202,Pulses,tls,558331.289515884
+JPN,2020,GLORIA-FABIOv2 (disagg.),A,011202,Pulses,tls,14732.2780543908
+JPN,2011,GLORIA-FABIOv2 (disagg.),A,011401,Fruits,tls,1244818.74566339
+JPN,2015,GLORIA-FABIOv2 (disagg.),A,011401,Fruits,tls,859623.299449333
+JPN,2020,GLORIA-FABIOv2 (disagg.),A,011401,Fruits,tls,490177.626873094
+JPN,2011,GLORIA-FABIOv2 (disagg.),A,011301,Vegetables (outdoor),tls,282.470781065668
+JPN,2011,GLORIA-FABIOv2 (disagg.),A,011302,Vegetables (under facilities),tls,132.623083938317
+JPN,2015,GLORIA-FABIOv2 (disagg.),A,011301,Vegetables (outdoor),tls,0
+JPN,2015,GLORIA-FABIOv2 (disagg.),A,011302,Vegetables (under facilities),tls,0
+JPN,2020,GLORIA-FABIOv2 (disagg.),A,011301,Vegetables,tls,79400.6930581991
+JPN,2011,GLORIA-FABIOv2 (disagg.),A,012104,Hen eggs,tls,0
+JPN,2015,GLORIA-FABIOv2 (disagg.),A,012104,Hen eggs,tls,0
+JPN,2020,GLORIA-FABIOv2 (disagg.),A,012104,Hen eggs,tls,0
+JPN,2011,GLORIA-FABIOv2 (disagg.),A,011101,Rice,tls,41270357.4452202
+JPN,2015,GLORIA-FABIOv2 (disagg.),A,011101,Rice,tls,54144335.9418135
+JPN,2020,GLORIA-FABIOv2 (disagg.),A,011101,Rice,tls,47275299.1826948
+JPN,2011,GLORIA-FABIOv2 (disagg.),A,012101,Dairy cattle farming,tls,0
+JPN,2015,GLORIA-FABIOv2 (disagg.),A,012101,Dairy cattle farming,tls,0
+JPN,2020,GLORIA-FABIOv2 (disagg.),A,012101,Dairy cattle farming,tls,0
+JPN,2011,GLORIA-FABIOv2 (disagg.),A,017101,Marine fishery,tls,0
+JPN,2011,GLORIA-FABIOv2 (disagg.),A,017102,Marine aquaculture,tls,0
+JPN,2011,GLORIA-FABIOv2 (disagg.),A,017201,Inland water fishery,tls,0
+JPN,2011,GLORIA-FABIOv2 (disagg.),A,017202,Inland water aquaculture,tls,0
+JPN,2015,GLORIA-FABIOv2 (disagg.),A,017101,Marine fishery,tls,0
+JPN,2015,GLORIA-FABIOv2 (disagg.),A,017102,Marine aquaculture,tls,0
+JPN,2015,GLORIA-FABIOv2 (disagg.),A,017201,Inland water fishery,tls,0
+JPN,2015,GLORIA-FABIOv2 (disagg.),A,017202,Inland water aquaculture,tls,0
+JPN,2020,GLORIA-FABIOv2 (disagg.),A,017101,Marine fishery,tls,0
+JPN,2020,GLORIA-FABIOv2 (disagg.),A,017102,Marine aquaculture,tls,0
+JPN,2020,GLORIA-FABIOv2 (disagg.),A,017201,Inland water fishery,tls,0
+JPN,2020,GLORIA-FABIOv2 (disagg.),A,017202,Inland water aquaculture,tls,0
+JPN,2011,GLORIA-FABIOv2 (disagg.),C,111701,Sugar,wages,103595510.175977
+JPN,2015,GLORIA-FABIOv2 (disagg.),C,111601,Sugar,wages,84137959.7453204
+JPN,2020,GLORIA-FABIOv2 (disagg.),C,111601,Sugar,wages,67116415.0978181
+JPN,2011,GLORIA-FABIOv2 (disagg.),C,111703,"Dextrose, syrup and isomerized sugar",wages,1803757.58627593
+JPN,2015,GLORIA-FABIOv2 (disagg.),C,111603,"Dextrose, syrup and isomerized sugar",wages,993771.222742625
+JPN,2020,GLORIA-FABIOv2 (disagg.),C,111603,"Dextrose, syrup and isomerized sugar",wages,1152180.38219484
+JPN,2011,GLORIA-FABIOv2 (disagg.),C,111704,"Animal oil and fats, vegetable oil and meal",wages,360173.783608779
+JPN,2015,GLORIA-FABIOv2 (disagg.),C,111604,"Animal oil and fats, vegetable oil and meal",wages,1443339.95457927
+JPN,2020,GLORIA-FABIOv2 (disagg.),C,111604,"Animal oil and fats, vegetable oil and meal",wages,2746436.41509631
+JPN,2015,GLORIA-FABIOv2 (disagg.),C,111602,Starch,wages,88389.5726390623
+JPN,2020,GLORIA-FABIOv2 (disagg.),C,111602,Starch,wages,103647.809154649
+JPN,2011,GLORIA-FABIOv2 (disagg.),C,113101,Feeds,wages,0
+JPN,2015,GLORIA-FABIOv2 (disagg.),C,113101,Feeds,wages,0
+JPN,2020,GLORIA-FABIOv2 (disagg.),C,113101,Feeds,wages,0
+JPN,2011,GLORIA-FABIOv2 (disagg.),C,112901,Tea and roasted coffee,wages,0
+JPN,2015,GLORIA-FABIOv2 (disagg.),C,112901,Tea and roasted coffee,wages,0
+JPN,2020,GLORIA-FABIOv2 (disagg.),C,112901,Tea and roasted coffee,wages,0
+JPN,2011,GLORIA-FABIOv2 (disagg.),C,111503,Confectionery,wages,0
+JPN,2015,GLORIA-FABIOv2 (disagg.),C,111403,Confectionery,wages,0
+JPN,2020,GLORIA-FABIOv2 (disagg.),C,111403,Confectionery,wages,0
+JPN,2011,GLORIA-FABIOv2 (disagg.),C,112109,Miscellaneous liquors,wages,73166.1190101774
+JPN,2015,GLORIA-FABIOv2 (disagg.),C,112109,Miscellaneous liquors,wages,28313.9084208625
+JPN,2020,GLORIA-FABIOv2 (disagg.),C,112109,Miscellaneous liquors,wages,0
+JPN,2011,GLORIA-FABIOv2 (disagg.),C,112102,Malt liquors,wages,2434509.22133275
+JPN,2015,GLORIA-FABIOv2 (disagg.),C,112102,Malt liquors,wages,3715684.24906004
+JPN,2020,GLORIA-FABIOv2 (disagg.),C,112102,Malt liquors,wages,0
+JPN,2011,GLORIA-FABIOv2 (disagg.),C,112101,Refined sake,wages,0
+JPN,2015,GLORIA-FABIOv2 (disagg.),C,112101,Refined sake,wages,0
+JPN,2020,GLORIA-FABIOv2 (disagg.),C,112101,Refined sake,wages,0
+JPN,2011,GLORIA-FABIOv2 (disagg.),C,112103,Whiskey and brandy,wages,0
+JPN,2015,GLORIA-FABIOv2 (disagg.),C,112103,Whiskey and brandy,wages,0
+JPN,2020,GLORIA-FABIOv2 (disagg.),C,112103,Whiskey and brandy,wages,0
+JPN,2011,GLORIA-FABIOv2 (disagg.),C,111101,Meat,wages,4340191.98198509
+JPN,2011,GLORIA-FABIOv2 (disagg.),C,111201,Processed meat products,wages,804069.359835605
+JPN,2011,GLORIA-FABIOv2 (disagg.),C,111202,Bottled or canned meat products,wages,46364.2701194556
+JPN,2015,GLORIA-FABIOv2 (disagg.),C,111101,Meat,wages,9646772.10194054
+JPN,2020,GLORIA-FABIOv2 (disagg.),C,111101,Meat,wages,10462347.5987497
+JPN,2011,GLORIA-FABIOv2 (disagg.),C,111203,Dairy farm products,wages,0
+JPN,2015,GLORIA-FABIOv2 (disagg.),C,111102,Dairy farm products,wages,0
+JPN,2020,GLORIA-FABIOv2 (disagg.),C,111102,Dairy farm products,wages,0
+JPN,2011,GLORIA-FABIOv2 (disagg.),C,111701,Sugar,capital,229503671.587982
+JPN,2015,GLORIA-FABIOv2 (disagg.),C,111601,Sugar,capital,69532509.2389812
+JPN,2020,GLORIA-FABIOv2 (disagg.),C,111601,Sugar,capital,28993600.5797661
+JPN,2011,GLORIA-FABIOv2 (disagg.),C,111703,"Dextrose, syrup and isomerized sugar",capital,1906882.60694143
+JPN,2015,GLORIA-FABIOv2 (disagg.),C,111603,"Dextrose, syrup and isomerized sugar",capital,821263.160361199
+JPN,2020,GLORIA-FABIOv2 (disagg.),C,111603,"Dextrose, syrup and isomerized sugar",capital,497730.067205059
+JPN,2011,GLORIA-FABIOv2 (disagg.),C,111704,"Animal oil and fats, vegetable oil and meal",capital,204592.968456064
+JPN,2015,GLORIA-FABIOv2 (disagg.),C,111604,"Animal oil and fats, vegetable oil and meal",capital,136902.469523363
+JPN,2020,GLORIA-FABIOv2 (disagg.),C,111604,"Animal oil and fats, vegetable oil and meal",capital,26248.1125517699
+JPN,2015,GLORIA-FABIOv2 (disagg.),C,111602,Starch,capital,8383.85353084029
+JPN,2020,GLORIA-FABIOv2 (disagg.),C,111602,Starch,capital,990.577952390057
+JPN,2011,GLORIA-FABIOv2 (disagg.),C,113101,Feeds,capital,0
+JPN,2015,GLORIA-FABIOv2 (disagg.),C,113101,Feeds,capital,0
+JPN,2020,GLORIA-FABIOv2 (disagg.),C,113101,Feeds,capital,0
+JPN,2011,GLORIA-FABIOv2 (disagg.),C,112901,Tea and roasted coffee,capital,0
+JPN,2015,GLORIA-FABIOv2 (disagg.),C,112901,Tea and roasted coffee,capital,0
+JPN,2020,GLORIA-FABIOv2 (disagg.),C,112901,Tea and roasted coffee,capital,0
+JPN,2011,GLORIA-FABIOv2 (disagg.),C,111503,Confectionery,capital,0
+JPN,2015,GLORIA-FABIOv2 (disagg.),C,111403,Confectionery,capital,0
+JPN,2020,GLORIA-FABIOv2 (disagg.),C,111403,Confectionery,capital,0
+JPN,2011,GLORIA-FABIOv2 (disagg.),C,112109,Miscellaneous liquors,capital,229308.344248949
+JPN,2015,GLORIA-FABIOv2 (disagg.),C,112109,Miscellaneous liquors,capital,77178.2092672631
+JPN,2020,GLORIA-FABIOv2 (disagg.),C,112109,Miscellaneous liquors,capital,0
+JPN,2011,GLORIA-FABIOv2 (disagg.),C,112102,Malt liquors,capital,7629942.46729087
+JPN,2015,GLORIA-FABIOv2 (disagg.),C,112102,Malt liquors,capital,10128232.8205077
+JPN,2020,GLORIA-FABIOv2 (disagg.),C,112102,Malt liquors,capital,0
+JPN,2011,GLORIA-FABIOv2 (disagg.),C,112101,Refined sake,capital,0
+JPN,2015,GLORIA-FABIOv2 (disagg.),C,112101,Refined sake,capital,0
+JPN,2020,GLORIA-FABIOv2 (disagg.),C,112101,Refined sake,capital,0
+JPN,2011,GLORIA-FABIOv2 (disagg.),C,112103,Whiskey and brandy,capital,0
+JPN,2015,GLORIA-FABIOv2 (disagg.),C,112103,Whiskey and brandy,capital,0
+JPN,2020,GLORIA-FABIOv2 (disagg.),C,112103,Whiskey and brandy,capital,0
+JPN,2011,GLORIA-FABIOv2 (disagg.),C,111101,Meat,capital,2254592.80455739
+JPN,2011,GLORIA-FABIOv2 (disagg.),C,111201,Processed meat products,capital,974023.251902535
+JPN,2011,GLORIA-FABIOv2 (disagg.),C,111202,Bottled or canned meat products,capital,56164.1562402935
+JPN,2015,GLORIA-FABIOv2 (disagg.),C,111101,Meat,capital,3614611.8464018
+JPN,2020,GLORIA-FABIOv2 (disagg.),C,111101,Meat,capital,3608232.21653283
+JPN,2011,GLORIA-FABIOv2 (disagg.),C,111203,Dairy farm products,capital,0
+JPN,2015,GLORIA-FABIOv2 (disagg.),C,111102,Dairy farm products,capital,0
+JPN,2020,GLORIA-FABIOv2 (disagg.),C,111102,Dairy farm products,capital,0
+JPN,2011,GLORIA-FABIOv2 (disagg.),C,111701,Sugar,tls,2138494.2180487
+JPN,2015,GLORIA-FABIOv2 (disagg.),C,111601,Sugar,tls,-813977.231437439
+JPN,2020,GLORIA-FABIOv2 (disagg.),C,111601,Sugar,tls,-505503.423116932
+JPN,2011,GLORIA-FABIOv2 (disagg.),C,111703,"Dextrose, syrup and isomerized sugar",tls,37234.4820973432
+JPN,2015,GLORIA-FABIOv2 (disagg.),C,111603,"Dextrose, syrup and isomerized sugar",tls,-9614.05709169492
+JPN,2020,GLORIA-FABIOv2 (disagg.),C,111603,"Dextrose, syrup and isomerized sugar",tls,-8677.92367036903
+JPN,2011,GLORIA-FABIOv2 (disagg.),C,111704,"Animal oil and fats, vegetable oil and meal",tls,-9740.62020028522
+JPN,2015,GLORIA-FABIOv2 (disagg.),C,111604,"Animal oil and fats, vegetable oil and meal",tls,-7646.26918378074
+JPN,2020,GLORIA-FABIOv2 (disagg.),C,111604,"Animal oil and fats, vegetable oil and meal",tls,-977.124915350244
+JPN,2015,GLORIA-FABIOv2 (disagg.),C,111602,Starch,tls,-468.254525410556
+JPN,2020,GLORIA-FABIOv2 (disagg.),C,111602,Starch,tls,-36.8757332919805
+JPN,2011,GLORIA-FABIOv2 (disagg.),C,113101,Feeds,tls,0
+JPN,2015,GLORIA-FABIOv2 (disagg.),C,113101,Feeds,tls,0
+JPN,2020,GLORIA-FABIOv2 (disagg.),C,113101,Feeds,tls,0
+JPN,2011,GLORIA-FABIOv2 (disagg.),C,112901,Tea and roasted coffee,tls,0
+JPN,2015,GLORIA-FABIOv2 (disagg.),C,112901,Tea and roasted coffee,tls,0
+JPN,2020,GLORIA-FABIOv2 (disagg.),C,112901,Tea and roasted coffee,tls,0
+JPN,2011,GLORIA-FABIOv2 (disagg.),C,111503,Confectionery,tls,0
+JPN,2015,GLORIA-FABIOv2 (disagg.),C,111403,Confectionery,tls,0
+JPN,2020,GLORIA-FABIOv2 (disagg.),C,111403,Confectionery,tls,0
+JPN,2011,GLORIA-FABIOv2 (disagg.),C,112109,Miscellaneous liquors,tls,8389.54997767895
+JPN,2015,GLORIA-FABIOv2 (disagg.),C,112109,Miscellaneous liquors,tls,1261.27889975462
+JPN,2020,GLORIA-FABIOv2 (disagg.),C,112109,Miscellaneous liquors,tls,0
+JPN,2011,GLORIA-FABIOv2 (disagg.),C,112102,Malt liquors,tls,279151.567143398
+JPN,2015,GLORIA-FABIOv2 (disagg.),C,112102,Malt liquors,tls,165519.859421346
+JPN,2020,GLORIA-FABIOv2 (disagg.),C,112102,Malt liquors,tls,0
+JPN,2011,GLORIA-FABIOv2 (disagg.),C,112101,Refined sake,tls,0
+JPN,2015,GLORIA-FABIOv2 (disagg.),C,112101,Refined sake,tls,0
+JPN,2020,GLORIA-FABIOv2 (disagg.),C,112101,Refined sake,tls,0
+JPN,2011,GLORIA-FABIOv2 (disagg.),C,112103,Whiskey and brandy,tls,0
+JPN,2015,GLORIA-FABIOv2 (disagg.),C,112103,Whiskey and brandy,tls,0
+JPN,2020,GLORIA-FABIOv2 (disagg.),C,112103,Whiskey and brandy,tls,0
+JPN,2011,GLORIA-FABIOv2 (disagg.),C,111101,Meat,tls,168304.895946987
+JPN,2011,GLORIA-FABIOv2 (disagg.),C,111201,Processed meat products,tls,13242.518482407
+JPN,2011,GLORIA-FABIOv2 (disagg.),C,111202,Bottled or canned meat products,tls,763.590474465701
+JPN,2015,GLORIA-FABIOv2 (disagg.),C,111101,Meat,tls,125264.881495442
+JPN,2020,GLORIA-FABIOv2 (disagg.),C,111101,Meat,tls,76829.9720894112
+JPN,2011,GLORIA-FABIOv2 (disagg.),C,111203,Dairy farm products,tls,0
+JPN,2015,GLORIA-FABIOv2 (disagg.),C,111102,Dairy farm products,tls,0
+JPN,2020,GLORIA-FABIOv2 (disagg.),C,111102,Dairy farm products,tls,0
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),A,011609,Miscellaneous inedible crops,wages,146122642.341362
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),A,011609,Miscellaneous inedible crops,wages,163625903.164676
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),A,011609,Miscellaneous inedible crops,wages,253400248.214324
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),A,011502,Crops for beverages,wages,3236154.65240975
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),A,011502,Crops for beverages,wages,3073576.47860966
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),A,011502,Crops for beverages,wages,68546866.9520458
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),A,012102,Beef cattle,wages,933032.429399632
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),A,012102,Beef cattle,wages,1528543.40443224
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),A,012102,Beef cattle,wages,2361704.52499719
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),A,012109,Miscellaneous livestock,wages,12061222.9425386
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),A,012109,Miscellaneous livestock,wages,8182434.24932082
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),A,012109,Miscellaneous livestock,wages,7477881.82631016
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),A,012103,Hogs,wages,1224996717.49361
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),A,012103,Hogs,wages,863847499.218011
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),A,012103,Hogs,wages,1105370939.51993
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),A,011601,Feed and forage crops,wages,3367936.03179838
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),A,011601,Feed and forage crops,wages,17006806.5292563
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),A,011601,Feed and forage crops,wages,0
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),A,012105,Chickens,wages,425234015.72071
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),A,012105,Chickens,wages,165356452.982808
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),A,012105,Chickens,wages,406147689.845431
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),A,011102,"Wheat, barley and the like",wages,110568864.404878
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),A,011102,"Wheat, barley and the like",wages,133042613.714034
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),A,011102,"Wheat, barley and the like",wages,197159494.033811
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),A,011509,Miscellaneous edible crops,wages,10869765.2184539
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),A,011509,Miscellaneous edible crops,wages,19832864.4823136
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),A,011509,Miscellaneous edible crops,wages,4241546.38747395
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),A,011201,Potatoes and sweet potatoes,wages,365593110.004422
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),A,011201,Potatoes and sweet potatoes,wages,225078560.106238
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),A,011201,Potatoes and sweet potatoes,wages,306061634.427871
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),A,011501,Sugar crops,wages,10832294.1611863
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),A,011501,Sugar crops,wages,9777402.06471287
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),A,011501,Sugar crops,wages,11594580.8637964
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),A,011202,Pulses,wages,206927174.82688
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),A,011202,Pulses,wages,217943268.702886
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),A,011202,Pulses,wages,206631909.53192
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),A,011401,Fruits,wages,512595594.444943
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),A,011401,Fruits,wages,586852570.108181
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),A,011401,Fruits,wages,538196578.821333
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),A,011301,Vegetables (outdoor),wages,3667.14243446949
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),A,011302,Vegetables (under facilities),wages,1721.76299816067
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),A,011301,Vegetables (outdoor),wages,0
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),A,011302,Vegetables (under facilities),wages,0
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),A,011301,Vegetables,wages,2440412.31707481
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),A,012104,Hen eggs,wages,0
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),A,012104,Hen eggs,wages,0
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),A,012104,Hen eggs,wages,0
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),A,011101,Rice,wages,565217238.436832
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),A,011101,Rice,wages,722696825.163295
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),A,011101,Rice,wages,608039326.846065
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),A,012101,Dairy cattle farming,wages,0
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),A,012101,Dairy cattle farming,wages,0
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),A,012101,Dairy cattle farming,wages,0
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),A,017101,Marine fishery,wages,0
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),A,017102,Marine aquaculture,wages,0
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),A,017201,Inland water fishery,wages,0
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),A,017202,Inland water aquaculture,wages,0
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),A,017101,Marine fishery,wages,0
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),A,017102,Marine aquaculture,wages,0
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),A,017201,Inland water fishery,wages,0
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),A,017202,Inland water aquaculture,wages,0
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),A,017101,Marine fishery,wages,0
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),A,017102,Marine aquaculture,wages,0
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),A,017201,Inland water fishery,wages,0
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),A,017202,Inland water aquaculture,wages,0
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),A,011609,Miscellaneous inedible crops,capital,2685.29130434237
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),A,011609,Miscellaneous inedible crops,capital,5070.39537383293
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),A,011609,Miscellaneous inedible crops,capital,4278.94417591489
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),A,011502,Crops for beverages,capital,5914.44072294176
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),A,011502,Crops for beverages,capital,660.493425274021
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),A,011502,Crops for beverages,capital,1442.73839812093
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),A,012102,Beef cattle,capital,338.108435970679
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),A,012102,Beef cattle,capital,424.337232798229
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),A,012102,Beef cattle,capital,729.778537971658
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),A,012109,Miscellaneous livestock,capital,47.1104065122142
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),A,012109,Miscellaneous livestock,capital,26.1003700855771
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),A,012109,Miscellaneous livestock,capital,52.701896101562
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),A,012103,Hogs,capital,43364204.9204183
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),A,012103,Hogs,capital,42587517.9464699
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),A,012103,Hogs,capital,41519097.7737948
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),A,011601,Feed and forage crops,capital,43029883.5850391
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),A,011601,Feed and forage crops,capital,185410753.58084
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),A,011601,Feed and forage crops,capital,0
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),A,012105,Chickens,capital,78589460.5491843
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),A,012105,Chickens,capital,9095860.00243778
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),A,012105,Chickens,capital,9191.07484776844
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),A,011102,"Wheat, barley and the like",capital,227442778.137374
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),A,011102,"Wheat, barley and the like",capital,74474674.7201917
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),A,011102,"Wheat, barley and the like",capital,17370603.5894248
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),A,011509,Miscellaneous edible crops,capital,19438448.0970331
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),A,011509,Miscellaneous edible crops,capital,5528506.53039458
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),A,011509,Miscellaneous edible crops,capital,3570198.28793037
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),A,011201,Potatoes and sweet potatoes,capital,3869984762.22864
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),A,011201,Potatoes and sweet potatoes,capital,2453840194.6537
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),A,011201,Potatoes and sweet potatoes,capital,2432084586.18515
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),A,011501,Sugar crops,capital,445557898.861869
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),A,011501,Sugar crops,capital,351971498.179788
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),A,011501,Sugar crops,capital,300622656.456493
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),A,011202,Pulses,capital,665967.773499982
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),A,011202,Pulses,capital,524117.554331899
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),A,011202,Pulses,capital,18398.6268300887
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),A,011401,Fruits,capital,113232816.564324
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),A,011401,Fruits,capital,87917873.1975616
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),A,011401,Fruits,capital,40195839.6428032
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),A,011301,Vegetables (outdoor),capital,34941.5654325854
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),A,011302,Vegetables (under facilities),capital,16405.4425304423
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),A,011301,Vegetables (outdoor),capital,0
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),A,011302,Vegetables (under facilities),capital,0
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),A,011301,Vegetables,capital,19392463.8460127
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),A,012104,Hen eggs,capital,0
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),A,012104,Hen eggs,capital,0
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),A,012104,Hen eggs,capital,0
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),A,011101,Rice,capital,11876768427.3375
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),A,011101,Rice,capital,7342462588.13022
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),A,011101,Rice,capital,5775428777.18096
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),A,012101,Dairy cattle farming,capital,0
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),A,012101,Dairy cattle farming,capital,0
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),A,012101,Dairy cattle farming,capital,0
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),A,017101,Marine fishery,capital,0
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),A,017102,Marine aquaculture,capital,0
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),A,017201,Inland water fishery,capital,0
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),A,017202,Inland water aquaculture,capital,0
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),A,017101,Marine fishery,capital,0
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),A,017102,Marine aquaculture,capital,0
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),A,017201,Inland water fishery,capital,0
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),A,017202,Inland water aquaculture,capital,0
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),A,017101,Marine fishery,capital,0
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),A,017102,Marine aquaculture,capital,0
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),A,017201,Inland water fishery,capital,0
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),A,017202,Inland water aquaculture,capital,0
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),A,011609,Miscellaneous inedible crops,tls,688189.954372415
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),A,011609,Miscellaneous inedible crops,tls,717806.180057709
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),A,011609,Miscellaneous inedible crops,tls,107245.14213544
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),A,011502,Crops for beverages,tls,16678.0759969199
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),A,011502,Crops for beverages,tls,6898.79449606512
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),A,011502,Crops for beverages,tls,56284.0800213541
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),A,012102,Beef cattle,tls,321996.812146669
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),A,012102,Beef cattle,tls,902103.766968542
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),A,012102,Beef cattle,tls,2401370.35271176
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),A,012109,Miscellaneous livestock,tls,-81127.9344977559
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),A,012109,Miscellaneous livestock,tls,-35013.7711997051
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),A,012109,Miscellaneous livestock,tls,-7291.69020615324
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),A,012103,Hogs,tls,206428304.965355
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),A,012103,Hogs,tls,230190946.896457
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),A,012103,Hogs,tls,172675194.039487
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),A,011601,Feed and forage crops,tls,259423.662560552
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),A,011601,Feed and forage crops,tls,1010648.12555183
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),A,011601,Feed and forage crops,tls,0
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),A,012105,Chickens,tls,36020069.4124918
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),A,012105,Chickens,tls,9541166.51407673
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),A,012105,Chickens,tls,9412872.4986148
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),A,011102,"Wheat, barley and the like",tls,-1719107.39932853
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),A,011102,"Wheat, barley and the like",tls,902608.265546315
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),A,011102,"Wheat, barley and the like",tls,-671796.976313126
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),A,011509,Miscellaneous edible crops,tls,-3138814.53382172
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),A,011509,Miscellaneous edible crops,tls,-1066856.89260578
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),A,011509,Miscellaneous edible crops,tls,-852077.818499878
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),A,011201,Potatoes and sweet potatoes,tls,28160720.010352
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),A,011201,Potatoes and sweet potatoes,tls,13375540.2274939
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),A,011201,Potatoes and sweet potatoes,tls,9957950.84382583
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),A,011501,Sugar crops,tls,7861614.95672559
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),A,011501,Sugar crops,tls,4745679.61056631
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),A,011501,Sugar crops,tls,2660325.86075795
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),A,011202,Pulses,tls,679763.639959559
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),A,011202,Pulses,tls,558331.289515884
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),A,011202,Pulses,tls,14732.2780543908
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),A,011401,Fruits,tls,1244818.74566339
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),A,011401,Fruits,tls,859623.299449333
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),A,011401,Fruits,tls,490177.626873094
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),A,011301,Vegetables (outdoor),tls,282.470781065668
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),A,011302,Vegetables (under facilities),tls,132.623083938317
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),A,011301,Vegetables (outdoor),tls,0
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),A,011302,Vegetables (under facilities),tls,0
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),A,011301,Vegetables,tls,79400.6930581991
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),A,012104,Hen eggs,tls,0
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),A,012104,Hen eggs,tls,0
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),A,012104,Hen eggs,tls,0
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),A,011101,Rice,tls,41270357.4452202
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),A,011101,Rice,tls,54144335.9418135
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),A,011101,Rice,tls,47275299.1826948
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),A,012101,Dairy cattle farming,tls,0
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),A,012101,Dairy cattle farming,tls,0
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),A,012101,Dairy cattle farming,tls,0
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),A,017101,Marine fishery,tls,0
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),A,017102,Marine aquaculture,tls,0
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),A,017201,Inland water fishery,tls,0
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),A,017202,Inland water aquaculture,tls,0
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),A,017101,Marine fishery,tls,0
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),A,017102,Marine aquaculture,tls,0
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),A,017201,Inland water fishery,tls,0
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),A,017202,Inland water aquaculture,tls,0
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),A,017101,Marine fishery,tls,0
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),A,017102,Marine aquaculture,tls,0
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),A,017201,Inland water fishery,tls,0
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),A,017202,Inland water aquaculture,tls,0
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),C,111701,Sugar,wages,103595510.175977
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),C,111601,Sugar,wages,84137959.7453204
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),C,111601,Sugar,wages,67116415.0978181
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),C,111703,"Dextrose, syrup and isomerized sugar",wages,1803757.58627593
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),C,111603,"Dextrose, syrup and isomerized sugar",wages,993771.222742625
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),C,111603,"Dextrose, syrup and isomerized sugar",wages,1152180.38219484
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),C,111704,"Animal oil and fats, vegetable oil and meal",wages,360173.783608779
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),C,111604,"Animal oil and fats, vegetable oil and meal",wages,1443339.95457927
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),C,111604,"Animal oil and fats, vegetable oil and meal",wages,2746436.41509631
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),C,111602,Starch,wages,88389.5726390623
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),C,111602,Starch,wages,103647.809154649
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),C,113101,Feeds,wages,0
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),C,113101,Feeds,wages,0
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),C,113101,Feeds,wages,0
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),C,112901,Tea and roasted coffee,wages,0
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),C,112901,Tea and roasted coffee,wages,0
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),C,112901,Tea and roasted coffee,wages,0
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),C,111503,Confectionery,wages,0
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),C,111403,Confectionery,wages,0
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),C,111403,Confectionery,wages,0
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),C,112109,Miscellaneous liquors,wages,73166.1190101774
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),C,112109,Miscellaneous liquors,wages,28313.9084208625
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),C,112109,Miscellaneous liquors,wages,0
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),C,112102,Malt liquors,wages,2434509.22133275
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),C,112102,Malt liquors,wages,3715684.24906004
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),C,112102,Malt liquors,wages,0
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),C,112101,Refined sake,wages,0
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),C,112101,Refined sake,wages,0
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),C,112101,Refined sake,wages,0
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),C,112103,Whiskey and brandy,wages,0
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),C,112103,Whiskey and brandy,wages,0
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),C,112103,Whiskey and brandy,wages,0
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),C,111101,Meat,wages,4340191.98198509
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),C,111201,Processed meat products,wages,804069.359835605
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),C,111202,Bottled or canned meat products,wages,46364.2701194556
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),C,111101,Meat,wages,9646772.10194054
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),C,111101,Meat,wages,10462347.5987497
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),C,111203,Dairy farm products,wages,0
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),C,111102,Dairy farm products,wages,0
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),C,111102,Dairy farm products,wages,0
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),C,111701,Sugar,capital,229503671.587982
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),C,111601,Sugar,capital,69532509.2389812
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),C,111601,Sugar,capital,28993600.5797661
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),C,111703,"Dextrose, syrup and isomerized sugar",capital,1906882.60694143
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),C,111603,"Dextrose, syrup and isomerized sugar",capital,821263.160361199
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),C,111603,"Dextrose, syrup and isomerized sugar",capital,497730.067205059
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),C,111704,"Animal oil and fats, vegetable oil and meal",capital,204592.968456064
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),C,111604,"Animal oil and fats, vegetable oil and meal",capital,136902.469523363
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),C,111604,"Animal oil and fats, vegetable oil and meal",capital,26248.1125517699
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),C,111602,Starch,capital,8383.85353084029
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),C,111602,Starch,capital,990.577952390057
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),C,113101,Feeds,capital,0
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),C,113101,Feeds,capital,0
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),C,113101,Feeds,capital,0
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),C,112901,Tea and roasted coffee,capital,0
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),C,112901,Tea and roasted coffee,capital,0
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),C,112901,Tea and roasted coffee,capital,0
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),C,111503,Confectionery,capital,0
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),C,111403,Confectionery,capital,0
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),C,111403,Confectionery,capital,0
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),C,112109,Miscellaneous liquors,capital,229308.344248949
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),C,112109,Miscellaneous liquors,capital,77178.2092672631
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),C,112109,Miscellaneous liquors,capital,0
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),C,112102,Malt liquors,capital,7629942.46729087
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),C,112102,Malt liquors,capital,10128232.8205077
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),C,112102,Malt liquors,capital,0
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),C,112101,Refined sake,capital,0
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),C,112101,Refined sake,capital,0
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),C,112101,Refined sake,capital,0
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),C,112103,Whiskey and brandy,capital,0
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),C,112103,Whiskey and brandy,capital,0
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),C,112103,Whiskey and brandy,capital,0
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),C,111101,Meat,capital,2254592.80455739
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),C,111201,Processed meat products,capital,974023.251902535
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),C,111202,Bottled or canned meat products,capital,56164.1562402935
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),C,111101,Meat,capital,3614611.8464018
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),C,111101,Meat,capital,3608232.21653283
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),C,111203,Dairy farm products,capital,0
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),C,111102,Dairy farm products,capital,0
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),C,111102,Dairy farm products,capital,0
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),C,111701,Sugar,tls,2138494.2180487
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),C,111601,Sugar,tls,-813977.231437439
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),C,111601,Sugar,tls,-505503.423116932
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),C,111703,"Dextrose, syrup and isomerized sugar",tls,37234.4820973432
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),C,111603,"Dextrose, syrup and isomerized sugar",tls,-9614.05709169492
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),C,111603,"Dextrose, syrup and isomerized sugar",tls,-8677.92367036903
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),C,111704,"Animal oil and fats, vegetable oil and meal",tls,-9740.62020028522
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),C,111604,"Animal oil and fats, vegetable oil and meal",tls,-7646.26918378074
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),C,111604,"Animal oil and fats, vegetable oil and meal",tls,-977.124915350244
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),C,111602,Starch,tls,-468.254525410556
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),C,111602,Starch,tls,-36.8757332919805
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),C,113101,Feeds,tls,0
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),C,113101,Feeds,tls,0
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),C,113101,Feeds,tls,0
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),C,112901,Tea and roasted coffee,tls,0
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),C,112901,Tea and roasted coffee,tls,0
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),C,112901,Tea and roasted coffee,tls,0
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),C,111503,Confectionery,tls,0
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),C,111403,Confectionery,tls,0
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),C,111403,Confectionery,tls,0
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),C,112109,Miscellaneous liquors,tls,8389.54997767895
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),C,112109,Miscellaneous liquors,tls,1261.27889975462
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),C,112109,Miscellaneous liquors,tls,0
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),C,112102,Malt liquors,tls,279151.567143398
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),C,112102,Malt liquors,tls,165519.859421346
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),C,112102,Malt liquors,tls,0
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),C,112101,Refined sake,tls,0
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),C,112101,Refined sake,tls,0
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),C,112101,Refined sake,tls,0
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),C,112103,Whiskey and brandy,tls,0
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),C,112103,Whiskey and brandy,tls,0
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),C,112103,Whiskey and brandy,tls,0
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),C,111101,Meat,tls,168304.895946987
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),C,111201,Processed meat products,tls,13242.518482407
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),C,111202,Bottled or canned meat products,tls,763.590474465701
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),C,111101,Meat,tls,125264.881495442
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),C,111101,Meat,tls,76829.9720894112
+JPN,2011,COMBINED-GLORIA-FABIOv2 (disagg.),C,111203,Dairy farm products,tls,0
+JPN,2015,COMBINED-GLORIA-FABIOv2 (disagg.),C,111102,Dairy farm products,tls,0
+JPN,2020,COMBINED-GLORIA-FABIOv2 (disagg.),C,111102,Dairy farm products,tls,0
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),A,011609,Miscellaneous inedible crops,wages,68620883.3312488
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),A,011609,Miscellaneous inedible crops,wages,47247908.1006105
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),A,011609,Miscellaneous inedible crops,wages,39996206.6580584
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),A,011502,Crops for beverages,wages,417176.597864962
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),A,011502,Crops for beverages,wages,474554.936389154
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),A,011502,Crops for beverages,wages,7728586.04293068
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),A,012102,Beef cattle,wages,25344164.4131396
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),A,012102,Beef cattle,wages,27077362.2054767
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),A,012102,Beef cattle,wages,29249592.7705392
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),A,012109,Miscellaneous livestock,wages,656016.674427787
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),A,012109,Miscellaneous livestock,wages,289819.300907483
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),A,012109,Miscellaneous livestock,wages,505233.192260274
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),A,012103,Hogs,wages,1894137856.27263
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),A,012103,Hogs,wages,2149544415.06674
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),A,012103,Hogs,wages,2480775646.7954
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),A,011601,Feed and forage crops,wages,6548933.13908202
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),A,011601,Feed and forage crops,wages,39570618.3436796
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),A,011601,Feed and forage crops,wages,0
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),A,012105,Chickens,wages,198166025.882259
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),A,012105,Chickens,wages,155794455.467632
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),A,012105,Chickens,wages,262397971.321488
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),A,011102,"Wheat, barley and the like",wages,64109754.5334899
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),A,011102,"Wheat, barley and the like",wages,44720875.9584265
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),A,011102,"Wheat, barley and the like",wages,61613872.0939054
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),A,011509,Miscellaneous edible crops,wages,1843270.93913801
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),A,011509,Miscellaneous edible crops,wages,4427200.43058547
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),A,011509,Miscellaneous edible crops,wages,2601644.17672848
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),A,011201,Potatoes and sweet potatoes,wages,710893796.949452
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),A,011201,Potatoes and sweet potatoes,wages,523701953.331881
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),A,011201,Potatoes and sweet potatoes,wages,579255022.898815
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),A,011501,Sugar crops,wages,64687306.6826775
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),A,011501,Sugar crops,wages,101966920.868513
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),A,011501,Sugar crops,wages,68274887.8818078
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),A,011202,Pulses,wages,31433968.0626788
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),A,011202,Pulses,wages,35464591.3386228
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),A,011202,Pulses,wages,36548131.913813
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),A,011401,Fruits,wages,102955074.745766
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),A,011401,Fruits,wages,119562809.327784
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),A,011401,Fruits,wages,118732776.108009
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),A,011301,Vegetables (outdoor),wages,8426.50041861966
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),A,011302,Vegetables (under facilities),wages,3956.33299879272
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),A,011301,Vegetables (outdoor),wages,0
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),A,011302,Vegetables (under facilities),wages,0
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),A,011301,Vegetables,wages,5873336.67175613
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),A,012104,Hen eggs,wages,0
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),A,012104,Hen eggs,wages,0
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),A,012104,Hen eggs,wages,0
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),A,011101,Rice,wages,1324584622.24692
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),A,011101,Rice,wages,1509592456.06348
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),A,011101,Rice,wages,1563147092.7097
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),A,012101,Dairy cattle farming,wages,0
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),A,012101,Dairy cattle farming,wages,0
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),A,012101,Dairy cattle farming,wages,0
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),A,017101,Marine fishery,wages,0
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),A,017102,Marine aquaculture,wages,0
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),A,017201,Inland water fishery,wages,0
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),A,017202,Inland water aquaculture,wages,0
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),A,017101,Marine fishery,wages,0
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),A,017102,Marine aquaculture,wages,0
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),A,017201,Inland water fishery,wages,0
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),A,017202,Inland water aquaculture,wages,0
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),A,017101,Marine fishery,wages,0
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),A,017102,Marine aquaculture,wages,0
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),A,017201,Inland water fishery,wages,0
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),A,017202,Inland water aquaculture,wages,0
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),A,011609,Miscellaneous inedible crops,capital,99865543.9424352
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),A,011609,Miscellaneous inedible crops,capital,78856158.5525431
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),A,011609,Miscellaneous inedible crops,capital,58240778.5752866
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),A,011502,Crops for beverages,capital,1013373.75407523
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),A,011502,Crops for beverages,capital,1070043.63552045
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),A,011502,Crops for beverages,capital,5295036.67182564
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),A,012102,Beef cattle,capital,58442718.4285052
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),A,012102,Beef cattle,capital,58351079.6351464
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),A,012102,Beef cattle,capital,56385265.9028261
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),A,012109,Miscellaneous livestock,capital,2703169.59529047
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),A,012109,Miscellaneous livestock,capital,1075003.36206552
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),A,012109,Miscellaneous livestock,capital,1849489.59534507
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),A,012103,Hogs,capital,9217036.60366045
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),A,012103,Hogs,capital,9051952.23784293
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),A,012103,Hogs,capital,9382869.85284111
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),A,011601,Feed and forage crops,capital,15908171.7294396
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),A,011601,Feed and forage crops,capital,89225261.5354546
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),A,011601,Feed and forage crops,capital,0
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),A,012105,Chickens,capital,317821983.071469
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),A,012105,Chickens,capital,189731110.506995
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),A,012105,Chickens,capital,283469720.481357
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),A,011102,"Wheat, barley and the like",capital,278816602.424903
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),A,011102,"Wheat, barley and the like",capital,194701669.377624
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),A,011102,"Wheat, barley and the like",capital,241332970.656659
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),A,011509,Miscellaneous edible crops,capital,19149559.6229311
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),A,011509,Miscellaneous edible crops,capital,25014770.5866976
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),A,011509,Miscellaneous edible crops,capital,25296596.3582108
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),A,011201,Potatoes and sweet potatoes,capital,1590860896.52053
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),A,011201,Potatoes and sweet potatoes,capital,1180862107.00139
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),A,011201,Potatoes and sweet potatoes,capital,1159146041.55881
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),A,011501,Sugar crops,capital,242536694.53721
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),A,011501,Sugar crops,capital,143160088.715251
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),A,011501,Sugar crops,capital,226261783.671892
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),A,011202,Pulses,capital,120157038.704543
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),A,011202,Pulses,capital,124160393.549796
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),A,011202,Pulses,capital,113801209.21002
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),A,011401,Fruits,capital,150611127.076332
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),A,011401,Fruits,capital,154991842.354501
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),A,011401,Fruits,capital,140218476.189379
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),A,011301,Vegetables (outdoor),capital,28629.7696721662
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),A,011302,Vegetables (under facilities),capital,13441.9862190407
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),A,011301,Vegetables (outdoor),capital,0
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),A,011302,Vegetables (under facilities),capital,0
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),A,011301,Vegetables,capital,17909085.7948242
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),A,012104,Hen eggs,capital,0
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),A,012104,Hen eggs,capital,0
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),A,012104,Hen eggs,capital,0
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),A,011101,Rice,capital,7726662409.95122
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),A,011101,Rice,capital,7925877517.52066
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),A,011101,Rice,capital,7603788811.05327
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),A,012101,Dairy cattle farming,capital,0
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),A,012101,Dairy cattle farming,capital,0
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),A,012101,Dairy cattle farming,capital,0
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),A,017101,Marine fishery,capital,0
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),A,017102,Marine aquaculture,capital,0
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),A,017201,Inland water fishery,capital,0
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),A,017202,Inland water aquaculture,capital,0
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),A,017101,Marine fishery,capital,0
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),A,017102,Marine aquaculture,capital,0
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),A,017201,Inland water fishery,capital,0
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),A,017202,Inland water aquaculture,capital,0
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),A,017101,Marine fishery,capital,0
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),A,017102,Marine aquaculture,capital,0
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),A,017201,Inland water fishery,capital,0
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),A,017202,Inland water aquaculture,capital,0
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),A,011609,Miscellaneous inedible crops,tls,6699725.80799729
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),A,011609,Miscellaneous inedible crops,tls,3316634.05254094
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),A,011609,Miscellaneous inedible crops,tls,1899578.70267269
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),A,011502,Crops for beverages,tls,44713.3914350544
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),A,011502,Crops for beverages,tls,33312.0581439949
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),A,011502,Crops for beverages,tls,336384.586996851
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),A,012102,Beef cattle,tls,-2355618.96017716
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),A,012102,Beef cattle,tls,-1203918.24483192
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),A,012102,Beef cattle,tls,-704185.304605683
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),A,012109,Miscellaneous livestock,tls,-141545.939346881
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),A,012109,Miscellaneous livestock,tls,-129170.350810902
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),A,012109,Miscellaneous livestock,tls,-119750.794729361
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),A,012103,Hogs,tls,2590626.59535796
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),A,012103,Hogs,tls,2544226.43802379
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),A,012103,Hogs,tls,2637237.24086103
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),A,011601,Feed and forage crops,tls,701920.990842733
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),A,011601,Feed and forage crops,tls,2777715.78795154
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),A,011601,Feed and forage crops,tls,0
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),A,012105,Chickens,tls,21352356.766555
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),A,012105,Chickens,tls,9014707.62396418
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),A,012105,Chickens,tls,10272677.3346543
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),A,011102,"Wheat, barley and the like",tls,-2496751.40277693
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),A,011102,"Wheat, barley and the like",tls,-2348071.64748564
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),A,011102,"Wheat, barley and the like",tls,-2170471.39802987
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),A,011509,Miscellaneous edible crops,tls,-565016.365145911
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),A,011509,Miscellaneous edible crops,tls,-320734.432791251
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),A,011509,Miscellaneous edible crops,tls,-387789.910758373
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),A,011201,Potatoes and sweet potatoes,tls,53372069.2621809
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),A,011201,Potatoes and sweet potatoes,tls,36427178.1619623
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),A,011201,Potatoes and sweet potatoes,tls,27511122.1293624
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),A,011501,Sugar crops,tls,14373551.5747849
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),A,011501,Sugar crops,tls,11018626.4842627
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),A,011501,Sugar crops,tls,5785405.84465957
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),A,011202,Pulses,tls,71704.3149545891
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),A,011202,Pulses,tls,65778.6855569741
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),A,011202,Pulses,tls,60174.6839169473
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),A,011401,Fruits,tls,2706832.62388583
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),A,011401,Fruits,tls,2798949.61125261
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),A,011401,Fruits,tls,2534371.02844168
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),A,011301,Vegetables (outdoor),tls,494.021057588687
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),A,011302,Vegetables (under facilities),tls,231.948224664868
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),A,011301,Vegetables (outdoor),tls,0
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),A,011302,Vegetables (under facilities),tls,0
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),A,011301,Vegetables,tls,360986.090396809
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),A,012104,Hen eggs,tls,0
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),A,012104,Hen eggs,tls,0
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),A,012104,Hen eggs,tls,0
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),A,011101,Rice,tls,365814289.260949
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),A,011101,Rice,tls,74080887.6228698
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),A,011101,Rice,tls,206132142.186233
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),A,012101,Dairy cattle farming,tls,0
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),A,012101,Dairy cattle farming,tls,0
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),A,012101,Dairy cattle farming,tls,0
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),A,017101,Marine fishery,tls,0
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),A,017102,Marine aquaculture,tls,0
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),A,017201,Inland water fishery,tls,0
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),A,017202,Inland water aquaculture,tls,0
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),A,017101,Marine fishery,tls,0
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),A,017102,Marine aquaculture,tls,0
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),A,017201,Inland water fishery,tls,0
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),A,017202,Inland water aquaculture,tls,0
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),A,017101,Marine fishery,tls,0
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),A,017102,Marine aquaculture,tls,0
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),A,017201,Inland water fishery,tls,0
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),A,017202,Inland water aquaculture,tls,0
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),C,111701,Sugar,wages,292029907.300002
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),C,111601,Sugar,wages,215724825.386975
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),C,111601,Sugar,wages,105592925.807718
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),C,111703,"Dextrose, syrup and isomerized sugar",wages,2274304.7807428
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),C,111603,"Dextrose, syrup and isomerized sugar",wages,2547971.50001818
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),C,111603,"Dextrose, syrup and isomerized sugar",wages,1812702.56221065
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),C,111704,"Animal oil and fats, vegetable oil and meal",wages,299431.111827649
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),C,111604,"Animal oil and fats, vegetable oil and meal",wages,731913.041584178
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),C,111604,"Animal oil and fats, vegetable oil and meal",wages,1084493.36786938
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),C,111602,Starch,wages,44822.0675588792
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),C,111602,Starch,wages,40927.713091973
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),C,113101,Feeds,wages,0
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),C,113101,Feeds,wages,0
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),C,113101,Feeds,wages,0
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),C,112901,Tea and roasted coffee,wages,0
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),C,112901,Tea and roasted coffee,wages,0
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),C,112901,Tea and roasted coffee,wages,0
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),C,111503,Confectionery,wages,0
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),C,111403,Confectionery,wages,0
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),C,111403,Confectionery,wages,0
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),C,112109,Miscellaneous liquors,wages,294229.963949613
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),C,112109,Miscellaneous liquors,wages,83079.3885034647
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),C,112109,Miscellaneous liquors,wages,0
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),C,112102,Malt liquors,wages,9790126.49732177
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),C,112102,Malt liquors,wages,10902655.0024583
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),C,112102,Malt liquors,wages,0
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),C,112101,Refined sake,wages,0
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),C,112101,Refined sake,wages,0
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),C,112101,Refined sake,wages,0
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),C,112103,Whiskey and brandy,wages,0
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),C,112103,Whiskey and brandy,wages,0
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),C,112103,Whiskey and brandy,wages,0
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),C,111101,Meat,wages,6348082.28099125
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),C,111201,Processed meat products,wages,381775.935481747
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),C,111202,Bottled or canned meat products,wages,22013.9747663094
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),C,111101,Meat,wages,7984119.32715767
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),C,111101,Meat,wages,4918181.41030703
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),C,111203,Dairy farm products,wages,0
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),C,111102,Dairy farm products,wages,0
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),C,111102,Dairy farm products,wages,0
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),C,111701,Sugar,capital,132683903.70832
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),C,111601,Sugar,capital,132282371.831798
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),C,111601,Sugar,capital,45523309.2526653
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),C,111703,"Dextrose, syrup and isomerized sugar",capital,3004416.38102057
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),C,111603,"Dextrose, syrup and isomerized sugar",capital,1562415.047863
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),C,111603,"Dextrose, syrup and isomerized sugar",capital,781493.823486636
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),C,111704,"Animal oil and fats, vegetable oil and meal",capital,158191.653666592
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),C,111604,"Animal oil and fats, vegetable oil and meal",capital,404689.126058422
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),C,111604,"Animal oil and fats, vegetable oil and meal",capital,423991.028085994
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),C,111602,Starch,capital,24783.0033322998
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),C,111602,Starch,capital,16001.0044000234
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),C,113101,Feeds,capital,0
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),C,113101,Feeds,capital,0
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),C,113101,Feeds,capital,0
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),C,112901,Tea and roasted coffee,capital,0
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),C,112901,Tea and roasted coffee,capital,0
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),C,112901,Tea and roasted coffee,capital,0
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),C,111503,Confectionery,capital,0
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),C,111403,Confectionery,capital,0
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),C,111403,Confectionery,capital,0
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),C,112109,Miscellaneous liquors,capital,198444.675782101
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),C,112109,Miscellaneous liquors,capital,85186.0071649996
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),C,112109,Miscellaneous liquors,capital,0
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),C,112102,Malt liquors,capital,12006628.4463072
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),C,112102,Malt liquors,capital,24237312.225771
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),C,112102,Malt liquors,capital,0
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),C,112101,Refined sake,capital,0
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),C,112101,Refined sake,capital,0
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),C,112101,Refined sake,capital,0
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),C,112103,Whiskey and brandy,capital,0
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),C,112103,Whiskey and brandy,capital,0
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),C,112103,Whiskey and brandy,capital,0
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),C,111101,Meat,capital,4087790.64715924
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),C,111201,Processed meat products,capital,276845.399034637
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),C,111202,Bottled or canned meat products,capital,15963.4672123245
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),C,111101,Meat,capital,5828756.72796484
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),C,111101,Meat,capital,2650630.86490144
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),C,111203,Dairy farm products,capital,0
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),C,111102,Dairy farm products,capital,0
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),C,111102,Dairy farm products,capital,0
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),C,111701,Sugar,tls,484460.26371158
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),C,111601,Sugar,tls,589797.56950398
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),C,111601,Sugar,tls,566983.481384061
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),C,111703,"Dextrose, syrup and isomerized sugar",tls,-182684.449210516
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),C,111603,"Dextrose, syrup and isomerized sugar",tls,-219221.339052619
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),C,111603,"Dextrose, syrup and isomerized sugar",tls,-175377.071242095
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),C,111704,"Animal oil and fats, vegetable oil and meal",tls,12560.5048962052
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),C,111604,"Animal oil and fats, vegetable oil and meal",tls,34171.265422228
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),C,111604,"Animal oil and fats, vegetable oil and meal",tls,43506.6554220981
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),C,111602,Starch,tls,2092.63489008529
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),C,111602,Starch,tls,1641.89838634533
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),C,113101,Feeds,tls,0
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),C,113101,Feeds,tls,0
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),C,113101,Feeds,tls,0
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),C,112901,Tea and roasted coffee,tls,0
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),C,112901,Tea and roasted coffee,tls,0
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),C,112901,Tea and roasted coffee,tls,0
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),C,111503,Confectionery,tls,0
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),C,111403,Confectionery,tls,0
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),C,111403,Confectionery,tls,0
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),C,112109,Miscellaneous liquors,tls,57372.1844807291
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),C,112109,Miscellaneous liquors,tls,20337.9450270565
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),C,112109,Miscellaneous liquors,tls,0
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),C,112102,Malt liquors,tls,1908986.20913472
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),C,112102,Malt liquors,tls,2668984.47476792
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),C,112102,Malt liquors,tls,0
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),C,112101,Refined sake,tls,0
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),C,112101,Refined sake,tls,0
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),C,112101,Refined sake,tls,0
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),C,112103,Whiskey and brandy,tls,0
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),C,112103,Whiskey and brandy,tls,0
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),C,112103,Whiskey and brandy,tls,0
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),C,111101,Meat,tls,10856.1313687161
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),C,111201,Processed meat products,tls,305.677716239893
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),C,111202,Bottled or canned meat products,tls,17.6259971007257
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),C,111101,Meat,tls,14363.3701965558
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),C,111101,Meat,tls,5752.00042639328
+JPN,2011,EXIOBASE-FABIOv2 (disagg.),C,111203,Dairy farm products,tls,0
+JPN,2015,EXIOBASE-FABIOv2 (disagg.),C,111102,Dairy farm products,tls,0
+JPN,2020,EXIOBASE-FABIOv2 (disagg.),C,111102,Dairy farm products,tls,0
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011609,Miscellaneous inedible crops,wages,68620883.3312488
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011609,Miscellaneous inedible crops,wages,47247908.1006105
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011609,Miscellaneous inedible crops,wages,39996206.6580584
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011502,Crops for beverages,wages,417176.597864962
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011502,Crops for beverages,wages,474554.936389154
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011502,Crops for beverages,wages,7728586.04293068
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,012102,Beef cattle,wages,25344164.4131396
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,012102,Beef cattle,wages,27077362.2054767
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,012102,Beef cattle,wages,29249592.7705392
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,012109,Miscellaneous livestock,wages,656016.674427787
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,012109,Miscellaneous livestock,wages,289819.300907483
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,012109,Miscellaneous livestock,wages,505233.192260274
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,012103,Hogs,wages,1894137856.27263
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,012103,Hogs,wages,2149544415.06674
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,012103,Hogs,wages,2480775646.7954
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011601,Feed and forage crops,wages,6548933.13908202
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011601,Feed and forage crops,wages,39570618.3436796
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011601,Feed and forage crops,wages,0
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,012105,Chickens,wages,198166025.882259
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,012105,Chickens,wages,155794455.467632
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,012105,Chickens,wages,262397971.321488
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011102,"Wheat, barley and the like",wages,64109754.5334899
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011102,"Wheat, barley and the like",wages,44720875.9584265
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011102,"Wheat, barley and the like",wages,61613872.0939054
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011509,Miscellaneous edible crops,wages,1843270.93913801
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011509,Miscellaneous edible crops,wages,4427200.43058547
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011509,Miscellaneous edible crops,wages,2601644.17672848
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011201,Potatoes and sweet potatoes,wages,710893796.949452
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011201,Potatoes and sweet potatoes,wages,523701953.331881
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011201,Potatoes and sweet potatoes,wages,579255022.898815
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011501,Sugar crops,wages,64687306.6826775
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011501,Sugar crops,wages,101966920.868513
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011501,Sugar crops,wages,68274887.8818078
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011202,Pulses,wages,31433968.0626788
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011202,Pulses,wages,35464591.3386228
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011202,Pulses,wages,36548131.913813
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011401,Fruits,wages,102955074.745766
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011401,Fruits,wages,119562809.327784
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011401,Fruits,wages,118732776.108009
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011301,Vegetables (outdoor),wages,8426.50041861966
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011302,Vegetables (under facilities),wages,3956.33299879272
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011301,Vegetables (outdoor),wages,0
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011302,Vegetables (under facilities),wages,0
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011301,Vegetables,wages,5873336.67175613
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,012104,Hen eggs,wages,0
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,012104,Hen eggs,wages,0
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,012104,Hen eggs,wages,0
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011101,Rice,wages,1324584622.24692
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011101,Rice,wages,1509592456.06348
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011101,Rice,wages,1563147092.7097
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,012101,Dairy cattle farming,wages,0
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,012101,Dairy cattle farming,wages,0
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,012101,Dairy cattle farming,wages,0
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,017101,Marine fishery,wages,0
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,017102,Marine aquaculture,wages,0
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,017201,Inland water fishery,wages,0
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,017202,Inland water aquaculture,wages,0
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,017101,Marine fishery,wages,0
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,017102,Marine aquaculture,wages,0
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,017201,Inland water fishery,wages,0
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,017202,Inland water aquaculture,wages,0
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,017101,Marine fishery,wages,0
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,017102,Marine aquaculture,wages,0
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,017201,Inland water fishery,wages,0
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,017202,Inland water aquaculture,wages,0
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011609,Miscellaneous inedible crops,capital,99865543.9424352
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011609,Miscellaneous inedible crops,capital,78856158.5525431
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011609,Miscellaneous inedible crops,capital,58240778.5752866
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011502,Crops for beverages,capital,1013373.75407523
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011502,Crops for beverages,capital,1070043.63552045
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011502,Crops for beverages,capital,5295036.67182564
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,012102,Beef cattle,capital,58442718.4285052
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,012102,Beef cattle,capital,58351079.6351464
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,012102,Beef cattle,capital,56385265.9028261
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,012109,Miscellaneous livestock,capital,2703169.59529047
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,012109,Miscellaneous livestock,capital,1075003.36206552
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,012109,Miscellaneous livestock,capital,1849489.59534507
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,012103,Hogs,capital,9217036.60366045
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,012103,Hogs,capital,9051952.23784293
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,012103,Hogs,capital,9382869.85284111
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011601,Feed and forage crops,capital,15908171.7294396
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011601,Feed and forage crops,capital,89225261.5354546
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011601,Feed and forage crops,capital,0
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,012105,Chickens,capital,317821983.071469
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,012105,Chickens,capital,189731110.506995
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,012105,Chickens,capital,283469720.481357
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011102,"Wheat, barley and the like",capital,278816602.424903
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011102,"Wheat, barley and the like",capital,194701669.377624
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011102,"Wheat, barley and the like",capital,241332970.656659
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011509,Miscellaneous edible crops,capital,19149559.6229311
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011509,Miscellaneous edible crops,capital,25014770.5866976
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011509,Miscellaneous edible crops,capital,25296596.3582108
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011201,Potatoes and sweet potatoes,capital,1590860896.52053
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011201,Potatoes and sweet potatoes,capital,1180862107.00139
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011201,Potatoes and sweet potatoes,capital,1159146041.55881
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011501,Sugar crops,capital,242536694.53721
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011501,Sugar crops,capital,143160088.715251
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011501,Sugar crops,capital,226261783.671892
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011202,Pulses,capital,120157038.704543
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011202,Pulses,capital,124160393.549796
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011202,Pulses,capital,113801209.21002
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011401,Fruits,capital,150611127.076332
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011401,Fruits,capital,154991842.354501
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011401,Fruits,capital,140218476.189379
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011301,Vegetables (outdoor),capital,28629.7696721662
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011302,Vegetables (under facilities),capital,13441.9862190407
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011301,Vegetables (outdoor),capital,0
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011302,Vegetables (under facilities),capital,0
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011301,Vegetables,capital,17909085.7948242
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,012104,Hen eggs,capital,0
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,012104,Hen eggs,capital,0
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,012104,Hen eggs,capital,0
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011101,Rice,capital,7726662409.95122
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011101,Rice,capital,7925877517.52066
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011101,Rice,capital,7603788811.05327
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,012101,Dairy cattle farming,capital,0
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,012101,Dairy cattle farming,capital,0
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,012101,Dairy cattle farming,capital,0
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,017101,Marine fishery,capital,0
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,017102,Marine aquaculture,capital,0
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,017201,Inland water fishery,capital,0
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,017202,Inland water aquaculture,capital,0
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,017101,Marine fishery,capital,0
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,017102,Marine aquaculture,capital,0
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,017201,Inland water fishery,capital,0
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,017202,Inland water aquaculture,capital,0
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,017101,Marine fishery,capital,0
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,017102,Marine aquaculture,capital,0
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,017201,Inland water fishery,capital,0
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,017202,Inland water aquaculture,capital,0
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011609,Miscellaneous inedible crops,tls,6699725.80799729
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011609,Miscellaneous inedible crops,tls,3316634.05254094
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011609,Miscellaneous inedible crops,tls,1899578.70267269
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011502,Crops for beverages,tls,44713.3914350544
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011502,Crops for beverages,tls,33312.0581439949
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011502,Crops for beverages,tls,336384.586996851
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,012102,Beef cattle,tls,-2355618.96017716
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,012102,Beef cattle,tls,-1203918.24483192
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,012102,Beef cattle,tls,-704185.304605683
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,012109,Miscellaneous livestock,tls,-141545.939346881
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,012109,Miscellaneous livestock,tls,-129170.350810902
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,012109,Miscellaneous livestock,tls,-119750.794729361
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,012103,Hogs,tls,2590626.59535796
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,012103,Hogs,tls,2544226.43802379
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,012103,Hogs,tls,2637237.24086103
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011601,Feed and forage crops,tls,701920.990842733
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011601,Feed and forage crops,tls,2777715.78795154
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011601,Feed and forage crops,tls,0
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,012105,Chickens,tls,21352356.766555
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,012105,Chickens,tls,9014707.62396418
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,012105,Chickens,tls,10272677.3346543
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011102,"Wheat, barley and the like",tls,-2496751.40277693
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011102,"Wheat, barley and the like",tls,-2348071.64748564
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011102,"Wheat, barley and the like",tls,-2170471.39802987
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011509,Miscellaneous edible crops,tls,-565016.365145911
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011509,Miscellaneous edible crops,tls,-320734.432791251
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011509,Miscellaneous edible crops,tls,-387789.910758373
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011201,Potatoes and sweet potatoes,tls,53372069.2621809
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011201,Potatoes and sweet potatoes,tls,36427178.1619623
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011201,Potatoes and sweet potatoes,tls,27511122.1293624
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011501,Sugar crops,tls,14373551.5747849
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011501,Sugar crops,tls,11018626.4842627
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011501,Sugar crops,tls,5785405.84465957
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011202,Pulses,tls,71704.3149545891
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011202,Pulses,tls,65778.6855569741
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011202,Pulses,tls,60174.6839169473
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011401,Fruits,tls,2706832.62388583
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011401,Fruits,tls,2798949.61125261
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011401,Fruits,tls,2534371.02844168
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011301,Vegetables (outdoor),tls,494.021057588687
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011302,Vegetables (under facilities),tls,231.948224664868
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011301,Vegetables (outdoor),tls,0
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011302,Vegetables (under facilities),tls,0
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011301,Vegetables,tls,360986.090396809
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,012104,Hen eggs,tls,0
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,012104,Hen eggs,tls,0
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,012104,Hen eggs,tls,0
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011101,Rice,tls,365814289.260949
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011101,Rice,tls,74080887.6228698
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,011101,Rice,tls,206132142.186233
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,012101,Dairy cattle farming,tls,0
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,012101,Dairy cattle farming,tls,0
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,012101,Dairy cattle farming,tls,0
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,017101,Marine fishery,tls,0
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,017102,Marine aquaculture,tls,0
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,017201,Inland water fishery,tls,0
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,017202,Inland water aquaculture,tls,0
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,017101,Marine fishery,tls,0
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,017102,Marine aquaculture,tls,0
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,017201,Inland water fishery,tls,0
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,017202,Inland water aquaculture,tls,0
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,017101,Marine fishery,tls,0
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,017102,Marine aquaculture,tls,0
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,017201,Inland water fishery,tls,0
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,017202,Inland water aquaculture,tls,0
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,111701,Sugar,wages,292029907.300002
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,111601,Sugar,wages,215724825.386975
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,111601,Sugar,wages,105592925.807718
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,111703,"Dextrose, syrup and isomerized sugar",wages,2274304.7807428
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,111603,"Dextrose, syrup and isomerized sugar",wages,2547971.50001818
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,111603,"Dextrose, syrup and isomerized sugar",wages,1812702.56221065
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,111704,"Animal oil and fats, vegetable oil and meal",wages,299431.111827649
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,111604,"Animal oil and fats, vegetable oil and meal",wages,731913.041584178
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,111604,"Animal oil and fats, vegetable oil and meal",wages,1084493.36786938
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,111602,Starch,wages,44822.0675588792
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,111602,Starch,wages,40927.713091973
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,113101,Feeds,wages,0
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,113101,Feeds,wages,0
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,113101,Feeds,wages,0
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,112901,Tea and roasted coffee,wages,0
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,112901,Tea and roasted coffee,wages,0
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,112901,Tea and roasted coffee,wages,0
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,111503,Confectionery,wages,0
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,111403,Confectionery,wages,0
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,111403,Confectionery,wages,0
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,112109,Miscellaneous liquors,wages,294229.963949613
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,112109,Miscellaneous liquors,wages,83079.3885034647
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,112109,Miscellaneous liquors,wages,0
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,112102,Malt liquors,wages,9790126.49732177
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,112102,Malt liquors,wages,10902655.0024583
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,112102,Malt liquors,wages,0
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,112101,Refined sake,wages,0
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,112101,Refined sake,wages,0
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,112101,Refined sake,wages,0
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,112103,Whiskey and brandy,wages,0
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,112103,Whiskey and brandy,wages,0
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,112103,Whiskey and brandy,wages,0
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,111101,Meat,wages,6348082.28099125
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,111201,Processed meat products,wages,381775.935481747
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,111202,Bottled or canned meat products,wages,22013.9747663094
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,111101,Meat,wages,7984119.32715767
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,111101,Meat,wages,4918181.41030703
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,111203,Dairy farm products,wages,0
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,111102,Dairy farm products,wages,0
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,111102,Dairy farm products,wages,0
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,111701,Sugar,capital,132683903.70832
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,111601,Sugar,capital,132282371.831798
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,111601,Sugar,capital,45523309.2526653
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,111703,"Dextrose, syrup and isomerized sugar",capital,3004416.38102057
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,111603,"Dextrose, syrup and isomerized sugar",capital,1562415.047863
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,111603,"Dextrose, syrup and isomerized sugar",capital,781493.823486636
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,111704,"Animal oil and fats, vegetable oil and meal",capital,158191.653666592
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,111604,"Animal oil and fats, vegetable oil and meal",capital,404689.126058422
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,111604,"Animal oil and fats, vegetable oil and meal",capital,423991.028085994
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,111602,Starch,capital,24783.0033322998
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,111602,Starch,capital,16001.0044000234
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,113101,Feeds,capital,0
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,113101,Feeds,capital,0
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,113101,Feeds,capital,0
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,112901,Tea and roasted coffee,capital,0
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,112901,Tea and roasted coffee,capital,0
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,112901,Tea and roasted coffee,capital,0
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,111503,Confectionery,capital,0
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,111403,Confectionery,capital,0
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,111403,Confectionery,capital,0
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,112109,Miscellaneous liquors,capital,198444.675782101
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,112109,Miscellaneous liquors,capital,85186.0071649996
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,112109,Miscellaneous liquors,capital,0
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,112102,Malt liquors,capital,12006628.4463072
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,112102,Malt liquors,capital,24237312.225771
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,112102,Malt liquors,capital,0
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,112101,Refined sake,capital,0
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,112101,Refined sake,capital,0
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,112101,Refined sake,capital,0
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,112103,Whiskey and brandy,capital,0
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,112103,Whiskey and brandy,capital,0
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,112103,Whiskey and brandy,capital,0
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,111101,Meat,capital,4087790.64715924
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,111201,Processed meat products,capital,276845.399034637
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,111202,Bottled or canned meat products,capital,15963.4672123245
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,111101,Meat,capital,5828756.72796484
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,111101,Meat,capital,2650630.86490144
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,111203,Dairy farm products,capital,0
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,111102,Dairy farm products,capital,0
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,111102,Dairy farm products,capital,0
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,111701,Sugar,tls,484460.26371158
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,111601,Sugar,tls,589797.56950398
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,111601,Sugar,tls,566983.481384061
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,111703,"Dextrose, syrup and isomerized sugar",tls,-182684.449210516
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,111603,"Dextrose, syrup and isomerized sugar",tls,-219221.339052619
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,111603,"Dextrose, syrup and isomerized sugar",tls,-175377.071242095
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,111704,"Animal oil and fats, vegetable oil and meal",tls,12560.5048962052
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,111604,"Animal oil and fats, vegetable oil and meal",tls,34171.265422228
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,111604,"Animal oil and fats, vegetable oil and meal",tls,43506.6554220981
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,111602,Starch,tls,2092.63489008529
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,111602,Starch,tls,1641.89838634533
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,113101,Feeds,tls,0
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,113101,Feeds,tls,0
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,113101,Feeds,tls,0
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,112901,Tea and roasted coffee,tls,0
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,112901,Tea and roasted coffee,tls,0
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,112901,Tea and roasted coffee,tls,0
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,111503,Confectionery,tls,0
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,111403,Confectionery,tls,0
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,111403,Confectionery,tls,0
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,112109,Miscellaneous liquors,tls,57372.1844807291
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,112109,Miscellaneous liquors,tls,20337.9450270565
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,112109,Miscellaneous liquors,tls,0
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,112102,Malt liquors,tls,1908986.20913472
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,112102,Malt liquors,tls,2668984.47476792
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,112102,Malt liquors,tls,0
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,112101,Refined sake,tls,0
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,112101,Refined sake,tls,0
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,112101,Refined sake,tls,0
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,112103,Whiskey and brandy,tls,0
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,112103,Whiskey and brandy,tls,0
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,112103,Whiskey and brandy,tls,0
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,111101,Meat,tls,10856.1313687161
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,111201,Processed meat products,tls,305.677716239893
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,111202,Bottled or canned meat products,tls,17.6259971007257
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,111101,Meat,tls,14363.3701965558
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,111101,Meat,tls,5752.00042639328
+JPN,2011,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,111203,Dairy farm products,tls,0
+JPN,2015,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,111102,Dairy farm products,tls,0
+JPN,2020,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,111102,Dairy farm products,tls,0

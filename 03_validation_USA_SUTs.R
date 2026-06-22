@@ -91,6 +91,10 @@
 #   output/usa_sut_validation/by_country/USA_tls.svg
 #       — every figure carries the OECD A01+A03 reference line for its measure
 #       (total or the matching strand), if the OECD export is available.
+#   output/usa_sut_validation/by_country/USA_panel4.svg
+#       the SAME four measures combined into ONE 2x2 panel, with a single year
+#       (PANEL_YEAR) per panel so all four fit, a shared industry legend, and
+#       the per-measure OECD reference line.  The four figures above are kept.
 #   output/usa_sut_validation/usa_sut_vs_fabio_comparison.csv
 #       tidy long table behind the figures
 #       (iso3c, year, source, isic, usa_sut_code, category, strand, value_usd)
@@ -243,6 +247,11 @@ ISO3 <- "USA"
 # Measures plotted, one figure each (same as script 02).
 STRANDS  <- c("wages", "capital", "tls")
 MEASURES <- c("total", STRANDS)
+
+# Single year shown in every panel of the combined 2x2 figure (USA_panel4.svg);
+# must be one of YEARS.  The four single-measure figures keep BOTH years; only
+# the combined panel collapses to one year so all four measures fit at once.
+PANEL_YEAR <- 2017L
 
 MEASURE_TITLE <- c(total   = "value-added",
                    wages   = "wages",
@@ -731,6 +740,127 @@ make_country_chart <- function(iso, dat_iso, measure, bench_specs,
 }
 
 
+# ── Figure: all four measures as ONE 2x2 panel (single year) ─────────────────
+# Same stacking / colours / ISIC-C black outlines as make_country_chart(), but
+# the year facet is dropped (one chosen year, PANEL_YEAR) and the four MEASURES
+# become the facets, so the four single-measure figures also exist combined in
+# one panel.  One shared industry legend; each measure keeps its own y-scale
+# (free_y) because the magnitudes — and the TLS sign — differ.  TOTAL is read
+# from dat_total (strand-summed), the three strands from dat_all.
+make_panel_of_4 <- function(iso, panel_year, dat_total, dat_all,
+                            cat_colors, stack_levels, oecd_bench = NULL) {
+  if (!panel_year %in% YEARS)
+    stop("PANEL_YEAR (", panel_year, ") is not one of the benchmark years: ",
+         paste(YEARS, collapse = ", "))
+  
+  # Capitalised facet labels: "Value-added", "Wages", "Capital", "Taxes ...".
+  measure_label <- vapply(MEASURE_TITLE[MEASURES], function(x)
+    paste0(toupper(substring(x, 1, 1)), substring(x, 2)), character(1))
+  names(measure_label) <- MEASURES
+  
+  # One long table tagged by measure.
+  dat_panel <- rbindlist(list(
+    dat_total[iso3c == iso & year == panel_year][, measure := "total"],
+    dat_all  [iso3c == iso & year == panel_year & strand %in% STRANDS][
+      , measure := strand]
+  ), use.names = TRUE, fill = TRUE)
+  
+  if (!nrow(dat_panel)) {
+    message("[", iso, "/panel4] no rows for year ", panel_year, "; skipping.")
+    return(invisible(NULL))
+  }
+  
+  dat_panel <- dat_panel %>%
+    mutate(
+      source    = factor(source,   levels = SOURCE_LEVELS),
+      isic      = factor(isic,     levels = c("A", "C")),
+      category  = factor(category, levels = names(cat_colors)),
+      stack_grp = factor(paste(isic, category, sep = "|"), levels = stack_levels),
+      measure   = factor(measure,  levels = MEASURES,
+                         labels = measure_label[MEASURES])
+    )
+  
+  # Per-measure OECD reference line — tagged by measure so it lands in its panel.
+  bench_panel <- NULL
+  if (!is.null(oecd_bench)) {
+    bp <- as.data.table(oecd_bench)[iso3c == iso & year == panel_year &
+                                      strand %in% MEASURES & is.finite(bench_usd)]
+    if (nrow(bp)) {
+      bp[, measure := factor(strand, levels = MEASURES,
+                             labels = measure_label[MEASURES])]
+      bench_panel <- bp
+    }
+  }
+  
+  has_neg  <- any(c(dat_panel$value_usd, bench_panel$bench_usd) < 0, na.rm = TRUE)
+  y_expand <- if (has_neg) expansion(mult = c(0.04, 0.04))
+  else          expansion(mult = c(0,    0.04))
+  
+  p <- ggplot(dat_panel, aes(x = source, y = value_usd,
+                             fill = category, colour = isic, group = stack_grp)) +
+    geom_col(width = 0.8, linewidth = 0.35,
+             position = position_stack(reverse = TRUE))
+  
+  if (has_neg)
+    p <- p + geom_hline(yintercept = 0, linewidth = 0.3, colour = "grey70")
+  
+  if (!is.null(bench_panel))
+    p <- p + geom_hline(data = bench_panel, aes(yintercept = bench_usd),
+                        inherit.aes = FALSE, linetype = "solid",
+                        linewidth = 0.5, colour = "black")
+  
+  ref_note <- if (is.null(bench_panel))
+    " (OECD reference unavailable — no reference line.)"
+  else
+    paste0(" Black line = OECD SUT T1600 A01+A03 (agriculture + fishery, ",
+           "current prices, USD) for each measure.")
+  
+  p <- p +
+    facet_wrap(~ measure, nrow = 2, scales = "free_y") +
+    scale_x_discrete(drop = FALSE) +
+    scale_fill_manual(values = cat_colors, name = "US SUT industry", drop = TRUE) +
+    scale_colour_manual(values = c(A = NA, C = "black"), guide = "none",
+                        na.value = NA) +
+    scale_y_continuous(labels = label_number(scale_cut = cut_short_scale()),
+                       expand = y_expand) +
+    labs(
+      title    = sprintf("US SUT vs FABIOv2 — %s (%d)", iso, panel_year),
+      subtitle = paste0(
+        "All four value-added measures for the BEA detail Use (SUT) tables and ",
+        "the GLORIA / COMBINED-GLORIA / EXIOBASE / COMBINED-EXIOBASE FABIOv2 ",
+        "variants disaggregated to BEA industries by US output shares. Bars ",
+        "stacked by industry; ISIC-C (processing) on top and outlined in black, ",
+        "ISIC-A (primary) below. Single year (", panel_year, ") per panel.",
+        ref_note),
+      x = NULL,
+      y = "Value-added components (current US$)"
+    ) +
+    theme_minimal(base_size = 10) +
+    theme(
+      axis.text.x        = element_text(angle = 30, vjust = 1, hjust = 1, size = 8),
+      panel.grid.major.x = element_blank(),
+      panel.spacing      = unit(1, "lines"),
+      strip.text         = element_text(face = "bold"),
+      legend.position    = "bottom",
+      legend.key.size    = unit(0.35, "cm"),
+      legend.text        = element_text(size = 7),
+      plot.title         = element_text(face = "bold")
+    ) +
+    guides(fill = guide_legend(ncol = 4, byrow = TRUE))
+  
+  n_legend_rows <- ceiling(length(cat_colors) / 4)
+  svg_width     <- 14
+  svg_height    <- 11 + 0.25 * n_legend_rows
+  out_file      <- file.path(OUT_DIR_COUNTRY, sprintf("%s_panel4.svg", iso))
+  
+  ggsave(out_file, p, width = svg_width, height = svg_height,
+         limitsize = FALSE, device = "svg")
+  message(sprintf("[%s/panel4] wrote %s  (%.1f x %.1f in, year %d)",
+                  iso, out_file, svg_width, svg_height, panel_year))
+  invisible(out_file)
+}
+
+
 # ============================================================================
 # RUN
 # ============================================================================
@@ -738,6 +868,8 @@ make_country_chart <- function(iso, dat_iso, measure, bench_specs,
 message("Loading concordance ...")
 item_conc_a <- load_item_conc(ITEM_CONC_PATH, "A", "USA_SUT_code", "USA_SUT_item", out_code = "usa_sut_code", out_item = "usa_sut_item", keep_code_class_char = FALSE)
 item_conc_c <- load_item_conc(ITEM_CONC_PATH, "C", "USA_SUT_code", "USA_SUT_item", out_code = "usa_sut_code", out_item = "usa_sut_item", keep_code_class_char = FALSE)
+# ISIC-C keeps only FABIO items not also tagged at ISIC-A (drop double-mapped items).
+item_conc_c <- item_conc_c[!fabio_item_code %in% item_conc_a$fabio_item_code]
 sut_isic    <- build_sut_item_isic(item_conc_a, item_conc_c)
 message(sprintf("  %d ISIC-A and %d ISIC-C item mappings onto %d SUT industries (%d A / %d C).",
                 nrow(item_conc_a), nrow(item_conc_c), nrow(sut_isic),
@@ -794,6 +926,25 @@ if (!is.null(oecd_bench)) {
   message("OECD benchmark -> ", oecd_bench_path)
 }
 
+# Agreement metrics behind the figures, scoring every FABIOv2 source against the
+# RAW US SUT (BEA) reference — the same comparison the thesis text reports, now
+# written out rather than read off the bars.  Three CSVs (see
+# write_reference_metrics() in 00_validation_helpers.R):
+#   usa_sut_by_strand_by_year.csv      per-year aggregate ratios per ISIC level
+#       and measure (total + wages/capital/tls) — the per-year totals and the
+#       per-year strand ratios, TLS kept signed.
+#   usa_sut_item_ratios.csv            the pre-aggregation item frame: one
+#       aggregate ratio per (isic, BEA category, year, source, measure).
+#   metrics_usa_sut_pooled_items.csv   pooled item-level metrics per
+#       (isic, source, measure): med ratio, the three dex dispersions, within-2x.
+# Scored on the two SUT benchmark years that dat_all already carries.
+write_reference_metrics(
+  dat       = dat_all,
+  reference = "US SUT (BEA)",
+  sources   = SOURCE_LEVELS,
+  out_dir   = OUT_DIR,
+  prefix    = "usa_sut")
+
 # Global, stable category palette + stacking order (A combos first, then C,
 # each by descending TOTAL) — same construction as script 02.
 cat_tot    <- dat_total[, .(tot = sum(abs(value_usd), na.rm = TRUE)),
@@ -832,5 +983,9 @@ for (measure in MEASURES) {
                      cat_colors, stack_levels,
                      ref_note = ref_note_for(measure))
 }
+
+message(sprintf("Building combined 2x2 panel (year %d) ...", PANEL_YEAR))
+make_panel_of_4(ISO3, PANEL_YEAR, dat_total, dat_all,
+                cat_colors, stack_levels, oecd_bench)
 
 message("\nDone.")

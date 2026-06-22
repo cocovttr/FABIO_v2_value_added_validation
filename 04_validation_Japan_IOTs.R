@@ -1003,6 +1003,13 @@ conc_a <- setNames(lapply(YEARS, load_jpn_item_conc, isic_level = "A"),
                    as.character(YEARS))
 conc_c <- setNames(lapply(YEARS, load_jpn_item_conc, isic_level = "C"),
                    as.character(YEARS))
+# Per year, ISIC-C keeps only FABIO items not also tagged at ISIC-A (drop double-mapped items).
+conc_c <- setNames(lapply(YEARS, function(yr) {
+  cc <- conc_c[[as.character(yr)]]
+  ca <- conc_a[[as.character(yr)]]
+  if (is.null(cc) || nrow(cc) == 0L) return(cc)
+  cc[!fabio_item_code %in% ca$fabio_item_code]
+}), as.character(YEARS))
 iot_isic <- rbindlist(lapply(YEARS, function(yr)
   build_iot_item_isic(conc_a[[as.character(yr)]],
                       conc_c[[as.character(yr)]], yr)))
@@ -1077,6 +1084,29 @@ if (!is.null(wb_bench)) {
   fwrite(wb_bench, wb_bench_path)
   message("WB fallback benchmark -> ", wb_bench_path)
 }
+
+# Agreement metrics behind the figures, scoring every FABIOv2 source against the
+# RAW Japan IOT (MIC) reference — the same comparison the thesis text reports,
+# now written out rather than read off the bars.  Three CSVs (see
+# write_reference_metrics() in 00_validation_helpers.R):
+#   japan_iot_by_strand_by_year.csv    per-year aggregate ratios per ISIC level
+#       and measure — the per-year ISIC-A capture shares (total) and the per-year
+#       strand ratios, TLS kept signed (so the IOT's net-negative TLS, against
+#       the bases' small positive TLS, is visible directly).
+#   japan_iot_item_ratios.csv          the pre-aggregation item frame: one
+#       aggregate ratio per (isic, IOT category, year, source, measure) — e.g.
+#       the per-year rice ratios and the non-rice / processing collapse.
+#   metrics_japan_iot_pooled_items.csv pooled item-level metrics per
+#       (isic, source, measure).
+# Scored on the three IOT benchmark years (2011/2015/2020) in dat_all.  The WB
+# fallback is the TOTAL-only external line for the figures and is NOT used here;
+# these metrics are strictly FABIOv2-source vs the raw IOT.
+write_reference_metrics(
+  dat       = dat_all,
+  reference = "Japan IOT (MIC)",
+  sources   = SOURCE_LEVELS,
+  out_dir   = OUT_DIR,
+  prefix    = "japan_iot")
 
 # Global, stable category palette + stacking order (A combos first, then C,
 # each by descending TOTAL) — same construction as scripts 02 / 03.  Categories

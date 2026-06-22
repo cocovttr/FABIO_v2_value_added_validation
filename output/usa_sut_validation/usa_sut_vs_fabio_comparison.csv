@@ -1,0 +1,661 @@
+iso3c,year,source,isic,usa_sut_code,category,strand,value_usd
+USA,2012,US SUT (BEA),A,1111A0,Oilseed farming,wages,5.4e+07
+USA,2012,US SUT (BEA),A,1111A0,Oilseed farming,tls,8.65e+08
+USA,2012,US SUT (BEA),A,1111A0,Oilseed farming,capital,2.1925e+10
+USA,2012,US SUT (BEA),A,1111B0,Grain farming,wages,3.182e+09
+USA,2012,US SUT (BEA),A,1111B0,Grain farming,tls,1.873e+09
+USA,2012,US SUT (BEA),A,1111B0,Grain farming,capital,2.3375e+10
+USA,2012,US SUT (BEA),A,111200,Vegetable and melon farming,wages,1.807e+09
+USA,2012,US SUT (BEA),A,111200,Vegetable and melon farming,tls,2.99e+08
+USA,2012,US SUT (BEA),A,111200,Vegetable and melon farming,capital,4.944e+09
+USA,2012,US SUT (BEA),A,111300,Fruit and tree nut farming,wages,4.469e+09
+USA,2012,US SUT (BEA),A,111300,Fruit and tree nut farming,tls,5.22e+08
+USA,2012,US SUT (BEA),A,111300,Fruit and tree nut farming,capital,1.1823e+10
+USA,2012,US SUT (BEA),A,111900,Other crop farming,wages,6.251e+09
+USA,2012,US SUT (BEA),A,111900,Other crop farming,tls,3.71e+08
+USA,2012,US SUT (BEA),A,111900,Other crop farming,capital,5.074e+09
+USA,2012,US SUT (BEA),A,112120,Dairy cattle and milk production,wages,1.864e+09
+USA,2012,US SUT (BEA),A,112120,Dairy cattle and milk production,tls,7.5e+08
+USA,2012,US SUT (BEA),A,112120,Dairy cattle and milk production,capital,4.966e+09
+USA,2012,US SUT (BEA),A,1121A0,"Beef cattle ranching and farming, including feedlots and dual-purpose ranching and farming",wages,1.15e+09
+USA,2012,US SUT (BEA),A,1121A0,"Beef cattle ranching and farming, including feedlots and dual-purpose ranching and farming",tls,1.59e+09
+USA,2012,US SUT (BEA),A,1121A0,"Beef cattle ranching and farming, including feedlots and dual-purpose ranching and farming",capital,2.1246e+10
+USA,2012,US SUT (BEA),A,112300,Poultry and egg production,wages,1.657e+09
+USA,2012,US SUT (BEA),A,112300,Poultry and egg production,tls,7.64e+08
+USA,2012,US SUT (BEA),A,112300,Poultry and egg production,capital,1.585e+09
+USA,2012,US SUT (BEA),A,112A00,"Animal production, except cattle and poultry and eggs",wages,2.145e+09
+USA,2012,US SUT (BEA),A,112A00,"Animal production, except cattle and poultry and eggs",tls,8.05e+08
+USA,2012,US SUT (BEA),A,112A00,"Animal production, except cattle and poultry and eggs",capital,2.1659e+10
+USA,2012,US SUT (BEA),A,114000,"Fishing, hunting and trapping",wages,1.078e+09
+USA,2012,US SUT (BEA),A,114000,"Fishing, hunting and trapping",tls,1.77e+08
+USA,2012,US SUT (BEA),A,114000,"Fishing, hunting and trapping",capital,4.18e+09
+USA,2012,US SUT (BEA),C,311119,Other animal food manufacturing,wages,1.727e+09
+USA,2012,US SUT (BEA),C,311119,Other animal food manufacturing,tls,2.11e+08
+USA,2012,US SUT (BEA),C,311119,Other animal food manufacturing,capital,1.818e+09
+USA,2012,US SUT (BEA),C,311221,Wet corn milling,wages,1.601e+09
+USA,2012,US SUT (BEA),C,311221,Wet corn milling,tls,7.7e+07
+USA,2012,US SUT (BEA),C,311221,Wet corn milling,capital,7.38e+08
+USA,2012,US SUT (BEA),C,311224,Soybean and other oilseed processing,wages,9.9e+08
+USA,2012,US SUT (BEA),C,311224,Soybean and other oilseed processing,tls,2.41e+08
+USA,2012,US SUT (BEA),C,311224,Soybean and other oilseed processing,capital,2.988e+09
+USA,2012,US SUT (BEA),C,311225,Fats and oils refining and blending,wages,5.28e+08
+USA,2012,US SUT (BEA),C,311225,Fats and oils refining and blending,tls,9.9e+07
+USA,2012,US SUT (BEA),C,311225,Fats and oils refining and blending,capital,1.218e+09
+USA,2012,US SUT (BEA),C,311300,Sugar and confectionery product manufacturing,wages,3.924e+09
+USA,2012,US SUT (BEA),C,311300,Sugar and confectionery product manufacturing,tls,1.97e+08
+USA,2012,US SUT (BEA),C,311300,Sugar and confectionery product manufacturing,capital,3.289e+09
+USA,2012,US SUT (BEA),C,31151A,Fluid milk and butter manufacturing,wages,3.859e+09
+USA,2012,US SUT (BEA),C,31151A,Fluid milk and butter manufacturing,tls,2.26e+08
+USA,2012,US SUT (BEA),C,31151A,Fluid milk and butter manufacturing,capital,2.663e+09
+USA,2012,US SUT (BEA),C,311615,Poultry processing,wages,7.601e+09
+USA,2012,US SUT (BEA),C,311615,Poultry processing,tls,3.46e+08
+USA,2012,US SUT (BEA),C,311615,Poultry processing,capital,3.839e+09
+USA,2012,US SUT (BEA),C,31161A,"Animal (except poultry) slaughtering, rendering, and processing",wages,1.0216e+10
+USA,2012,US SUT (BEA),C,31161A,"Animal (except poultry) slaughtering, rendering, and processing",tls,8.39e+08
+USA,2012,US SUT (BEA),C,31161A,"Animal (except poultry) slaughtering, rendering, and processing",capital,6.315e+09
+USA,2012,US SUT (BEA),C,311920,Coffee and tea manufacturing,wages,9.22e+08
+USA,2012,US SUT (BEA),C,311920,Coffee and tea manufacturing,tls,7.8e+07
+USA,2012,US SUT (BEA),C,311920,Coffee and tea manufacturing,capital,1.612e+09
+USA,2012,US SUT (BEA),C,312120,Breweries,wages,3.205e+09
+USA,2012,US SUT (BEA),C,312120,Breweries,tls,1.87e+08
+USA,2012,US SUT (BEA),C,312120,Breweries,capital,6.519e+09
+USA,2012,US SUT (BEA),C,312130,Wineries,wages,2.646e+09
+USA,2012,US SUT (BEA),C,312130,Wineries,tls,9.9e+07
+USA,2012,US SUT (BEA),C,312130,Wineries,capital,2.284e+09
+USA,2012,US SUT (BEA),C,312140,Distilleries,wages,8.86e+08
+USA,2012,US SUT (BEA),C,312140,Distilleries,tls,8.7e+07
+USA,2012,US SUT (BEA),C,312140,Distilleries,capital,2.89e+09
+USA,2017,US SUT (BEA),A,1111A0,Oilseed farming,wages,1.062e+09
+USA,2017,US SUT (BEA),A,1111A0,Oilseed farming,tls,1.112e+09
+USA,2017,US SUT (BEA),A,1111A0,Oilseed farming,capital,1.5495e+10
+USA,2017,US SUT (BEA),A,1111B0,Grain farming,wages,3.149e+09
+USA,2017,US SUT (BEA),A,1111B0,Grain farming,tls,1.293e+09
+USA,2017,US SUT (BEA),A,1111B0,Grain farming,capital,1.4896e+10
+USA,2017,US SUT (BEA),A,111200,Vegetable and melon farming,wages,2.497e+09
+USA,2017,US SUT (BEA),A,111200,Vegetable and melon farming,tls,4.89e+08
+USA,2017,US SUT (BEA),A,111200,Vegetable and melon farming,capital,5.165e+09
+USA,2017,US SUT (BEA),A,111300,Fruit and tree nut farming,wages,5.182e+09
+USA,2017,US SUT (BEA),A,111300,Fruit and tree nut farming,tls,8.26e+08
+USA,2017,US SUT (BEA),A,111300,Fruit and tree nut farming,capital,1.2227e+10
+USA,2017,US SUT (BEA),A,111900,Other crop farming,wages,4.823e+09
+USA,2017,US SUT (BEA),A,111900,Other crop farming,tls,5.44e+08
+USA,2017,US SUT (BEA),A,111900,Other crop farming,capital,4.298e+09
+USA,2017,US SUT (BEA),A,112120,Dairy cattle and milk production,wages,2.179e+09
+USA,2017,US SUT (BEA),A,112120,Dairy cattle and milk production,tls,8.53e+08
+USA,2017,US SUT (BEA),A,112120,Dairy cattle and milk production,capital,6.583e+09
+USA,2017,US SUT (BEA),A,1121A0,"Beef cattle ranching and farming, including feedlots and dual-purpose ranching and farming",wages,1.231e+09
+USA,2017,US SUT (BEA),A,1121A0,"Beef cattle ranching and farming, including feedlots and dual-purpose ranching and farming",tls,1.89e+09
+USA,2017,US SUT (BEA),A,1121A0,"Beef cattle ranching and farming, including feedlots and dual-purpose ranching and farming",capital,2.4181e+10
+USA,2017,US SUT (BEA),A,112300,Poultry and egg production,wages,2.521e+09
+USA,2017,US SUT (BEA),A,112300,Poultry and egg production,tls,1.051e+09
+USA,2017,US SUT (BEA),A,112300,Poultry and egg production,capital,2.239e+09
+USA,2017,US SUT (BEA),A,112A00,"Animal production, except cattle and poultry and eggs",wages,2.761e+09
+USA,2017,US SUT (BEA),A,112A00,"Animal production, except cattle and poultry and eggs",tls,9.85e+08
+USA,2017,US SUT (BEA),A,112A00,"Animal production, except cattle and poultry and eggs",capital,1.9081e+10
+USA,2017,US SUT (BEA),A,114000,"Fishing, hunting and trapping",wages,8.95e+08
+USA,2017,US SUT (BEA),A,114000,"Fishing, hunting and trapping",tls,1.98e+08
+USA,2017,US SUT (BEA),A,114000,"Fishing, hunting and trapping",capital,5.344e+09
+USA,2017,US SUT (BEA),C,311119,Other animal food manufacturing,wages,2.497e+09
+USA,2017,US SUT (BEA),C,311119,Other animal food manufacturing,tls,2.14e+08
+USA,2017,US SUT (BEA),C,311119,Other animal food manufacturing,capital,1.89e+09
+USA,2017,US SUT (BEA),C,311221,Wet corn milling,wages,1.565e+09
+USA,2017,US SUT (BEA),C,311221,Wet corn milling,tls,6.7e+07
+USA,2017,US SUT (BEA),C,311221,Wet corn milling,capital,6.02e+08
+USA,2017,US SUT (BEA),C,311224,Soybean and other oilseed processing,wages,7.16e+08
+USA,2017,US SUT (BEA),C,311224,Soybean and other oilseed processing,tls,2.39e+08
+USA,2017,US SUT (BEA),C,311224,Soybean and other oilseed processing,capital,2.402e+09
+USA,2017,US SUT (BEA),C,311225,Fats and oils refining and blending,wages,5.38e+08
+USA,2017,US SUT (BEA),C,311225,Fats and oils refining and blending,tls,6.7e+07
+USA,2017,US SUT (BEA),C,311225,Fats and oils refining and blending,capital,8.03e+08
+USA,2017,US SUT (BEA),C,311300,Sugar and confectionery product manufacturing,wages,4.924e+09
+USA,2017,US SUT (BEA),C,311300,Sugar and confectionery product manufacturing,tls,2.51e+08
+USA,2017,US SUT (BEA),C,311300,Sugar and confectionery product manufacturing,capital,4.606e+09
+USA,2017,US SUT (BEA),C,31151A,Fluid milk and butter manufacturing,wages,4.483e+09
+USA,2017,US SUT (BEA),C,31151A,Fluid milk and butter manufacturing,tls,3.03e+08
+USA,2017,US SUT (BEA),C,31151A,Fluid milk and butter manufacturing,capital,3.688e+09
+USA,2017,US SUT (BEA),C,311615,Poultry processing,wages,9.788e+09
+USA,2017,US SUT (BEA),C,311615,Poultry processing,tls,4.83e+08
+USA,2017,US SUT (BEA),C,311615,Poultry processing,capital,7.504e+09
+USA,2017,US SUT (BEA),C,31161A,"Animal (except poultry) slaughtering, rendering, and processing",wages,1.529e+10
+USA,2017,US SUT (BEA),C,31161A,"Animal (except poultry) slaughtering, rendering, and processing",tls,1.002e+09
+USA,2017,US SUT (BEA),C,31161A,"Animal (except poultry) slaughtering, rendering, and processing",capital,8.436e+09
+USA,2017,US SUT (BEA),C,311920,Coffee and tea manufacturing,wages,1.465e+09
+USA,2017,US SUT (BEA),C,311920,Coffee and tea manufacturing,tls,8.8e+07
+USA,2017,US SUT (BEA),C,311920,Coffee and tea manufacturing,capital,1.793e+09
+USA,2017,US SUT (BEA),C,312120,Breweries,wages,4.29e+09
+USA,2017,US SUT (BEA),C,312120,Breweries,tls,2.19e+08
+USA,2017,US SUT (BEA),C,312120,Breweries,capital,7.523e+09
+USA,2017,US SUT (BEA),C,312130,Wineries,wages,3.727e+09
+USA,2017,US SUT (BEA),C,312130,Wineries,tls,1.58e+08
+USA,2017,US SUT (BEA),C,312130,Wineries,capital,4.507e+09
+USA,2017,US SUT (BEA),C,312140,Distilleries,wages,1.208e+09
+USA,2017,US SUT (BEA),C,312140,Distilleries,tls,1.45e+08
+USA,2017,US SUT (BEA),C,312140,Distilleries,capital,3.398e+09
+USA,2012,GLORIA-FABIOv2 (disagg.),A,111900,Other crop farming,wages,5568097992.21363
+USA,2017,GLORIA-FABIOv2 (disagg.),A,111900,Other crop farming,wages,6457111026.69208
+USA,2012,GLORIA-FABIOv2 (disagg.),A,1121A0,"Beef cattle ranching and farming, including feedlots and dual-purpose ranching and farming",wages,444874149.73192
+USA,2017,GLORIA-FABIOv2 (disagg.),A,1121A0,"Beef cattle ranching and farming, including feedlots and dual-purpose ranching and farming",wages,293492757.014706
+USA,2012,GLORIA-FABIOv2 (disagg.),A,112A00,"Animal production, except cattle and poultry and eggs",wages,5849822397.57842
+USA,2017,GLORIA-FABIOv2 (disagg.),A,112A00,"Animal production, except cattle and poultry and eggs",wages,4108461006.24985
+USA,2012,GLORIA-FABIOv2 (disagg.),A,112300,Poultry and egg production,wages,7263115737.31714
+USA,2017,GLORIA-FABIOv2 (disagg.),A,112300,Poultry and egg production,wages,7476508858.85187
+USA,2012,GLORIA-FABIOv2 (disagg.),A,1111B0,Grain farming,wages,32499853485.2907
+USA,2017,GLORIA-FABIOv2 (disagg.),A,1111B0,Grain farming,wages,19260696077.0863
+USA,2012,GLORIA-FABIOv2 (disagg.),A,111200,Vegetable and melon farming,wages,6374554119.71587
+USA,2017,GLORIA-FABIOv2 (disagg.),A,111200,Vegetable and melon farming,wages,7321309549.21313
+USA,2012,GLORIA-FABIOv2 (disagg.),A,111300,Fruit and tree nut farming,wages,12527991220.1812
+USA,2017,GLORIA-FABIOv2 (disagg.),A,111300,Fruit and tree nut farming,wages,15534596777.0238
+USA,2012,GLORIA-FABIOv2 (disagg.),A,1111A0,Oilseed farming,wages,20737032228.9161
+USA,2017,GLORIA-FABIOv2 (disagg.),A,1111A0,Oilseed farming,wages,17993522975.803
+USA,2012,GLORIA-FABIOv2 (disagg.),A,112120,Dairy cattle and milk production,wages,560241072.954893
+USA,2017,GLORIA-FABIOv2 (disagg.),A,112120,Dairy cattle and milk production,wages,734698709.405095
+USA,2012,GLORIA-FABIOv2 (disagg.),A,114000,"Fishing, hunting and trapping",wages,1462880000
+USA,2017,GLORIA-FABIOv2 (disagg.),A,114000,"Fishing, hunting and trapping",wages,1709160000
+USA,2012,GLORIA-FABIOv2 (disagg.),A,111900,Other crop farming,capital,4828891240.21624
+USA,2017,GLORIA-FABIOv2 (disagg.),A,111900,Other crop farming,capital,3581745742.07189
+USA,2012,GLORIA-FABIOv2 (disagg.),A,1121A0,"Beef cattle ranching and farming, including feedlots and dual-purpose ranching and farming",capital,85643039.8124046
+USA,2017,GLORIA-FABIOv2 (disagg.),A,1121A0,"Beef cattle ranching and farming, including feedlots and dual-purpose ranching and farming",capital,172448510.813419
+USA,2012,GLORIA-FABIOv2 (disagg.),A,112A00,"Animal production, except cattle and poultry and eggs",capital,471624655.890359
+USA,2017,GLORIA-FABIOv2 (disagg.),A,112A00,"Animal production, except cattle and poultry and eggs",capital,552230612.255336
+USA,2012,GLORIA-FABIOv2 (disagg.),A,112300,Poultry and egg production,capital,3060038804.30311
+USA,2017,GLORIA-FABIOv2 (disagg.),A,112300,Poultry and egg production,capital,2284193857.40915
+USA,2012,GLORIA-FABIOv2 (disagg.),A,1111B0,Grain farming,capital,41913488162.4299
+USA,2017,GLORIA-FABIOv2 (disagg.),A,1111B0,Grain farming,capital,22703157639.4392
+USA,2012,GLORIA-FABIOv2 (disagg.),A,111200,Vegetable and melon farming,capital,9242009483.82558
+USA,2017,GLORIA-FABIOv2 (disagg.),A,111200,Vegetable and melon farming,capital,7774006346.21993
+USA,2012,GLORIA-FABIOv2 (disagg.),A,111300,Fruit and tree nut farming,capital,1374888175.99846
+USA,2017,GLORIA-FABIOv2 (disagg.),A,111300,Fruit and tree nut farming,capital,2301924590.56734
+USA,2012,GLORIA-FABIOv2 (disagg.),A,1111A0,Oilseed farming,capital,18621453280.5689
+USA,2017,GLORIA-FABIOv2 (disagg.),A,1111A0,Oilseed farming,capital,16613775698.6819
+USA,2012,GLORIA-FABIOv2 (disagg.),A,112120,Dairy cattle and milk production,capital,162720866.379075
+USA,2017,GLORIA-FABIOv2 (disagg.),A,112120,Dairy cattle and milk production,capital,340943747.027277
+USA,2012,GLORIA-FABIOv2 (disagg.),A,114000,"Fishing, hunting and trapping",capital,2457662636.5798
+USA,2017,GLORIA-FABIOv2 (disagg.),A,114000,"Fishing, hunting and trapping",capital,2402848004.3795
+USA,2012,GLORIA-FABIOv2 (disagg.),A,111900,Other crop farming,tls,71070778.6269549
+USA,2017,GLORIA-FABIOv2 (disagg.),A,111900,Other crop farming,tls,51709902.055955
+USA,2012,GLORIA-FABIOv2 (disagg.),A,1121A0,"Beef cattle ranching and farming, including feedlots and dual-purpose ranching and farming",tls,2660876039.97944
+USA,2017,GLORIA-FABIOv2 (disagg.),A,1121A0,"Beef cattle ranching and farming, including feedlots and dual-purpose ranching and farming",tls,1826162368.19576
+USA,2012,GLORIA-FABIOv2 (disagg.),A,112A00,"Animal production, except cattle and poultry and eggs",tls,722567927.416278
+USA,2017,GLORIA-FABIOv2 (disagg.),A,112A00,"Animal production, except cattle and poultry and eggs",tls,420942707.774984
+USA,2012,GLORIA-FABIOv2 (disagg.),A,112300,Poultry and egg production,tls,562846812.3295
+USA,2017,GLORIA-FABIOv2 (disagg.),A,112300,Poultry and egg production,tls,272462165.65949
+USA,2012,GLORIA-FABIOv2 (disagg.),A,1111B0,Grain farming,tls,487115711.291846
+USA,2017,GLORIA-FABIOv2 (disagg.),A,1111B0,Grain farming,tls,494360997.085486
+USA,2012,GLORIA-FABIOv2 (disagg.),A,111200,Vegetable and melon farming,tls,43431634.005645
+USA,2017,GLORIA-FABIOv2 (disagg.),A,111200,Vegetable and melon farming,tls,43232801.881527
+USA,2012,GLORIA-FABIOv2 (disagg.),A,111300,Fruit and tree nut farming,tls,33224869.7927989
+USA,2017,GLORIA-FABIOv2 (disagg.),A,111300,Fruit and tree nut farming,tls,48544888.9919467
+USA,2012,GLORIA-FABIOv2 (disagg.),A,1111A0,Oilseed farming,tls,254876161.50453
+USA,2017,GLORIA-FABIOv2 (disagg.),A,1111A0,Oilseed farming,tls,349419052.866926
+USA,2012,GLORIA-FABIOv2 (disagg.),A,112120,Dairy cattle and milk production,tls,1459183978.44887
+USA,2017,GLORIA-FABIOv2 (disagg.),A,112120,Dairy cattle and milk production,tls,1714940011.92829
+USA,2012,GLORIA-FABIOv2 (disagg.),A,114000,"Fishing, hunting and trapping",tls,197917686
+USA,2017,GLORIA-FABIOv2 (disagg.),A,114000,"Fishing, hunting and trapping",tls,219623260
+USA,2012,GLORIA-FABIOv2 (disagg.),C,311300,Sugar and confectionery product manufacturing,wages,1089077905.13816
+USA,2017,GLORIA-FABIOv2 (disagg.),C,311300,Sugar and confectionery product manufacturing,wages,1354829613.18722
+USA,2012,GLORIA-FABIOv2 (disagg.),C,311224,Soybean and other oilseed processing,wages,1573016188.3844
+USA,2012,GLORIA-FABIOv2 (disagg.),C,311225,Fats and oils refining and blending,wages,303674283.906516
+USA,2017,GLORIA-FABIOv2 (disagg.),C,311224,Soybean and other oilseed processing,wages,1716511113.97707
+USA,2017,GLORIA-FABIOv2 (disagg.),C,311225,Fats and oils refining and blending,wages,237045887.620498
+USA,2012,GLORIA-FABIOv2 (disagg.),C,311221,Wet corn milling,wages,20061381.3955035
+USA,2017,GLORIA-FABIOv2 (disagg.),C,311221,Wet corn milling,wages,24798942.299094
+USA,2012,GLORIA-FABIOv2 (disagg.),C,311119,Other animal food manufacturing,wages,722718548.152882
+USA,2017,GLORIA-FABIOv2 (disagg.),C,311119,Other animal food manufacturing,wages,867804736.525542
+USA,2012,GLORIA-FABIOv2 (disagg.),C,311920,Coffee and tea manufacturing,wages,776471431.21075
+USA,2017,GLORIA-FABIOv2 (disagg.),C,311920,Coffee and tea manufacturing,wages,882777442.998139
+USA,2012,GLORIA-FABIOv2 (disagg.),C,312130,Wineries,wages,936268858.85665
+USA,2017,GLORIA-FABIOv2 (disagg.),C,312130,Wineries,wages,896527497.60667
+USA,2012,GLORIA-FABIOv2 (disagg.),C,312120,Breweries,wages,2130921319.27777
+USA,2017,GLORIA-FABIOv2 (disagg.),C,312120,Breweries,wages,2124560814.47177
+USA,2012,GLORIA-FABIOv2 (disagg.),C,312140,Distilleries,wages,471372222.562042
+USA,2017,GLORIA-FABIOv2 (disagg.),C,312140,Distilleries,wages,821160695.368979
+USA,2012,GLORIA-FABIOv2 (disagg.),C,31161A,"Animal (except poultry) slaughtering, rendering, and processing",wages,17882406376.2604
+USA,2017,GLORIA-FABIOv2 (disagg.),C,31161A,"Animal (except poultry) slaughtering, rendering, and processing",wages,18480714820.9476
+USA,2012,GLORIA-FABIOv2 (disagg.),C,311615,Poultry processing,wages,4728933313.51998
+USA,2017,GLORIA-FABIOv2 (disagg.),C,311615,Poultry processing,wages,7929361338.24335
+USA,2012,GLORIA-FABIOv2 (disagg.),C,31151A,Fluid milk and butter manufacturing,wages,167502188.798459
+USA,2017,GLORIA-FABIOv2 (disagg.),C,31151A,Fluid milk and butter manufacturing,wages,261928156.952665
+USA,2012,GLORIA-FABIOv2 (disagg.),C,311300,Sugar and confectionery product manufacturing,capital,620572652.241047
+USA,2017,GLORIA-FABIOv2 (disagg.),C,311300,Sugar and confectionery product manufacturing,capital,569895864.112648
+USA,2012,GLORIA-FABIOv2 (disagg.),C,311224,Soybean and other oilseed processing,capital,4223952732.53431
+USA,2012,GLORIA-FABIOv2 (disagg.),C,311225,Fats and oils refining and blending,capital,379799842.000732
+USA,2017,GLORIA-FABIOv2 (disagg.),C,311224,Soybean and other oilseed processing,capital,3498379789.29202
+USA,2017,GLORIA-FABIOv2 (disagg.),C,311225,Fats and oils refining and blending,capital,159229339.976602
+USA,2012,GLORIA-FABIOv2 (disagg.),C,311221,Wet corn milling,capital,25289270.0987723
+USA,2017,GLORIA-FABIOv2 (disagg.),C,311221,Wet corn milling,capital,16658037.2013217
+USA,2012,GLORIA-FABIOv2 (disagg.),C,311119,Other animal food manufacturing,capital,2868914749.92079
+USA,2017,GLORIA-FABIOv2 (disagg.),C,311119,Other animal food manufacturing,capital,2846705913.45033
+USA,2012,GLORIA-FABIOv2 (disagg.),C,311920,Coffee and tea manufacturing,capital,393010554.65441
+USA,2017,GLORIA-FABIOv2 (disagg.),C,311920,Coffee and tea manufacturing,capital,427108356.735076
+USA,2012,GLORIA-FABIOv2 (disagg.),C,312130,Wineries,capital,500213267.160564
+USA,2017,GLORIA-FABIOv2 (disagg.),C,312130,Wineries,capital,428601529.906569
+USA,2012,GLORIA-FABIOv2 (disagg.),C,312120,Breweries,capital,1138471182.81783
+USA,2017,GLORIA-FABIOv2 (disagg.),C,312120,Breweries,capital,1015685539.92267
+USA,2012,GLORIA-FABIOv2 (disagg.),C,312140,Distilleries,capital,251836464.778326
+USA,2017,GLORIA-FABIOv2 (disagg.),C,312140,Distilleries,capital,392571038.003673
+USA,2012,GLORIA-FABIOv2 (disagg.),C,31161A,"Animal (except poultry) slaughtering, rendering, and processing",capital,1167490823.65897
+USA,2017,GLORIA-FABIOv2 (disagg.),C,31161A,"Animal (except poultry) slaughtering, rendering, and processing",capital,833693823.506712
+USA,2012,GLORIA-FABIOv2 (disagg.),C,311615,Poultry processing,capital,624062073.126631
+USA,2017,GLORIA-FABIOv2 (disagg.),C,311615,Poultry processing,capital,842202476.739327
+USA,2012,GLORIA-FABIOv2 (disagg.),C,31151A,Fluid milk and butter manufacturing,capital,120222190.008277
+USA,2017,GLORIA-FABIOv2 (disagg.),C,31151A,Fluid milk and butter manufacturing,capital,162137136.338447
+USA,2012,GLORIA-FABIOv2 (disagg.),C,311300,Sugar and confectionery product manufacturing,tls,-9512215.9650658
+USA,2017,GLORIA-FABIOv2 (disagg.),C,311300,Sugar and confectionery product manufacturing,tls,-11805440.4462547
+USA,2012,GLORIA-FABIOv2 (disagg.),C,311224,Soybean and other oilseed processing,tls,-12387398.1283849
+USA,2012,GLORIA-FABIOv2 (disagg.),C,311225,Fats and oils refining and blending,tls,6848574.78581332
+USA,2017,GLORIA-FABIOv2 (disagg.),C,311224,Soybean and other oilseed processing,tls,-42533011.8893542
+USA,2017,GLORIA-FABIOv2 (disagg.),C,311225,Fats and oils refining and blending,tls,-3190875.2723587
+USA,2012,GLORIA-FABIOv2 (disagg.),C,311221,Wet corn milling,tls,452431.694335121
+USA,2017,GLORIA-FABIOv2 (disagg.),C,311221,Wet corn milling,tls,-333818.622871509
+USA,2012,GLORIA-FABIOv2 (disagg.),C,311119,Other animal food manufacturing,tls,-25379086.5476203
+USA,2017,GLORIA-FABIOv2 (disagg.),C,311119,Other animal food manufacturing,tls,-30432849.735514
+USA,2012,GLORIA-FABIOv2 (disagg.),C,311920,Coffee and tea manufacturing,tls,-27266680.3762225
+USA,2017,GLORIA-FABIOv2 (disagg.),C,311920,Coffee and tea manufacturing,tls,-30957924.2217848
+USA,2012,GLORIA-FABIOv2 (disagg.),C,312130,Wineries,tls,256768446.10178
+USA,2017,GLORIA-FABIOv2 (disagg.),C,312130,Wineries,tls,205882424.321157
+USA,2012,GLORIA-FABIOv2 (disagg.),C,312120,Breweries,tls,584397687.416709
+USA,2017,GLORIA-FABIOv2 (disagg.),C,312120,Breweries,tls,487893268.493013
+USA,2012,GLORIA-FABIOv2 (disagg.),C,312140,Distilleries,tls,129272176.445772
+USA,2017,GLORIA-FABIOv2 (disagg.),C,312140,Distilleries,tls,188574868.223378
+USA,2012,GLORIA-FABIOv2 (disagg.),C,31161A,"Animal (except poultry) slaughtering, rendering, and processing",tls,75587322.6849335
+USA,2017,GLORIA-FABIOv2 (disagg.),C,31161A,"Animal (except poultry) slaughtering, rendering, and processing",tls,-29531821.5837974
+USA,2012,GLORIA-FABIOv2 (disagg.),C,311615,Poultry processing,tls,-116808369.761875
+USA,2017,GLORIA-FABIOv2 (disagg.),C,311615,Poultry processing,tls,-72789912.0545826
+USA,2012,GLORIA-FABIOv2 (disagg.),C,31151A,Fluid milk and butter manufacturing,tls,1580799.1549533
+USA,2017,GLORIA-FABIOv2 (disagg.),C,31151A,Fluid milk and butter manufacturing,tls,-471593.692501562
+USA,2012,COMBINED-GLORIA-FABIOv2 (disagg.),A,111900,Other crop farming,wages,5568097992.21363
+USA,2017,COMBINED-GLORIA-FABIOv2 (disagg.),A,111900,Other crop farming,wages,6457111026.69208
+USA,2012,COMBINED-GLORIA-FABIOv2 (disagg.),A,1121A0,"Beef cattle ranching and farming, including feedlots and dual-purpose ranching and farming",wages,444874149.73192
+USA,2017,COMBINED-GLORIA-FABIOv2 (disagg.),A,1121A0,"Beef cattle ranching and farming, including feedlots and dual-purpose ranching and farming",wages,293492757.014706
+USA,2012,COMBINED-GLORIA-FABIOv2 (disagg.),A,112A00,"Animal production, except cattle and poultry and eggs",wages,5849822397.57842
+USA,2017,COMBINED-GLORIA-FABIOv2 (disagg.),A,112A00,"Animal production, except cattle and poultry and eggs",wages,4108461006.24985
+USA,2012,COMBINED-GLORIA-FABIOv2 (disagg.),A,112300,Poultry and egg production,wages,7263115737.31714
+USA,2017,COMBINED-GLORIA-FABIOv2 (disagg.),A,112300,Poultry and egg production,wages,7476508858.85187
+USA,2012,COMBINED-GLORIA-FABIOv2 (disagg.),A,1111B0,Grain farming,wages,32499853485.2907
+USA,2017,COMBINED-GLORIA-FABIOv2 (disagg.),A,1111B0,Grain farming,wages,19260696077.0863
+USA,2012,COMBINED-GLORIA-FABIOv2 (disagg.),A,111200,Vegetable and melon farming,wages,6374554119.71587
+USA,2017,COMBINED-GLORIA-FABIOv2 (disagg.),A,111200,Vegetable and melon farming,wages,7321309549.21313
+USA,2012,COMBINED-GLORIA-FABIOv2 (disagg.),A,111300,Fruit and tree nut farming,wages,12527991220.1812
+USA,2017,COMBINED-GLORIA-FABIOv2 (disagg.),A,111300,Fruit and tree nut farming,wages,15534596777.0238
+USA,2012,COMBINED-GLORIA-FABIOv2 (disagg.),A,1111A0,Oilseed farming,wages,20737032228.9161
+USA,2017,COMBINED-GLORIA-FABIOv2 (disagg.),A,1111A0,Oilseed farming,wages,17993522975.803
+USA,2012,COMBINED-GLORIA-FABIOv2 (disagg.),A,112120,Dairy cattle and milk production,wages,560241072.954893
+USA,2017,COMBINED-GLORIA-FABIOv2 (disagg.),A,112120,Dairy cattle and milk production,wages,734698709.405095
+USA,2012,COMBINED-GLORIA-FABIOv2 (disagg.),A,114000,"Fishing, hunting and trapping",wages,689020000
+USA,2017,COMBINED-GLORIA-FABIOv2 (disagg.),A,114000,"Fishing, hunting and trapping",wages,574960000
+USA,2012,COMBINED-GLORIA-FABIOv2 (disagg.),A,111900,Other crop farming,capital,4828891240.21624
+USA,2017,COMBINED-GLORIA-FABIOv2 (disagg.),A,111900,Other crop farming,capital,3581745742.07189
+USA,2012,COMBINED-GLORIA-FABIOv2 (disagg.),A,1121A0,"Beef cattle ranching and farming, including feedlots and dual-purpose ranching and farming",capital,85643039.8124046
+USA,2017,COMBINED-GLORIA-FABIOv2 (disagg.),A,1121A0,"Beef cattle ranching and farming, including feedlots and dual-purpose ranching and farming",capital,172448510.813419
+USA,2012,COMBINED-GLORIA-FABIOv2 (disagg.),A,112A00,"Animal production, except cattle and poultry and eggs",capital,471624655.890359
+USA,2017,COMBINED-GLORIA-FABIOv2 (disagg.),A,112A00,"Animal production, except cattle and poultry and eggs",capital,552230612.255336
+USA,2012,COMBINED-GLORIA-FABIOv2 (disagg.),A,112300,Poultry and egg production,capital,3060038804.30311
+USA,2017,COMBINED-GLORIA-FABIOv2 (disagg.),A,112300,Poultry and egg production,capital,2284193857.40915
+USA,2012,COMBINED-GLORIA-FABIOv2 (disagg.),A,1111B0,Grain farming,capital,41913488162.4299
+USA,2017,COMBINED-GLORIA-FABIOv2 (disagg.),A,1111B0,Grain farming,capital,22703157639.4392
+USA,2012,COMBINED-GLORIA-FABIOv2 (disagg.),A,111200,Vegetable and melon farming,capital,9242009483.82558
+USA,2017,COMBINED-GLORIA-FABIOv2 (disagg.),A,111200,Vegetable and melon farming,capital,7774006346.21993
+USA,2012,COMBINED-GLORIA-FABIOv2 (disagg.),A,111300,Fruit and tree nut farming,capital,1374888175.99846
+USA,2017,COMBINED-GLORIA-FABIOv2 (disagg.),A,111300,Fruit and tree nut farming,capital,2301924590.56734
+USA,2012,COMBINED-GLORIA-FABIOv2 (disagg.),A,1111A0,Oilseed farming,capital,18621453280.5689
+USA,2017,COMBINED-GLORIA-FABIOv2 (disagg.),A,1111A0,Oilseed farming,capital,16613775698.6819
+USA,2012,COMBINED-GLORIA-FABIOv2 (disagg.),A,112120,Dairy cattle and milk production,capital,162720866.379075
+USA,2017,COMBINED-GLORIA-FABIOv2 (disagg.),A,112120,Dairy cattle and milk production,capital,340943747.027277
+USA,2012,COMBINED-GLORIA-FABIOv2 (disagg.),A,114000,"Fishing, hunting and trapping",capital,2885370000
+USA,2017,COMBINED-GLORIA-FABIOv2 (disagg.),A,114000,"Fishing, hunting and trapping",capital,3435760000
+USA,2012,COMBINED-GLORIA-FABIOv2 (disagg.),A,111900,Other crop farming,tls,71070778.6269549
+USA,2017,COMBINED-GLORIA-FABIOv2 (disagg.),A,111900,Other crop farming,tls,51709902.055955
+USA,2012,COMBINED-GLORIA-FABIOv2 (disagg.),A,1121A0,"Beef cattle ranching and farming, including feedlots and dual-purpose ranching and farming",tls,2660876039.97944
+USA,2017,COMBINED-GLORIA-FABIOv2 (disagg.),A,1121A0,"Beef cattle ranching and farming, including feedlots and dual-purpose ranching and farming",tls,1826162368.19576
+USA,2012,COMBINED-GLORIA-FABIOv2 (disagg.),A,112A00,"Animal production, except cattle and poultry and eggs",tls,722567927.416278
+USA,2017,COMBINED-GLORIA-FABIOv2 (disagg.),A,112A00,"Animal production, except cattle and poultry and eggs",tls,420942707.774984
+USA,2012,COMBINED-GLORIA-FABIOv2 (disagg.),A,112300,Poultry and egg production,tls,562846812.3295
+USA,2017,COMBINED-GLORIA-FABIOv2 (disagg.),A,112300,Poultry and egg production,tls,272462165.65949
+USA,2012,COMBINED-GLORIA-FABIOv2 (disagg.),A,1111B0,Grain farming,tls,487115711.291846
+USA,2017,COMBINED-GLORIA-FABIOv2 (disagg.),A,1111B0,Grain farming,tls,494360997.085486
+USA,2012,COMBINED-GLORIA-FABIOv2 (disagg.),A,111200,Vegetable and melon farming,tls,43431634.005645
+USA,2017,COMBINED-GLORIA-FABIOv2 (disagg.),A,111200,Vegetable and melon farming,tls,43232801.881527
+USA,2012,COMBINED-GLORIA-FABIOv2 (disagg.),A,111300,Fruit and tree nut farming,tls,33224869.7927989
+USA,2017,COMBINED-GLORIA-FABIOv2 (disagg.),A,111300,Fruit and tree nut farming,tls,48544888.9919467
+USA,2012,COMBINED-GLORIA-FABIOv2 (disagg.),A,1111A0,Oilseed farming,tls,254876161.50453
+USA,2017,COMBINED-GLORIA-FABIOv2 (disagg.),A,1111A0,Oilseed farming,tls,349419052.866926
+USA,2012,COMBINED-GLORIA-FABIOv2 (disagg.),A,112120,Dairy cattle and milk production,tls,1459183978.44887
+USA,2017,COMBINED-GLORIA-FABIOv2 (disagg.),A,112120,Dairy cattle and milk production,tls,1714940011.92829
+USA,2012,COMBINED-GLORIA-FABIOv2 (disagg.),A,114000,"Fishing, hunting and trapping",tls,120130000
+USA,2017,COMBINED-GLORIA-FABIOv2 (disagg.),A,114000,"Fishing, hunting and trapping",tls,133600000
+USA,2012,COMBINED-GLORIA-FABIOv2 (disagg.),C,311300,Sugar and confectionery product manufacturing,wages,1089077905.13816
+USA,2017,COMBINED-GLORIA-FABIOv2 (disagg.),C,311300,Sugar and confectionery product manufacturing,wages,1354829613.18722
+USA,2012,COMBINED-GLORIA-FABIOv2 (disagg.),C,311224,Soybean and other oilseed processing,wages,1573016188.3844
+USA,2012,COMBINED-GLORIA-FABIOv2 (disagg.),C,311225,Fats and oils refining and blending,wages,303674283.906516
+USA,2017,COMBINED-GLORIA-FABIOv2 (disagg.),C,311224,Soybean and other oilseed processing,wages,1716511113.97707
+USA,2017,COMBINED-GLORIA-FABIOv2 (disagg.),C,311225,Fats and oils refining and blending,wages,237045887.620498
+USA,2012,COMBINED-GLORIA-FABIOv2 (disagg.),C,311221,Wet corn milling,wages,20061381.3955035
+USA,2017,COMBINED-GLORIA-FABIOv2 (disagg.),C,311221,Wet corn milling,wages,24798942.299094
+USA,2012,COMBINED-GLORIA-FABIOv2 (disagg.),C,311119,Other animal food manufacturing,wages,722718548.152882
+USA,2017,COMBINED-GLORIA-FABIOv2 (disagg.),C,311119,Other animal food manufacturing,wages,867804736.525542
+USA,2012,COMBINED-GLORIA-FABIOv2 (disagg.),C,311920,Coffee and tea manufacturing,wages,776471431.21075
+USA,2017,COMBINED-GLORIA-FABIOv2 (disagg.),C,311920,Coffee and tea manufacturing,wages,882777442.998139
+USA,2012,COMBINED-GLORIA-FABIOv2 (disagg.),C,312130,Wineries,wages,936268858.85665
+USA,2017,COMBINED-GLORIA-FABIOv2 (disagg.),C,312130,Wineries,wages,896527497.60667
+USA,2012,COMBINED-GLORIA-FABIOv2 (disagg.),C,312120,Breweries,wages,2130921319.27777
+USA,2017,COMBINED-GLORIA-FABIOv2 (disagg.),C,312120,Breweries,wages,2124560814.47177
+USA,2012,COMBINED-GLORIA-FABIOv2 (disagg.),C,312140,Distilleries,wages,471372222.562042
+USA,2017,COMBINED-GLORIA-FABIOv2 (disagg.),C,312140,Distilleries,wages,821160695.368979
+USA,2012,COMBINED-GLORIA-FABIOv2 (disagg.),C,31161A,"Animal (except poultry) slaughtering, rendering, and processing",wages,17882406376.2604
+USA,2017,COMBINED-GLORIA-FABIOv2 (disagg.),C,31161A,"Animal (except poultry) slaughtering, rendering, and processing",wages,18480714820.9476
+USA,2012,COMBINED-GLORIA-FABIOv2 (disagg.),C,311615,Poultry processing,wages,4728933313.51998
+USA,2017,COMBINED-GLORIA-FABIOv2 (disagg.),C,311615,Poultry processing,wages,7929361338.24335
+USA,2012,COMBINED-GLORIA-FABIOv2 (disagg.),C,31151A,Fluid milk and butter manufacturing,wages,167502188.798459
+USA,2017,COMBINED-GLORIA-FABIOv2 (disagg.),C,31151A,Fluid milk and butter manufacturing,wages,261928156.952665
+USA,2012,COMBINED-GLORIA-FABIOv2 (disagg.),C,311300,Sugar and confectionery product manufacturing,capital,620572652.241047
+USA,2017,COMBINED-GLORIA-FABIOv2 (disagg.),C,311300,Sugar and confectionery product manufacturing,capital,569895864.112648
+USA,2012,COMBINED-GLORIA-FABIOv2 (disagg.),C,311224,Soybean and other oilseed processing,capital,4223952732.53431
+USA,2012,COMBINED-GLORIA-FABIOv2 (disagg.),C,311225,Fats and oils refining and blending,capital,379799842.000732
+USA,2017,COMBINED-GLORIA-FABIOv2 (disagg.),C,311224,Soybean and other oilseed processing,capital,3498379789.29202
+USA,2017,COMBINED-GLORIA-FABIOv2 (disagg.),C,311225,Fats and oils refining and blending,capital,159229339.976602
+USA,2012,COMBINED-GLORIA-FABIOv2 (disagg.),C,311221,Wet corn milling,capital,25289270.0987723
+USA,2017,COMBINED-GLORIA-FABIOv2 (disagg.),C,311221,Wet corn milling,capital,16658037.2013217
+USA,2012,COMBINED-GLORIA-FABIOv2 (disagg.),C,311119,Other animal food manufacturing,capital,2868914749.92079
+USA,2017,COMBINED-GLORIA-FABIOv2 (disagg.),C,311119,Other animal food manufacturing,capital,2846705913.45033
+USA,2012,COMBINED-GLORIA-FABIOv2 (disagg.),C,311920,Coffee and tea manufacturing,capital,393010554.65441
+USA,2017,COMBINED-GLORIA-FABIOv2 (disagg.),C,311920,Coffee and tea manufacturing,capital,427108356.735076
+USA,2012,COMBINED-GLORIA-FABIOv2 (disagg.),C,312130,Wineries,capital,500213267.160564
+USA,2017,COMBINED-GLORIA-FABIOv2 (disagg.),C,312130,Wineries,capital,428601529.906569
+USA,2012,COMBINED-GLORIA-FABIOv2 (disagg.),C,312120,Breweries,capital,1138471182.81783
+USA,2017,COMBINED-GLORIA-FABIOv2 (disagg.),C,312120,Breweries,capital,1015685539.92267
+USA,2012,COMBINED-GLORIA-FABIOv2 (disagg.),C,312140,Distilleries,capital,251836464.778326
+USA,2017,COMBINED-GLORIA-FABIOv2 (disagg.),C,312140,Distilleries,capital,392571038.003673
+USA,2012,COMBINED-GLORIA-FABIOv2 (disagg.),C,31161A,"Animal (except poultry) slaughtering, rendering, and processing",capital,1167490823.65897
+USA,2017,COMBINED-GLORIA-FABIOv2 (disagg.),C,31161A,"Animal (except poultry) slaughtering, rendering, and processing",capital,833693823.506712
+USA,2012,COMBINED-GLORIA-FABIOv2 (disagg.),C,311615,Poultry processing,capital,624062073.126631
+USA,2017,COMBINED-GLORIA-FABIOv2 (disagg.),C,311615,Poultry processing,capital,842202476.739327
+USA,2012,COMBINED-GLORIA-FABIOv2 (disagg.),C,31151A,Fluid milk and butter manufacturing,capital,120222190.008277
+USA,2017,COMBINED-GLORIA-FABIOv2 (disagg.),C,31151A,Fluid milk and butter manufacturing,capital,162137136.338447
+USA,2012,COMBINED-GLORIA-FABIOv2 (disagg.),C,311300,Sugar and confectionery product manufacturing,tls,-9512215.9650658
+USA,2017,COMBINED-GLORIA-FABIOv2 (disagg.),C,311300,Sugar and confectionery product manufacturing,tls,-11805440.4462547
+USA,2012,COMBINED-GLORIA-FABIOv2 (disagg.),C,311224,Soybean and other oilseed processing,tls,-12387398.1283849
+USA,2012,COMBINED-GLORIA-FABIOv2 (disagg.),C,311225,Fats and oils refining and blending,tls,6848574.78581332
+USA,2017,COMBINED-GLORIA-FABIOv2 (disagg.),C,311224,Soybean and other oilseed processing,tls,-42533011.8893542
+USA,2017,COMBINED-GLORIA-FABIOv2 (disagg.),C,311225,Fats and oils refining and blending,tls,-3190875.2723587
+USA,2012,COMBINED-GLORIA-FABIOv2 (disagg.),C,311221,Wet corn milling,tls,452431.694335121
+USA,2017,COMBINED-GLORIA-FABIOv2 (disagg.),C,311221,Wet corn milling,tls,-333818.622871509
+USA,2012,COMBINED-GLORIA-FABIOv2 (disagg.),C,311119,Other animal food manufacturing,tls,-25379086.5476203
+USA,2017,COMBINED-GLORIA-FABIOv2 (disagg.),C,311119,Other animal food manufacturing,tls,-30432849.735514
+USA,2012,COMBINED-GLORIA-FABIOv2 (disagg.),C,311920,Coffee and tea manufacturing,tls,-27266680.3762225
+USA,2017,COMBINED-GLORIA-FABIOv2 (disagg.),C,311920,Coffee and tea manufacturing,tls,-30957924.2217848
+USA,2012,COMBINED-GLORIA-FABIOv2 (disagg.),C,312130,Wineries,tls,256768446.10178
+USA,2017,COMBINED-GLORIA-FABIOv2 (disagg.),C,312130,Wineries,tls,205882424.321157
+USA,2012,COMBINED-GLORIA-FABIOv2 (disagg.),C,312120,Breweries,tls,584397687.416709
+USA,2017,COMBINED-GLORIA-FABIOv2 (disagg.),C,312120,Breweries,tls,487893268.493013
+USA,2012,COMBINED-GLORIA-FABIOv2 (disagg.),C,312140,Distilleries,tls,129272176.445772
+USA,2017,COMBINED-GLORIA-FABIOv2 (disagg.),C,312140,Distilleries,tls,188574868.223378
+USA,2012,COMBINED-GLORIA-FABIOv2 (disagg.),C,31161A,"Animal (except poultry) slaughtering, rendering, and processing",tls,75587322.6849335
+USA,2017,COMBINED-GLORIA-FABIOv2 (disagg.),C,31161A,"Animal (except poultry) slaughtering, rendering, and processing",tls,-29531821.5837974
+USA,2012,COMBINED-GLORIA-FABIOv2 (disagg.),C,311615,Poultry processing,tls,-116808369.761875
+USA,2017,COMBINED-GLORIA-FABIOv2 (disagg.),C,311615,Poultry processing,tls,-72789912.0545826
+USA,2012,COMBINED-GLORIA-FABIOv2 (disagg.),C,31151A,Fluid milk and butter manufacturing,tls,1580799.1549533
+USA,2017,COMBINED-GLORIA-FABIOv2 (disagg.),C,31151A,Fluid milk and butter manufacturing,tls,-471593.692501562
+USA,2012,EXIOBASE-FABIOv2 (disagg.),A,111900,Other crop farming,wages,1420308658.08014
+USA,2017,EXIOBASE-FABIOv2 (disagg.),A,111900,Other crop farming,wages,2412282978.96582
+USA,2012,EXIOBASE-FABIOv2 (disagg.),A,1121A0,"Beef cattle ranching and farming, including feedlots and dual-purpose ranching and farming",wages,4872733108.28784
+USA,2017,EXIOBASE-FABIOv2 (disagg.),A,1121A0,"Beef cattle ranching and farming, including feedlots and dual-purpose ranching and farming",wages,1901587036.85971
+USA,2012,EXIOBASE-FABIOv2 (disagg.),A,112A00,"Animal production, except cattle and poultry and eggs",wages,7854396573.16929
+USA,2017,EXIOBASE-FABIOv2 (disagg.),A,112A00,"Animal production, except cattle and poultry and eggs",wages,8836416630.8302
+USA,2012,EXIOBASE-FABIOv2 (disagg.),A,112300,Poultry and egg production,wages,1865136136.21219
+USA,2017,EXIOBASE-FABIOv2 (disagg.),A,112300,Poultry and egg production,wages,1440379098.24751
+USA,2012,EXIOBASE-FABIOv2 (disagg.),A,1111B0,Grain farming,wages,4996096753.0437
+USA,2017,EXIOBASE-FABIOv2 (disagg.),A,1111B0,Grain farming,wages,3726053625.03006
+USA,2012,EXIOBASE-FABIOv2 (disagg.),A,111200,Vegetable and melon farming,wages,10466834487.0949
+USA,2017,EXIOBASE-FABIOv2 (disagg.),A,111200,Vegetable and melon farming,wages,8452552108.43515
+USA,2012,EXIOBASE-FABIOv2 (disagg.),A,111300,Fruit and tree nut farming,wages,14061228755.2706
+USA,2017,EXIOBASE-FABIOv2 (disagg.),A,111300,Fruit and tree nut farming,wages,12351591297.5473
+USA,2012,EXIOBASE-FABIOv2 (disagg.),A,1111A0,Oilseed farming,wages,3268779210.99419
+USA,2017,EXIOBASE-FABIOv2 (disagg.),A,1111A0,Oilseed farming,wages,3060008825.85562
+USA,2012,EXIOBASE-FABIOv2 (disagg.),A,112120,Dairy cattle and milk production,wages,2980475490.14254
+USA,2017,EXIOBASE-FABIOv2 (disagg.),A,112120,Dairy cattle and milk production,wages,3524038489.27441
+USA,2012,EXIOBASE-FABIOv2 (disagg.),A,114000,"Fishing, hunting and trapping",wages,1666960829.89939
+USA,2017,EXIOBASE-FABIOv2 (disagg.),A,114000,"Fishing, hunting and trapping",wages,1682161185.23062
+USA,2012,EXIOBASE-FABIOv2 (disagg.),A,111900,Other crop farming,capital,3405419474.59723
+USA,2017,EXIOBASE-FABIOv2 (disagg.),A,111900,Other crop farming,capital,3405070539.77622
+USA,2012,EXIOBASE-FABIOv2 (disagg.),A,1121A0,"Beef cattle ranching and farming, including feedlots and dual-purpose ranching and farming",capital,7013923048.41936
+USA,2017,EXIOBASE-FABIOv2 (disagg.),A,1121A0,"Beef cattle ranching and farming, including feedlots and dual-purpose ranching and farming",capital,3308933483.01296
+USA,2012,EXIOBASE-FABIOv2 (disagg.),A,112A00,"Animal production, except cattle and poultry and eggs",capital,646057751.843338
+USA,2017,EXIOBASE-FABIOv2 (disagg.),A,112A00,"Animal production, except cattle and poultry and eggs",capital,573199191.071677
+USA,2012,EXIOBASE-FABIOv2 (disagg.),A,112300,Poultry and egg production,capital,4521247473.72026
+USA,2017,EXIOBASE-FABIOv2 (disagg.),A,112300,Poultry and egg production,capital,4007765071.91804
+USA,2012,EXIOBASE-FABIOv2 (disagg.),A,1111B0,Grain farming,capital,26273480086.7983
+USA,2017,EXIOBASE-FABIOv2 (disagg.),A,1111B0,Grain farming,capital,17983818445.2652
+USA,2012,EXIOBASE-FABIOv2 (disagg.),A,111200,Vegetable and melon farming,capital,11906451637.27
+USA,2017,EXIOBASE-FABIOv2 (disagg.),A,111200,Vegetable and melon farming,capital,8404125878.83462
+USA,2012,EXIOBASE-FABIOv2 (disagg.),A,111300,Fruit and tree nut farming,capital,7305864424.27323
+USA,2017,EXIOBASE-FABIOv2 (disagg.),A,111300,Fruit and tree nut farming,capital,13360958048.3605
+USA,2012,EXIOBASE-FABIOv2 (disagg.),A,1111A0,Oilseed farming,capital,21489240946.9783
+USA,2017,EXIOBASE-FABIOv2 (disagg.),A,1111A0,Oilseed farming,capital,20117564328.079
+USA,2012,EXIOBASE-FABIOv2 (disagg.),A,112120,Dairy cattle and milk production,capital,8383653377.799
+USA,2017,EXIOBASE-FABIOv2 (disagg.),A,112120,Dairy cattle and milk production,capital,5804163693.90647
+USA,2012,EXIOBASE-FABIOv2 (disagg.),A,114000,"Fishing, hunting and trapping",capital,2714856315.592
+USA,2017,EXIOBASE-FABIOv2 (disagg.),A,114000,"Fishing, hunting and trapping",capital,2396061384.14697
+USA,2012,EXIOBASE-FABIOv2 (disagg.),A,111900,Other crop farming,tls,20635728.3734603
+USA,2017,EXIOBASE-FABIOv2 (disagg.),A,111900,Other crop farming,tls,19400483.1876212
+USA,2012,EXIOBASE-FABIOv2 (disagg.),A,1121A0,"Beef cattle ranching and farming, including feedlots and dual-purpose ranching and farming",tls,-13124790.5264337
+USA,2017,EXIOBASE-FABIOv2 (disagg.),A,1121A0,"Beef cattle ranching and farming, including feedlots and dual-purpose ranching and farming",tls,-43739564.552048
+USA,2012,EXIOBASE-FABIOv2 (disagg.),A,112A00,"Animal production, except cattle and poultry and eggs",tls,-8657387.63547548
+USA,2017,EXIOBASE-FABIOv2 (disagg.),A,112A00,"Animal production, except cattle and poultry and eggs",tls,-17878753.3463295
+USA,2012,EXIOBASE-FABIOv2 (disagg.),A,112300,Poultry and egg production,tls,13148300.4441673
+USA,2017,EXIOBASE-FABIOv2 (disagg.),A,112300,Poultry and egg production,tls,15370531.1941411
+USA,2012,EXIOBASE-FABIOv2 (disagg.),A,1111B0,Grain farming,tls,1480395.26230657
+USA,2017,EXIOBASE-FABIOv2 (disagg.),A,1111B0,Grain farming,tls,-3606756.88748057
+USA,2012,EXIOBASE-FABIOv2 (disagg.),A,111200,Vegetable and melon farming,tls,-6358810.72473276
+USA,2017,EXIOBASE-FABIOv2 (disagg.),A,111200,Vegetable and melon farming,tls,-45437272.9315774
+USA,2012,EXIOBASE-FABIOv2 (disagg.),A,111300,Fruit and tree nut farming,tls,-7965980.78063136
+USA,2017,EXIOBASE-FABIOv2 (disagg.),A,111300,Fruit and tree nut farming,tls,-63295629.273393
+USA,2012,EXIOBASE-FABIOv2 (disagg.),A,1111A0,Oilseed farming,tls,28744243.936594
+USA,2017,EXIOBASE-FABIOv2 (disagg.),A,1111A0,Oilseed farming,tls,40630880.4714759
+USA,2012,EXIOBASE-FABIOv2 (disagg.),A,112120,Dairy cattle and milk production,tls,-19732346.6078936
+USA,2017,EXIOBASE-FABIOv2 (disagg.),A,112120,Dairy cattle and milk production,tls,-132988532.409996
+USA,2012,EXIOBASE-FABIOv2 (disagg.),A,114000,"Fishing, hunting and trapping",tls,439003295.894077
+USA,2017,EXIOBASE-FABIOv2 (disagg.),A,114000,"Fishing, hunting and trapping",tls,144805922.287596
+USA,2012,EXIOBASE-FABIOv2 (disagg.),C,311300,Sugar and confectionery product manufacturing,wages,962152935.781069
+USA,2017,EXIOBASE-FABIOv2 (disagg.),C,311300,Sugar and confectionery product manufacturing,wages,1933973912.61732
+USA,2012,EXIOBASE-FABIOv2 (disagg.),C,311224,Soybean and other oilseed processing,wages,402517254.948139
+USA,2012,EXIOBASE-FABIOv2 (disagg.),C,311225,Fats and oils refining and blending,wages,81202887.3588324
+USA,2017,EXIOBASE-FABIOv2 (disagg.),C,311224,Soybean and other oilseed processing,wages,378942882.249378
+USA,2017,EXIOBASE-FABIOv2 (disagg.),C,311225,Fats and oils refining and blending,wages,56023029.290439
+USA,2012,EXIOBASE-FABIOv2 (disagg.),C,311221,Wet corn milling,wages,5364438.7426073
+USA,2017,EXIOBASE-FABIOv2 (disagg.),C,311221,Wet corn milling,wages,5860940.61677328
+USA,2012,EXIOBASE-FABIOv2 (disagg.),C,311119,Other animal food manufacturing,wages,177486567.124192
+USA,2017,EXIOBASE-FABIOv2 (disagg.),C,311119,Other animal food manufacturing,wages,179290929.316083
+USA,2012,EXIOBASE-FABIOv2 (disagg.),C,311920,Coffee and tea manufacturing,wages,1573965430.69309
+USA,2017,EXIOBASE-FABIOv2 (disagg.),C,311920,Coffee and tea manufacturing,wages,1424585180.63673
+USA,2012,EXIOBASE-FABIOv2 (disagg.),C,312130,Wineries,wages,1264265182.97922
+USA,2017,EXIOBASE-FABIOv2 (disagg.),C,312130,Wineries,wages,1228929372.62524
+USA,2012,EXIOBASE-FABIOv2 (disagg.),C,312120,Breweries,wages,2877431633.17526
+USA,2017,EXIOBASE-FABIOv2 (disagg.),C,312120,Breweries,wages,2912275636.61237
+USA,2012,EXIOBASE-FABIOv2 (disagg.),C,312140,Distilleries,wages,636504657.365695
+USA,2017,EXIOBASE-FABIOv2 (disagg.),C,312140,Distilleries,wages,1125619125.881
+USA,2012,EXIOBASE-FABIOv2 (disagg.),C,31161A,"Animal (except poultry) slaughtering, rendering, and processing",wages,6806467906.10807
+USA,2017,EXIOBASE-FABIOv2 (disagg.),C,31161A,"Animal (except poultry) slaughtering, rendering, and processing",wages,8557668753.31702
+USA,2012,EXIOBASE-FABIOv2 (disagg.),C,311615,Poultry processing,wages,3720692203.61809
+USA,2017,EXIOBASE-FABIOv2 (disagg.),C,311615,Poultry processing,wages,5102404614.15628
+USA,2012,EXIOBASE-FABIOv2 (disagg.),C,31151A,Fluid milk and butter manufacturing,wages,195950564.342915
+USA,2017,EXIOBASE-FABIOv2 (disagg.),C,31151A,Fluid milk and butter manufacturing,wages,310678057.76419
+USA,2012,EXIOBASE-FABIOv2 (disagg.),C,311300,Sugar and confectionery product manufacturing,capital,410113849.093262
+USA,2017,EXIOBASE-FABIOv2 (disagg.),C,311300,Sugar and confectionery product manufacturing,capital,579767807.491976
+USA,2012,EXIOBASE-FABIOv2 (disagg.),C,311224,Soybean and other oilseed processing,capital,380254968.527061
+USA,2012,EXIOBASE-FABIOv2 (disagg.),C,311225,Fats and oils refining and blending,capital,76838917.7769206
+USA,2017,EXIOBASE-FABIOv2 (disagg.),C,311224,Soybean and other oilseed processing,capital,340361946.073965
+USA,2017,EXIOBASE-FABIOv2 (disagg.),C,311225,Fats and oils refining and blending,capital,50319212.1225913
+USA,2012,EXIOBASE-FABIOv2 (disagg.),C,311221,Wet corn milling,capital,5076145.4533143
+USA,2017,EXIOBASE-FABIOv2 (disagg.),C,311221,Wet corn milling,capital,5264226.47737217
+USA,2012,EXIOBASE-FABIOv2 (disagg.),C,311119,Other animal food manufacturing,capital,167399234.636245
+USA,2017,EXIOBASE-FABIOv2 (disagg.),C,311119,Other animal food manufacturing,capital,161036959.589263
+USA,2012,EXIOBASE-FABIOv2 (disagg.),C,311920,Coffee and tea manufacturing,capital,1380055349.15384
+USA,2017,EXIOBASE-FABIOv2 (disagg.),C,311920,Coffee and tea manufacturing,capital,1245766765.35027
+USA,2012,EXIOBASE-FABIOv2 (disagg.),C,312130,Wineries,capital,843256950.060209
+USA,2017,EXIOBASE-FABIOv2 (disagg.),C,312130,Wineries,capital,878281417.922145
+USA,2012,EXIOBASE-FABIOv2 (disagg.),C,312120,Breweries,capital,1919228857.73088
+USA,2017,EXIOBASE-FABIOv2 (disagg.),C,312120,Breweries,capital,2081321866.39829
+USA,2012,EXIOBASE-FABIOv2 (disagg.),C,312140,Distilleries,capital,885519393.605783
+USA,2017,EXIOBASE-FABIOv2 (disagg.),C,312140,Distilleries,capital,804448476.812939
+USA,2012,EXIOBASE-FABIOv2 (disagg.),C,31161A,"Animal (except poultry) slaughtering, rendering, and processing",capital,541448076.363632
+USA,2017,EXIOBASE-FABIOv2 (disagg.),C,31161A,"Animal (except poultry) slaughtering, rendering, and processing",capital,572600927.249556
+USA,2012,EXIOBASE-FABIOv2 (disagg.),C,311615,Poultry processing,capital,437181026.498742
+USA,2017,EXIOBASE-FABIOv2 (disagg.),C,311615,Poultry processing,capital,486042753.159992
+USA,2012,EXIOBASE-FABIOv2 (disagg.),C,31151A,Fluid milk and butter manufacturing,capital,140983011.146455
+USA,2017,EXIOBASE-FABIOv2 (disagg.),C,31151A,Fluid milk and butter manufacturing,capital,212172122.731738
+USA,2012,EXIOBASE-FABIOv2 (disagg.),C,311300,Sugar and confectionery product manufacturing,tls,127444490.443391
+USA,2017,EXIOBASE-FABIOv2 (disagg.),C,311300,Sugar and confectionery product manufacturing,tls,168693669.80517
+USA,2012,EXIOBASE-FABIOv2 (disagg.),C,311224,Soybean and other oilseed processing,tls,42668409.8861646
+USA,2012,EXIOBASE-FABIOv2 (disagg.),C,311225,Fats and oils refining and blending,tls,8622094.93702283
+USA,2017,EXIOBASE-FABIOv2 (disagg.),C,311224,Soybean and other oilseed processing,tls,23166734.1416897
+USA,2017,EXIOBASE-FABIOv2 (disagg.),C,311225,Fats and oils refining and blending,tls,3424976.91915897
+USA,2012,EXIOBASE-FABIOv2 (disagg.),C,311221,Wet corn milling,tls,569594.279550858
+USA,2017,EXIOBASE-FABIOv2 (disagg.),C,311221,Wet corn milling,tls,358309.548613352
+USA,2012,EXIOBASE-FABIOv2 (disagg.),C,311119,Other animal food manufacturing,tls,18783868.0603097
+USA,2017,EXIOBASE-FABIOv2 (disagg.),C,311119,Other animal food manufacturing,tls,10960979.8416764
+USA,2012,EXIOBASE-FABIOv2 (disagg.),C,311920,Coffee and tea manufacturing,tls,69647975.410119
+USA,2017,EXIOBASE-FABIOv2 (disagg.),C,311920,Coffee and tea manufacturing,tls,55637280.2305537
+USA,2012,EXIOBASE-FABIOv2 (disagg.),C,312130,Wineries,tls,294018418.557458
+USA,2017,EXIOBASE-FABIOv2 (disagg.),C,312130,Wineries,tls,177382403.305386
+USA,2012,EXIOBASE-FABIOv2 (disagg.),C,312120,Breweries,tls,669177566.291723
+USA,2017,EXIOBASE-FABIOv2 (disagg.),C,312120,Breweries,tls,420354873.939172
+USA,2012,EXIOBASE-FABIOv2 (disagg.),C,312140,Distilleries,tls,148025980.057536
+USA,2017,EXIOBASE-FABIOv2 (disagg.),C,312140,Distilleries,tls,162470708.409188
+USA,2012,EXIOBASE-FABIOv2 (disagg.),C,31161A,"Animal (except poultry) slaughtering, rendering, and processing",tls,251781341.562127
+USA,2017,EXIOBASE-FABIOv2 (disagg.),C,31161A,"Animal (except poultry) slaughtering, rendering, and processing",tls,165887776.448282
+USA,2012,EXIOBASE-FABIOv2 (disagg.),C,311615,Poultry processing,tls,114912774.979759
+USA,2017,EXIOBASE-FABIOv2 (disagg.),C,311615,Poultry processing,tls,90733819.8510556
+USA,2012,EXIOBASE-FABIOv2 (disagg.),C,31151A,Fluid milk and butter manufacturing,tls,13075431.5422288
+USA,2017,EXIOBASE-FABIOv2 (disagg.),C,31151A,Fluid milk and butter manufacturing,tls,11936302.7660331
+USA,2012,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,111900,Other crop farming,wages,1420308658.08014
+USA,2017,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,111900,Other crop farming,wages,2412282978.96582
+USA,2012,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,1121A0,"Beef cattle ranching and farming, including feedlots and dual-purpose ranching and farming",wages,4872733108.28784
+USA,2017,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,1121A0,"Beef cattle ranching and farming, including feedlots and dual-purpose ranching and farming",wages,1901587036.85971
+USA,2012,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,112A00,"Animal production, except cattle and poultry and eggs",wages,7854396573.16929
+USA,2017,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,112A00,"Animal production, except cattle and poultry and eggs",wages,8836416630.8302
+USA,2012,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,112300,Poultry and egg production,wages,1865136136.21219
+USA,2017,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,112300,Poultry and egg production,wages,1440379098.24751
+USA,2012,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,1111B0,Grain farming,wages,4996096753.0437
+USA,2017,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,1111B0,Grain farming,wages,3726053625.03006
+USA,2012,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,111200,Vegetable and melon farming,wages,10466834487.0949
+USA,2017,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,111200,Vegetable and melon farming,wages,8452552108.43515
+USA,2012,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,111300,Fruit and tree nut farming,wages,14061228755.2706
+USA,2017,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,111300,Fruit and tree nut farming,wages,12351591297.5473
+USA,2012,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,1111A0,Oilseed farming,wages,3268779210.99419
+USA,2017,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,1111A0,Oilseed farming,wages,3060008825.85562
+USA,2012,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,112120,Dairy cattle and milk production,wages,2980475490.14254
+USA,2017,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,112120,Dairy cattle and milk production,wages,3524038489.27441
+USA,2012,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,114000,"Fishing, hunting and trapping",wages,689020000
+USA,2017,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,114000,"Fishing, hunting and trapping",wages,574960000
+USA,2012,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,111900,Other crop farming,capital,3405419474.59723
+USA,2017,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,111900,Other crop farming,capital,3405070539.77622
+USA,2012,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,1121A0,"Beef cattle ranching and farming, including feedlots and dual-purpose ranching and farming",capital,7013923048.41936
+USA,2017,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,1121A0,"Beef cattle ranching and farming, including feedlots and dual-purpose ranching and farming",capital,3308933483.01296
+USA,2012,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,112A00,"Animal production, except cattle and poultry and eggs",capital,646057751.843338
+USA,2017,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,112A00,"Animal production, except cattle and poultry and eggs",capital,573199191.071677
+USA,2012,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,112300,Poultry and egg production,capital,4521247473.72026
+USA,2017,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,112300,Poultry and egg production,capital,4007765071.91804
+USA,2012,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,1111B0,Grain farming,capital,26273480086.7983
+USA,2017,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,1111B0,Grain farming,capital,17983818445.2652
+USA,2012,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,111200,Vegetable and melon farming,capital,11906451637.27
+USA,2017,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,111200,Vegetable and melon farming,capital,8404125878.83462
+USA,2012,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,111300,Fruit and tree nut farming,capital,7305864424.27323
+USA,2017,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,111300,Fruit and tree nut farming,capital,13360958048.3605
+USA,2012,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,1111A0,Oilseed farming,capital,21489240946.9783
+USA,2017,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,1111A0,Oilseed farming,capital,20117564328.079
+USA,2012,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,112120,Dairy cattle and milk production,capital,8383653377.799
+USA,2017,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,112120,Dairy cattle and milk production,capital,5804163693.90647
+USA,2012,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,114000,"Fishing, hunting and trapping",capital,2885370000
+USA,2017,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,114000,"Fishing, hunting and trapping",capital,3435760000
+USA,2012,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,111900,Other crop farming,tls,20635728.3734603
+USA,2017,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,111900,Other crop farming,tls,19400483.1876212
+USA,2012,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,1121A0,"Beef cattle ranching and farming, including feedlots and dual-purpose ranching and farming",tls,-13124790.5264337
+USA,2017,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,1121A0,"Beef cattle ranching and farming, including feedlots and dual-purpose ranching and farming",tls,-43739564.552048
+USA,2012,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,112A00,"Animal production, except cattle and poultry and eggs",tls,-8657387.63547548
+USA,2017,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,112A00,"Animal production, except cattle and poultry and eggs",tls,-17878753.3463295
+USA,2012,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,112300,Poultry and egg production,tls,13148300.4441673
+USA,2017,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,112300,Poultry and egg production,tls,15370531.1941411
+USA,2012,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,1111B0,Grain farming,tls,1480395.26230657
+USA,2017,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,1111B0,Grain farming,tls,-3606756.88748057
+USA,2012,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,111200,Vegetable and melon farming,tls,-6358810.72473276
+USA,2017,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,111200,Vegetable and melon farming,tls,-45437272.9315774
+USA,2012,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,111300,Fruit and tree nut farming,tls,-7965980.78063136
+USA,2017,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,111300,Fruit and tree nut farming,tls,-63295629.273393
+USA,2012,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,1111A0,Oilseed farming,tls,28744243.936594
+USA,2017,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,1111A0,Oilseed farming,tls,40630880.4714759
+USA,2012,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,112120,Dairy cattle and milk production,tls,-19732346.6078936
+USA,2017,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,112120,Dairy cattle and milk production,tls,-132988532.409996
+USA,2012,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,114000,"Fishing, hunting and trapping",tls,120130000
+USA,2017,COMBINED-EXIOBASE-FABIOv2 (disagg.),A,114000,"Fishing, hunting and trapping",tls,133600000
+USA,2012,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,311300,Sugar and confectionery product manufacturing,wages,962152935.781069
+USA,2017,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,311300,Sugar and confectionery product manufacturing,wages,1933973912.61732
+USA,2012,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,311224,Soybean and other oilseed processing,wages,402517254.948139
+USA,2012,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,311225,Fats and oils refining and blending,wages,81202887.3588324
+USA,2017,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,311224,Soybean and other oilseed processing,wages,378942882.249378
+USA,2017,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,311225,Fats and oils refining and blending,wages,56023029.290439
+USA,2012,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,311221,Wet corn milling,wages,5364438.7426073
+USA,2017,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,311221,Wet corn milling,wages,5860940.61677328
+USA,2012,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,311119,Other animal food manufacturing,wages,177486567.124192
+USA,2017,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,311119,Other animal food manufacturing,wages,179290929.316083
+USA,2012,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,311920,Coffee and tea manufacturing,wages,1573965430.69309
+USA,2017,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,311920,Coffee and tea manufacturing,wages,1424585180.63673
+USA,2012,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,312130,Wineries,wages,1264265182.97922
+USA,2017,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,312130,Wineries,wages,1228929372.62524
+USA,2012,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,312120,Breweries,wages,2877431633.17526
+USA,2017,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,312120,Breweries,wages,2912275636.61237
+USA,2012,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,312140,Distilleries,wages,636504657.365695
+USA,2017,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,312140,Distilleries,wages,1125619125.881
+USA,2012,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,31161A,"Animal (except poultry) slaughtering, rendering, and processing",wages,6806467906.10807
+USA,2017,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,31161A,"Animal (except poultry) slaughtering, rendering, and processing",wages,8557668753.31702
+USA,2012,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,311615,Poultry processing,wages,3720692203.61809
+USA,2017,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,311615,Poultry processing,wages,5102404614.15628
+USA,2012,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,31151A,Fluid milk and butter manufacturing,wages,195950564.342915
+USA,2017,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,31151A,Fluid milk and butter manufacturing,wages,310678057.76419
+USA,2012,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,311300,Sugar and confectionery product manufacturing,capital,410113849.093262
+USA,2017,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,311300,Sugar and confectionery product manufacturing,capital,579767807.491976
+USA,2012,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,311224,Soybean and other oilseed processing,capital,380254968.527061
+USA,2012,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,311225,Fats and oils refining and blending,capital,76838917.7769206
+USA,2017,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,311224,Soybean and other oilseed processing,capital,340361946.073965
+USA,2017,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,311225,Fats and oils refining and blending,capital,50319212.1225913
+USA,2012,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,311221,Wet corn milling,capital,5076145.4533143
+USA,2017,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,311221,Wet corn milling,capital,5264226.47737217
+USA,2012,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,311119,Other animal food manufacturing,capital,167399234.636245
+USA,2017,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,311119,Other animal food manufacturing,capital,161036959.589263
+USA,2012,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,311920,Coffee and tea manufacturing,capital,1380055349.15384
+USA,2017,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,311920,Coffee and tea manufacturing,capital,1245766765.35027
+USA,2012,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,312130,Wineries,capital,843256950.060209
+USA,2017,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,312130,Wineries,capital,878281417.922145
+USA,2012,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,312120,Breweries,capital,1919228857.73088
+USA,2017,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,312120,Breweries,capital,2081321866.39829
+USA,2012,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,312140,Distilleries,capital,885519393.605783
+USA,2017,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,312140,Distilleries,capital,804448476.812939
+USA,2012,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,31161A,"Animal (except poultry) slaughtering, rendering, and processing",capital,541448076.363632
+USA,2017,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,31161A,"Animal (except poultry) slaughtering, rendering, and processing",capital,572600927.249556
+USA,2012,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,311615,Poultry processing,capital,437181026.498742
+USA,2017,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,311615,Poultry processing,capital,486042753.159992
+USA,2012,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,31151A,Fluid milk and butter manufacturing,capital,140983011.146455
+USA,2017,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,31151A,Fluid milk and butter manufacturing,capital,212172122.731738
+USA,2012,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,311300,Sugar and confectionery product manufacturing,tls,127444490.443391
+USA,2017,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,311300,Sugar and confectionery product manufacturing,tls,168693669.80517
+USA,2012,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,311224,Soybean and other oilseed processing,tls,42668409.8861646
+USA,2012,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,311225,Fats and oils refining and blending,tls,8622094.93702283
+USA,2017,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,311224,Soybean and other oilseed processing,tls,23166734.1416897
+USA,2017,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,311225,Fats and oils refining and blending,tls,3424976.91915897
+USA,2012,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,311221,Wet corn milling,tls,569594.279550858
+USA,2017,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,311221,Wet corn milling,tls,358309.548613352
+USA,2012,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,311119,Other animal food manufacturing,tls,18783868.0603097
+USA,2017,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,311119,Other animal food manufacturing,tls,10960979.8416764
+USA,2012,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,311920,Coffee and tea manufacturing,tls,69647975.410119
+USA,2017,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,311920,Coffee and tea manufacturing,tls,55637280.2305537
+USA,2012,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,312130,Wineries,tls,294018418.557458
+USA,2017,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,312130,Wineries,tls,177382403.305386
+USA,2012,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,312120,Breweries,tls,669177566.291723
+USA,2017,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,312120,Breweries,tls,420354873.939172
+USA,2012,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,312140,Distilleries,tls,148025980.057536
+USA,2017,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,312140,Distilleries,tls,162470708.409188
+USA,2012,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,31161A,"Animal (except poultry) slaughtering, rendering, and processing",tls,251781341.562127
+USA,2017,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,31161A,"Animal (except poultry) slaughtering, rendering, and processing",tls,165887776.448282
+USA,2012,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,311615,Poultry processing,tls,114912774.979759
+USA,2017,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,311615,Poultry processing,tls,90733819.8510556
+USA,2012,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,31151A,Fluid milk and butter manufacturing,tls,13075431.5422288
+USA,2017,COMBINED-EXIOBASE-FABIOv2 (disagg.),C,31151A,Fluid milk and butter manufacturing,tls,11936302.7660331

@@ -7,15 +7,6 @@
 #   - combined_gloria/   : GLORIA   + the FSDN/OECD/Eurostat overlay  (synthesis output)
 #   - exiobase/          : the pure EXIOBASE decomposition            (script 14_1, EXIOBASE base)
 #   - combined_exiobase/ : EXIOBASE + the FSDN/OECD/Eurostat overlay  (synthesis output)
-# plus, when both members of a pair are available, COMPARISON versions of
-# every chart that put the two bases into ONE figure (section 9):
-#   - comparison_base/     : GLORIA vs EXIOBASE                (pure bases)
-#   - comparison_combined/ : COMBINED_GLORIA vs COMBINED_EXIOBASE
-# In the comparison figures the facet rows are base x ISIC level, ordered so
-# the two bases sit DIRECTLY above each other within each ISIC level (GLORIA
-# primary / EXIOBASE primary / GLORIA processing / EXIOBASE processing), on
-# identical axes, country order, item colours and WB references — the
-# remaining differences between adjacent panels are the bases themselves.
 # All sources share the same output schema, so one set of chart code drives
 # them; item colours are built from the UNION of all sources so the same FABIO
 # item is the same colour in every sub-folder's figures — flipping between the
@@ -39,8 +30,10 @@
 #     separate SVG.  A coloured square under each country flags which forestry
 #     route was used (green = Eurostat, purple = OECD, grey = GLORIA fallback).
 #     The standalone <year>_reduced-WB.svg variant is no longer produced.
-#     Y axis is clipped to [-100%, 300%] via coord_cartesian — values outside
-#     that range are visually capped without dropping bars from the stack.
+#     Share axis follows the data on both ends — the lower bound goes only as
+#     deep as the negative stacks, and the upper bound expands past 300% so
+#     strong-overshoot years are shown in full — without dropping bars from the
+#     stack.
 #
 #     Items whose ABSOLUTE share is below `threshold` (default 3%) are
 #     grouped as "Other"; the abs() lets heavily-subsidized items with
@@ -96,8 +89,7 @@
 #     they are shares of the WB headline, and there is no WB strand
 #     denominator to take a share of.  Sources without the component-split
 #     columns (older script 14_1 outputs) skip the strand figures with a
-#     message; comparison figures (section 9) build them only when BOTH
-#     members carry the columns.
+#     message.
 #
 # Pipeline rows are matched to items.csv on the numeric `item_code`
 # (fabio_item_code in the pipeline). Item names are then taken from items.csv
@@ -294,6 +286,16 @@ dir.create(out_dir_base, recursive = TRUE, showWarnings = FALSE)
 do_yearly_charts  <- TRUE
 do_country_charts <- TRUE
 
+# Per-year validation scatter — family (A2).  Builder in section 6c.
+do_scatter_charts <- TRUE
+
+# Animated GIF stitched from the per-year scatters (family A2).  When on, the
+# scatters share one fixed axis window so points drift on a stable frame, and a
+# per-country error-decomposition CSV is written alongside the metrics CSV.
+do_scatter_gif <- TRUE
+gif_delay      <- 0.9            # seconds per frame
+gif_frame_px   <- c(900L, 990L)  # frame W x H in px (fixed so frames align)
+
 # Per-country VA sub-account (strand) figures — family (B').  Requires the
 # component-split columns of scripts 14_1 / 14_4 in the source RDS files
 # (value_added_wages|capital|tls [USD]); sources without them fall back to
@@ -400,12 +402,16 @@ read_pipeline <- function(path, label) {
 read_source <- function(src) {
   lev_a <- read_pipeline(src$isic_a, "Primary (ISIC-A)")
   lev_c <- read_pipeline(src$isic_c, "Processing (ISIC-C)")
-  out <- bind_rows(lev_a, lev_c) %>%
-    mutate(pipeline = factor(pipeline, levels = pipeline_levels))
   # Strands are usable for a source only when BOTH ISIC levels carry them —
   # otherwise the two facet rows of a strand figure would not be comparable.
-  attr(out, "has_strands") <-
-    isTRUE(attr(lev_a, "has_strands")) && isTRUE(attr(lev_c, "has_strands"))
+  has_strands <- isTRUE(attr(lev_a, "has_strands")) &&
+    isTRUE(attr(lev_c, "has_strands"))
+  # ISIC-C keeps only items NOT also mapped at ISIC-A (drop double-mapped items,
+  # whose physical output isn't meaningful at the processing level).
+  lev_c <- lev_c %>% filter(!item_code %in% unique(lev_a$item_code))
+  out <- bind_rows(lev_a, lev_c) %>%
+    mutate(pipeline = factor(pipeline, levels = pipeline_levels))
+  attr(out, "has_strands") <- has_strands
   out
 }
 
@@ -922,7 +928,13 @@ canonical_item_order <- all_items_meta %>%
 # Short helper for axis labels in absolute USD (e.g. "1.2B", "500M", "10K")
 usd_axis_labels <- scales::label_number(scale_cut = scales::cut_short_scale())
 
+# Wrap long title/subtitle text onto multiple lines so it stays readable and
+# prints as a self-contained top band that crops off cleanly for publication.
+wrap_label <- function(txt, width = 110)
+  paste(strwrap(txt, width = width), collapse = "\n")
+
 # ---- 6a. per-year chart builder --------------------------------------------
+# Primary (ISIC-A) panel(s) only; horizontal bars with countries on the y axis.
 # Two output variants per year, controlled by the `denominator` argument:
 #   * "raw"     — bars are share of full WB ag VA; dashed y=1 line IS the
 #                 raw WB; per-country grey tick = where the FABIO-comparable
@@ -931,12 +943,12 @@ usd_axis_labels <- scales::label_number(scale_cut = scales::cut_short_scale())
 #                 the reduced WB; per-country grey tick = where the FULL WB
 #                 sits, at y = 1 / (1 - share_non_fabio).
 # share_non_fabio is passed through unclamped, so both ticks can land
-# anywhere on the y axis (including outside the clipped window, in which
+# anywhere on the y axis (including outside the display window, in which
 # case they simply don't render).
-# Y-axis is clipped to [-100%, 300%] in both variants via coord_cartesian,
-# so values outside that range are visually capped without dropping bars
-# from the stack (scale_y_continuous(limits=...) would drop them and
-# silently break stacking).
+# Share axis follows the data on both ends (lower bound only as deep as the
+# negative stacks; upper bound expanded past 300% to show overshoot in full),
+# without dropping bars from the stack (scale_y_continuous(limits=...) would
+# drop them and silently break stacking).
 #
 # Sign convention.  WB ag VA is allowed to be negative (heavy-subsidy
 # regimes occasionally show negative WB).  share = value_usd / wb_ag_va_usd
@@ -961,7 +973,11 @@ make_chart <- function(year_select, denominator = c("raw", "reduced"),
     left_join(items_map, by = "item_code") %>%
     mutate(item = if_else(is.na(item),
                           paste0("[unmapped:", item_code, "]"),
-                          item))
+                          item)) %>%
+    # Primary (ISIC-A) panel(s) only — matches both the single-source level
+    # ("Primary (ISIC-A)") and the section-9 "<base>\nPrimary (ISIC-A)" levels.
+    filter(grepl("ISIC-A", pipeline)) %>%
+    mutate(pipeline = droplevels(pipeline))
   
   wb <- wb_raw %>%
     select(iso3c = `Country Code`,
@@ -1063,45 +1079,31 @@ make_chart <- function(year_select, denominator = c("raw", "reduced"),
     out_dir, sprintf("fabio_validation_%d_%s.svg", year_select, variant_tag))
   
   y_axis_label <- if (denominator == "raw") {
-    "Share of WB agricultural value-added"
+    "Share of national agricultural value-added"
   } else {
-    "Share of FABIO-comparable WB agricultural value-added"
+    "Share of FABIO-comparable national agricultural value-added"
   }
   
   subtitle_txt <- if (denominator == "raw") {
     sprintf(
-      paste0("Stacked items are FABIO value-added as a share of FULL WB ",
-             "agricultural VA (black dashed line = 100%%; negative WB rows ",
-             "are kept and produce above-the-line bars when FABIO matches ",
-             "the negative direction). Grey tick per country = where the ",
-             "FABIO-comparable WB sits (= WB minus seeds [GLORIA share of ",
-             "sector 15] and forestry [measured A02 where available, else ",
-             "GLORIA share of sector 21]). Coloured square under each country ",
-             "= forestry deduction route (see legend). Items whose |share| is ",
-             "below %.0f%% per country are grouped as \"Other\". Countries ",
-             "ordered by full WB agricultural value-added (largest first; ",
-             "negatives at the end). Y axis clipped to [-100%%, 300%%]. ",
-             "Facet rows as labelled: primary (ISIC-A) vs processing ",
-             "(ISIC-C) layers; comparison figures interleave the bases ",
-             "within each level."),
+      paste0("Stacked bars: FABIO value-added as a share of full World Bank ",
+             "agricultural VA (black dashed line = 100%%). Grey tick = FABIO-",
+             "comparable WB (WB minus seeds and forestry); coloured square = ",
+             "forestry source (see legend). Items below %.0f%% |share| per ",
+             "country are grouped as \"Other\". Countries ordered by WB ag VA, ",
+             "largest first. Axis follows the data; overshoot beyond 300%% is ",
+             "shown in full. Primary (ISIC-A) layer only."),
       threshold * 100
     )
   } else {
     sprintf(
-      paste0("Stacked items are FABIO value-added as a share of FABIO-",
-             "comparable WB agricultural VA (= WB minus seeds [GLORIA share ",
-             "of sector 15] and forestry [measured A02 from Eurostat/OECD ",
-             "where available, else GLORIA share of sector 21]; black dashed ",
-             "line = 100%%; negative WB rows are kept). Grey tick per country ",
-             "= where the FULL WB sits relative to the reduced one ",
-             "(= 1 / (1 - share)). Coloured square under each country = ",
-             "forestry deduction route (see legend). Items whose |share| ",
-             "is below %.0f%% per country are grouped as \"Other\". ",
-             "Countries ordered by full WB agricultural value-added ",
-             "(largest first; negatives at the end). Y axis clipped to ",
-             "[-100%%, 300%%]. Facet rows as labelled: primary (ISIC-A) vs ",
-             "processing (ISIC-C) layers; comparison figures interleave the ",
-             "bases within each level."),
+      paste0("Stacked bars: FABIO value-added as a share of FABIO-comparable ",
+             "WB agricultural VA (WB minus seeds and forestry; black dashed ",
+             "line = 100%%). Grey tick = where full WB sits; coloured square = ",
+             "forestry source (see legend). Items below %.0f%% |share| per ",
+             "country are grouped as \"Other\". Countries ordered by WB ag VA, ",
+             "largest first. Axis follows the data; overshoot beyond 300%% is ",
+             "shown in full. Primary (ISIC-A) layer only."),
       threshold * 100
     )
   }
@@ -1109,14 +1111,37 @@ make_chart <- function(year_select, denominator = c("raw", "reduced"),
   # Countries ordered by RAW WB ag value-added (largest first) — keeps
   # the "biggest agricultural countries first" intuition independent of
   # which denominator drives the bar shares, so the two variants share
-  # the same x-axis order.
+  # the same axis order.  Reversed so the largest country sits at the TOP
+  # after the coord_flip.
   country_order <- wb %>%
     filter(iso3c %in% unique(dat_grouped$iso3c)) %>%
     arrange(desc(wb_ag_va_usd)) %>%
-    pull(iso3c)
+    pull(iso3c) %>%
+    rev()
   
   dat_grouped <- mutate(dat_grouped,
                         iso3c = factor(iso3c, levels = country_order))
+  
+  # Axis bounds derived from the data: the deepest negative stack and the
+  # tallest positive stack (sums within a country/panel), each snapped to the
+  # grid. The upper bound is floored at 300% but expands past it so strong
+  # overshoot years are shown in full rather than clipped. The route markers
+  # sit in a thin gutter just under the negative floor.
+  neg_depth <- dat_grouped %>%
+    group_by(pipeline, iso3c) %>%
+    summarise(neg = sum(share[share < 0]), .groups = "drop") %>%
+    pull(neg)
+  pos_depth <- dat_grouped %>%
+    group_by(pipeline, iso3c) %>%
+    summarise(pos = sum(share[share > 0]), .groups = "drop") %>%
+    pull(pos)
+  y_top      <- ceiling(max(3, pos_depth, na.rm = TRUE) / 0.5) * 0.5
+  y_neg      <- floor(min(0, neg_depth, na.rm = TRUE) / 0.25) * 0.25
+  route_y_at <- y_neg - 0.10
+  y_bottom   <- y_neg - 0.20
+  y_step     <- if (y_top > 6) 2 else if (y_top > 3.5) 1 else 0.5
+  y_breaks   <- seq(ceiling(y_bottom / y_step)       * y_step,       y_top, by = y_step)
+  y_minor    <- seq(ceiling(y_bottom / (y_step / 2)) * (y_step / 2), y_top, by = y_step / 2)
   
   # Per-country secondary reference: where the OTHER WB sits relative to
   # the chosen denominator's y=1.  Drawn as a horizontal tick (errorbar
@@ -1141,7 +1166,7 @@ make_chart <- function(year_select, denominator = c("raw", "reduced"),
     filter(iso3c %in% country_order) %>%
     distinct(iso3c, forestry_route) %>%
     mutate(iso3c   = factor(iso3c, levels = country_order),
-           route_y = -0.95)
+           route_y = route_y_at)
   
   # ---- plot ----------------------------------------------------------------
   p <- ggplot(dat_grouped, aes(x = iso3c, y = share, fill = item)) +
@@ -1157,14 +1182,15 @@ make_chart <- function(year_select, denominator = c("raw", "reduced"),
     facet_wrap(~ pipeline, ncol = 1, strip.position = "left", axes = "all_x",
                drop = FALSE) +
     scale_y_continuous(
-      labels = percent_format(accuracy = 1),
-      breaks = seq(-1, 3, by = 0.5),
-      expand = expansion(mult = c(0, 0.02))
+      labels       = percent_format(accuracy = 1),
+      breaks       = y_breaks,
+      minor_breaks = y_minor,          # help lines at every 25%
+      expand       = expansion(mult = c(0, 0.02))
     ) +
-    # Visual clip — DOES NOT drop data points, so stacking stays consistent
-    # for bars whose total exceeds 300%.  Tail of any item that pushes the
-    # stack past 300% (or below -100%) is simply painted out of frame.
-    coord_cartesian(ylim = c(-1, 3)) +
+    # Horizontal bars (countries on the y axis). The window follows the data on
+    # both ends — overshoot above 300% is shown rather than clipped — and does
+    # NOT drop data points, so stacking stays consistent.
+    coord_flip(ylim = c(y_bottom, y_top)) +
     scale_fill_manual(
       values = fill_colors,
       name   = legend_name,
@@ -1181,37 +1207,42 @@ make_chart <- function(year_select, denominator = c("raw", "reduced"),
       title    = sprintf(
         "FABIO value-added [%s] vs World Bank agricultural value-added %s, %d",
         source_name, variant_title, year_select),
-      subtitle = subtitle_txt,
+      subtitle = wrap_label(subtitle_txt),
       x = NULL,
       y = y_axis_label
     ) +
     theme_minimal(base_size = 10) +
     theme(
-      axis.text.x        = element_text(angle = 90, vjust = 0.5, hjust = 1, size = 7),
-      panel.grid.major.x = element_blank(),
-      panel.spacing.y    = unit(1, "lines"),
-      strip.text.y.left  = element_text(angle = 0, face = "bold"),
-      strip.placement    = "outside",
-      legend.position    = "bottom",
-      legend.box         = "vertical",   # stack item + route legends, don't compete for width
-      legend.key.size    = unit(0.35, "cm"),
-      legend.text        = element_text(size = 7),
-      plot.title         = element_text(face = "bold")
+      axis.text.y         = element_text(size = 7),
+      panel.grid.major.x  = element_blank(),
+      panel.grid.minor.x  = element_blank(),
+      panel.grid.major.y  = element_line(colour = "grey80", linewidth = 0.3),
+      panel.grid.minor.y  = element_line(colour = "grey88", linewidth = 0.25),
+      panel.spacing.y     = unit(1, "lines"),
+      strip.text.y.left   = element_text(angle = 0, face = "bold"),
+      strip.placement     = "outside",
+      legend.position     = "bottom",
+      legend.box          = "vertical",
+      legend.key.size     = unit(0.35, "cm"),
+      legend.text         = element_text(size = 7),
+      # Title + subtitle form a left-aligned top band, set off by whitespace so
+      # they can be cropped off cleanly when placing the figure in publication.
+      plot.title.position = "plot",
+      plot.title          = element_text(face = "bold", size = 13, margin = margin(b = 4)),
+      plot.subtitle       = element_text(size = 9, lineheight = 1.15, margin = margin(b = 16))
     ) +
     guides(fill   = guide_legend(ncol = legend_ncol, byrow = TRUE),
            colour = guide_legend(ncol = 3, order = 1,
                                  override.aes = list(size = 3)))
   
   # ---- size & write --------------------------------------------------------
+  # Portrait: countries run down the y axis, so HEIGHT scales with the country
+  # count (and the facet-row count, panels stacking via ncol = 1); width fixed.
   n_countries   <- n_distinct(dat_grouped$iso3c)
-  svg_width     <- max(20, n_countries * 0.18)
   n_legend_rows <- ceiling(length(fill_levels) / legend_ncol)
-  # Height scales with the number of facet rows (2 for a single source, 4 for
-  # the base-comparison figures) at 4.5in per panel — for 2 panels this
-  # reproduces the previous fixed 9in.  +0.5in reserves room for the route
-  # legend now stacked under the item legend.
   n_panels      <- nlevels(dat_grouped$pipeline)
-  svg_height    <- 4.5 * n_panels + 0.25 * n_legend_rows + 0.5
+  svg_width     <- 20
+  svg_height    <- max(20, n_countries * 0.18) * n_panels + 0.25 * n_legend_rows + 0.5
   
   ggsave(out_file, p,
          width = svg_width, height = svg_height,
@@ -1220,6 +1251,24 @@ make_chart <- function(year_select, denominator = c("raw", "reduced"),
   message(sprintf("[%d/%s] wrote %s  (%.1f x %.1f in, %d countries)",
                   year_select, denominator, out_file,
                   svg_width, svg_height, n_countries))
+}
+
+# ggplot draws ONE y-axis title centred across the stacked facet rows; this
+# replicates it so the value-added label sits next to BOTH the ISIC-A and
+# ISIC-C panels.  Returns the untouched grob if the layout is unexpected.
+repeat_facet_ylab <- function(p) {
+  g          <- ggplot2::ggplotGrob(p)
+  yt         <- which(g$layout$name == "ylab-l")
+  panel_rows <- sort(unique(g$layout$t[grepl("^panel", g$layout$name)]))
+  if (!length(yt) || length(panel_rows) < 2L) return(g)
+  ylab_grob <- g$grobs[[yt]]
+  ylab_col  <- g$layout$l[yt]
+  g$grobs[[yt]] <- grid::nullGrob()
+  for (r in panel_rows) {
+    g <- gtable::gtable_add_grob(g, ylab_grob, t = r, b = r, l = ylab_col, r = ylab_col,
+                                 clip = "off", name = sprintf("ylab-l-%d", r))
+  }
+  g
 }
 
 # ---- 6b. per-country time-series chart builder ------------------------------
@@ -1231,24 +1280,17 @@ make_chart <- function(year_select, denominator = c("raw", "reduced"),
 # is directly readable.
 # `pipelines_all`, `out_dir_country` and `source_name` are passed in by the
 # per-source driver (section 7); all other inputs are source-independent and
-# inherited.  `source_name` goes into the title (see make_chart).
-# `primary_panels` names the facet level(s) that represent primary agriculture
-# (ISIC-A) — the WB overlay lines are stamped into exactly those panels.  For
-# a single source that's the one "Primary (ISIC-A)" row (the default); for the
-# base-comparison figures (section 9) it's BOTH bases' primary rows, so each
-# base is read against the same WB reference.
-# `measure` selects what the bars stack: "total" reproduces the original
-# figure exactly (value_added [USD], WB + reduced-WB overlays, original file
-# name); "wages"/"capital"/"tls" stack the matching component-split column
-# instead, drop the WB overlays (the WB headline has no strand decomposition)
-# and stamp the external A01+A03 strand benchmark (section 3c) into the
-# primary row(s) where it covers this country.  The "Other" grouping is
-# decided from the TOTAL measure for every figure, so a country's four
-# figures share one item set and legend.
+# inherited.  `source_name` goes into the title (see make_chart).  The WB
+# overlay lines are stamped into the primary (ISIC-A) row only.
+# `measure` selects what the bars stack: "total" stacks value_added [USD] with
+# the WB + reduced-WB overlays; "wages"/"capital"/"tls" stack the matching
+# component-split column instead, drop the WB overlays (the WB headline has no
+# strand decomposition) and stamp the external A01+A03 strand benchmark
+# (section 3c) into the primary row where it covers this country.  The "Other"
+# grouping is decided from the TOTAL measure for every figure, so a country's
+# four figures share one item set and legend.
 make_country_chart <- function(iso_select, pipelines_all, out_dir_country,
-                               source_name,
-                               primary_panels = pipeline_levels[1],
-                               measure = "total") {
+                               source_name, measure = "total") {
   
   # Pipeline data for this country, restricted to the WB-overlapping years
   pipelines <- pipelines_all %>%
@@ -1362,13 +1404,12 @@ make_country_chart <- function(iso_select, pipelines_all, out_dir_country,
       "FABIO value-added [%s] vs World Bank agricultural value-added — %s",
       source_name, title_country)
     subtitle_txt <- sprintf(
-      paste0("FABIO value-added per item for %s; items below %.0f%% max |share| ",
-             "of WB across years are grouped as \"Other\". Primary (ISIC-A) ",
-             "row(s) only: black line = WB ag VA; grey dashed line = FABIO-",
-             "comparable WB (WB minus seeds + forestry), open points coloured ",
-             "by forestry source (see legend). Rows as labelled: primary ",
-             "(ISIC-A) vs processing (ISIC-C); comparison figures interleave ",
-             "the bases within each level."),
+      paste0("FABIO value-added per item for %s; items below %.0f%% max ",
+             "|share| of WB across years are grouped as \"Other\". Primary ",
+             "(ISIC-A) row: black line = WB ag VA, grey dashed = FABIO-",
+             "comparable WB (WB minus seeds and forestry), points coloured by ",
+             "forestry source (see legend). Rows: primary (ISIC-A) vs ",
+             "processing (ISIC-C)."),
       title_country, threshold * 100
     )
   } else {
@@ -1390,13 +1431,11 @@ make_country_chart <- function(iso_select, pipelines_all, out_dir_country,
       "No external strand benchmark covers this country. "
     }
     subtitle_txt <- sprintf(
-      paste0("FABIO %s per item for %s — a FABIO-internal decomposition of ",
-             "value-added; the World Bank reference exists only as a TOTAL, ",
-             "so no WB line is drawn here. %sItems grouped as \"Other\" ",
-             "exactly as in the TOTAL figure (below %.0f%% max |share| of WB ",
-             "total across years), so the country's figures share one legend. ",
-             "Rows as labelled: primary (ISIC-A) vs processing (ISIC-C); ",
-             "comparison figures interleave the bases within each level."),
+      paste0("FABIO %s per item for %s — a FABIO-internal decomposition; the ",
+             "World Bank reference is TOTAL-only, so no WB line is drawn. ",
+             "%sItems grouped as \"Other\" exactly as in the TOTAL figure ",
+             "(below %.0f%% max |share| of WB across years). Rows: primary ",
+             "(ISIC-A) vs processing (ISIC-C)."),
       MEASURE_TITLE[[measure]], title_country, bench_note, threshold * 100
     )
   }
@@ -1407,24 +1446,11 @@ make_country_chart <- function(iso_select, pipelines_all, out_dir_country,
   }
   
   # ---- plot ----------------------------------------------------------------
-  # Build WB layers only when WB data exists; this keeps geom args clean.
-  #
-  # We restrict the WB lines to the primary (ISIC-A) facet row(s) by stamping
-  # those layers' data with the panel level(s) in `primary_panels`. ggplot's
-  # facet_wrap then routes the layer to those panels only. WB Agriculture
-  # value-added is conceptually a reference for primary agriculture (ISIC-A);
-  # overlaying it on the processing layer (ISIC-C) is apples-to-oranges and
-  # was visual clutter. The cross-country yearly charts still show both WB
-  # references in both rows because there the y=1 line / grey tick are the
-  # comparison itself, not a side overlay.  In the base-comparison figures
-  # `primary_panels` holds BOTH bases' primary rows, so the identical WB
-  # reference is repeated into each — what differs between the panels is then
-  # the bars alone.
+  # The WB overlays are a reference for primary agriculture only, so they are
+  # stamped into the Primary (ISIC-A) row; facet_wrap then routes them there.
   panel_levels   <- levels(pipelines$pipeline)
-  .stamp_primary <- function(df) {
-    bind_rows(lapply(primary_panels, function(pp)
-      mutate(df, pipeline = factor(pp, levels = panel_levels))))
-  }
+  .stamp_primary <- function(df)
+    mutate(df, pipeline = factor(pipeline_levels[1], levels = panel_levels))
   
   # WB overlays only on the TOTAL figure — the WB headline has no strand
   # decomposition, so on strand figures these layers are simply absent.
@@ -1548,22 +1574,26 @@ make_country_chart <- function(iso_select, pipelines_all, out_dir_country,
     ) +
     labs(
       title    = title_txt,
-      subtitle = subtitle_txt,
+      subtitle = wrap_label(subtitle_txt),
       x = NULL,
       y = MEASURE_AXIS[[measure]]
     ) +
     theme_minimal(base_size = 10) +
     theme(
-      axis.text.x        = element_text(angle = 90, vjust = 0.5, hjust = 1, size = 7),
-      panel.grid.major.x = element_blank(),
-      panel.spacing.y    = unit(1, "lines"),
-      strip.text.y.left  = element_text(angle = 0, face = "bold"),
-      strip.placement    = "outside",
-      legend.position    = "bottom",
-      legend.box         = "vertical",   # stack item + route legends, don't compete for width
-      legend.key.size    = unit(0.35, "cm"),
-      legend.text        = element_text(size = 7),
-      plot.title         = element_text(face = "bold")
+      axis.text.x         = element_text(angle = 90, vjust = 0.5, hjust = 1, size = 7),
+      panel.grid.major.x  = element_blank(),
+      panel.spacing.y     = unit(1, "lines"),
+      strip.text.y.left   = element_text(angle = 0, face = "bold"),
+      strip.placement     = "outside",
+      legend.position     = "bottom",
+      legend.box          = "vertical",
+      legend.key.size     = unit(0.35, "cm"),
+      legend.text         = element_text(size = 7),
+      # Title + subtitle form a left-aligned top band, set off by whitespace so
+      # they can be cropped off cleanly when placing the figure in publication.
+      plot.title.position = "plot",
+      plot.title          = element_text(face = "bold", size = 13, margin = margin(b = 4)),
+      plot.subtitle       = element_text(size = 9, lineheight = 1.15, margin = margin(b = 16))
     ) +
     guides(fill   = guide_legend(ncol = legend_ncol, byrow = TRUE),
            colour = guide_legend(ncol = 3, order = 1,
@@ -1573,21 +1603,260 @@ make_country_chart <- function(iso_select, pipelines_all, out_dir_country,
   n_years       <- length(available_years)
   svg_width     <- max(10, n_years * 0.4)
   n_legend_rows <- ceiling(length(fill_levels) / legend_ncol)
-  # Height scales with the number of facet rows (2 for a single source, 4 for
-  # the base-comparison figures) at 4in per panel — for 2 panels this
-  # reproduces the previous fixed 8in.  +0.8in reserves room for the route
-  # legend stacked under the item legend (the per-country plot is narrow, so
-  # legends need explicit vertical budget).
+  # Height scales with the facet-row count at 4in per panel; +0.8in reserves
+  # room for the route legend stacked under the item legend.
   n_panels      <- length(panel_levels)
   svg_height    <- 4 * n_panels + 0.25 * n_legend_rows + 0.8
   
-  ggsave(out_file, p,
+  ggsave(out_file, repeat_facet_ylab(p),
          width = svg_width, height = svg_height,
          limitsize = FALSE, device = "svg")
   
   message(sprintf("[%s/%s] wrote %s  (%.1f x %.1f in, %d years)",
                   iso_select, measure, out_file,
                   svg_width, svg_height, n_years))
+}
+
+# ---- 6c. per-year validation scatter (family A2) ---------------------------
+# FABIO ISIC-A value-added aggregate vs reduced WB agricultural VA, one dot per
+# country per (source, year).  Dashed 45-degree line = identity; fit metrics
+# (RMSLE etc.) are reported in log10 space and written to a CSV, not the figure.
+
+# Reduced-WB rows for one year: iso3c, wb_ag_va_usd, wb_ag_va_reduced,
+# share_non_fabio, forestry_route.  Same derivation as make_chart's `wb` block.
+reduced_wb_for_year <- function(year_select) {
+  wb_raw %>%
+    dplyr::select(iso3c = `Country Code`,
+                  wb_ag_va_usd = dplyr::all_of(as.character(year_select))) %>%
+    dplyr::filter(!is.na(wb_ag_va_usd), wb_ag_va_usd != 0) %>%
+    dplyr::left_join(dplyr::filter(share_by_iso, year == year_select),
+                     by = "iso3c") %>%
+    dplyr::mutate(
+      share_seeds_gloria    = dplyr::coalesce(share_seeds_gloria, 0),
+      share_forestry_gloria = dplyr::coalesce(share_forestry_gloria, 0),
+      use_external_forestry = is.finite(forestry_total_usd) & wb_ag_va_usd != 0,
+      share_forestry        = dplyr::if_else(use_external_forestry,
+                                             forestry_total_usd / wb_ag_va_usd,
+                                             share_forestry_gloria),
+      forestry_route        = factor(
+        dplyr::if_else(use_external_forestry,
+                       dplyr::coalesce(forestry_source, "EUROSTAT_NAMA"),
+                       "GLORIA_share"),
+        levels = forestry_route_levels),
+      share_non_fabio       = share_seeds_gloria + share_forestry,
+      wb_ag_va_reduced      = wb_ag_va_usd * (1 - share_non_fabio)
+    ) %>%
+    dplyr::select(iso3c, wb_ag_va_usd, wb_ag_va_reduced,
+                  share_non_fabio, forestry_route)
+}
+
+# FABIO ISIC-A aggregate joined to reduced WB for one year (x = WB, y = FABIO).
+scatter_pairs <- function(year_select, pipelines_all) {
+  fabio_isic_a <- pipelines_all %>%
+    dplyr::filter(year == year_select, grepl("ISIC-A", pipeline)) %>%
+    dplyr::group_by(iso3c) %>%
+    dplyr::summarise(fabio_usd = sum(value_usd, na.rm = TRUE), .groups = "drop")
+  dplyr::inner_join(fabio_isic_a, reduced_wb_for_year(year_select), by = "iso3c") %>%
+    dplyr::mutate(x = wb_ag_va_reduced, y = fabio_usd)
+}
+
+# Common log-log window across all years, so the GIF frames share one axis.
+scatter_global_lim <- function(years, pipelines_all, pad = 0.30) {
+  vals <- unlist(lapply(years, function(yr) {
+    d <- scatter_pairs(yr, pipelines_all)
+    d <- d[is.finite(d$x) & is.finite(d$y) & d$x > 0 & d$y > 0, , drop = FALSE]
+    log10(c(d$x, d$y))
+  }))
+  if (!length(vals)) return(NULL)
+  10^(c(min(vals), max(vals)) + c(-pad, pad))
+}
+
+# Per-year window shared across ALL sources so the EXIOBASE and GLORIA scatters
+# for a given year sit on identical axes, while staying cut tight to that year.
+scatter_year_lims <- if (do_scatter_charts) {
+  setNames(lapply(available_years, function(yr) {
+    vals <- unlist(lapply(pipelines_by_source, function(pp) {
+      d <- scatter_pairs(yr, pp)
+      d <- d[is.finite(d$x) & is.finite(d$y) & d$x > 0 & d$y > 0, , drop = FALSE]
+      log10(c(d$x, d$y))
+    }))
+    if (!length(vals)) NULL else 10^(c(min(vals), max(vals)) + c(-0.30, 0.30))
+  }), as.character(available_years))
+} else NULL
+
+# Stitch the per-year frame PNGs into one GIF (gifski preferred, magick fallback).
+write_scatter_gif <- function(years, frame_dir, out_dir, source_name) {
+  frames <- file.path(frame_dir, sprintf("frame_%d.png", sort(years)))
+  frames <- frames[file.exists(frames)]
+  if (length(frames) < 2L) {
+    message("[gif/", source_name, "] <2 frames; skipping.")
+    return(invisible(NULL))
+  }
+  gif <- file.path(out_dir, "fabio_validation_scatter.gif")
+  if (requireNamespace("gifski", quietly = TRUE)) {
+    gifski::gifski(frames, gif_file = gif, delay = gif_delay,
+                   width = gif_frame_px[1], height = gif_frame_px[2], progress = FALSE)
+  } else if (requireNamespace("magick", quietly = TRUE)) {
+    anim <- magick::image_animate(magick::image_read(frames),
+                                  fps = max(1L, round(1 / gif_delay)))
+    magick::image_write(anim, gif)
+  } else {
+    message("[gif/", source_name, "] need package 'gifski' or 'magick'; skipping.")
+    return(invisible(NULL))
+  }
+  message("[gif/", source_name, "] wrote ", gif)
+}
+
+# Writes one SVG per year and returns a one-row data.frame of fit metrics for
+# the per-source CSV.  label_top_n = how many largest economies (by reduced WB)
+# to label.
+make_scatter_chart <- function(year_select, pipelines_all, out_dir, source_name,
+                               label_top_n = 5L, svg_lim = NULL, gif_lim = NULL,
+                               frame_dir = NULL) {
+  
+  dat <- scatter_pairs(year_select, pipelines_all)
+  
+  na_row <- function(msg) {
+    message("[scatter ", year_select, "/", source_name, "] ", msg)
+    list(summary = data.frame(
+      source = source_name, year = year_select, n = 0L, n_dropped = NA_integer_,
+      rmsle = NA_real_, bias_dex = NA_real_, gm_ratio = NA_real_,
+      median_fold = NA_real_, r2_identity = NA_real_, pearson_log = NA_real_,
+      ols_slope = NA_real_, ols_intercept = NA_real_, rmse_usd = NA_real_),
+      per_country = data.frame())
+  }
+  if (!nrow(dat)) return(invisible(na_row("no joinable rows; skipping.")))
+  
+  # log10 needs strictly positive pairs; the rest are set aside and counted.
+  pos    <- dplyr::filter(dat, is.finite(x), is.finite(y), x > 0, y > 0)
+  n_drop <- nrow(dat) - nrow(pos)
+  if (nrow(pos) < 2L) return(invisible(na_row("fewer than 2 positive pairs; skipping.")))
+  
+  # Fit metrics in log10 space (a USD RMSE would be size-dominated).
+  lr       <- log10(pos$y) - log10(pos$x)
+  rmsle    <- sqrt(mean(lr^2))
+  bias_dex <- mean(lr)
+  gm_ratio <- 10^bias_dex
+  med_fold <- 10^stats::median(abs(lr))
+  pear     <- if (nrow(pos) >= 3L) stats::cor(log10(pos$x), log10(pos$y)) else NA_real_
+  rmse_usd <- sqrt(mean((pos$y - pos$x)^2))
+  ss_tot   <- sum((log10(pos$y) - mean(log10(pos$y)))^2)
+  r2_id    <- if (ss_tot > 0) 1 - sum(lr^2) / ss_tot else NA_real_
+  # OLS slope/intercept go to the CSV only (slope != 1 flags size-dependent bias).
+  ols      <- if (nrow(pos) >= 3L) stats::lm(log10(y) ~ log10(x), data = pos) else NULL
+  
+  # Per-country error decomposition. pct_rmse2 / pct_rmsle2 are each country's
+  # share of the year's RMSE^2 / RMSLE^2 (each column sums to 1): the size-
+  # weighted vs scale-free attributions behind the aggregate metrics above.
+  per_country <- pos %>%
+    dplyr::transmute(
+      source = source_name, year = year_select, iso3c,
+      wb_reduced_usd = x, fabio_usd = y,
+      log_resid  = lr,
+      fold_err   = 10^abs(lr),
+      direction  = dplyr::if_else(lr >= 0, "over", "under"),
+      sq_resid_usd2 = (y - x)^2,
+      pct_rmse2  = (y - x)^2 / sum((y - x)^2),
+      pct_rmsle2 = lr^2 / sum(lr^2),
+      forestry_route) %>%
+    dplyr::arrange(dplyr::desc(pct_rmse2))
+  
+  # Square, equal-decade window so the dashed identity reads as a true 45 deg.
+  # A supplied svg_lim (shared across sources for this year) wins; else fit to
+  # this source-year's own data and cut tight.
+  if (!is.null(svg_lim)) {
+    lim_lo <- svg_lim[1]; lim_hi <- svg_lim[2]
+  } else {
+    lim_lo <- 10^(min(log10(pos$x), log10(pos$y)) - 0.30)
+    lim_hi <- 10^(max(log10(pos$x), log10(pos$y)) + 0.30)
+  }
+  id_df  <- data.frame(x = c(lim_lo, lim_hi), y = c(lim_lo, lim_hi))
+  
+  # The label_top_n largest economies (by reduced WB) plus identity-line
+  # outliers (|log residual| beyond the 1.5*IQR fence).
+  top_df <- dplyr::slice_max(pos, x, n = label_top_n, with_ties = FALSE)
+  qr     <- stats::quantile(lr, c(0.25, 0.75), names = FALSE)
+  fence  <- 1.5 * (qr[2] - qr[1])
+  lab_df <- dplyr::distinct(dplyr::bind_rows(
+    top_df, pos[lr < qr[1] - fence | lr > qr[2] + fence, , drop = FALSE]))
+  
+  subtitle_txt <- paste0(
+    "One dot per country. Dashed line = identity (y = x). Point colour = ",
+    "forestry source of the reduced WB. Log-log axes; the ", label_top_n,
+    " largest economies and identity-line outliers are labelled.")
+  
+  log_lab <- scales::trans_format("log10", scales::math_format(10^.x))
+  
+  p <- ggplot(pos, aes(x = x, y = y)) +
+    geom_line(data = id_df, aes(x = x, y = y), inherit.aes = FALSE,
+              linetype = "dashed", linewidth = 0.5, colour = "black") +
+    geom_point(aes(colour = forestry_route), size = 1.8, alpha = 0.9) +
+    scale_x_log10(limits = c(lim_lo, lim_hi), labels = log_lab) +
+    scale_y_log10(limits = c(lim_lo, lim_hi), labels = log_lab) +
+    scale_colour_manual(values = forestry_route_colors,
+                        labels = forestry_route_labels,
+                        name   = "Forestry source",
+                        drop   = FALSE, na.translate = FALSE) +
+    labs(
+      title = sprintf(
+        "FABIO ISIC-A value-added vs reduced World Bank agricultural VA [%s], %d",
+        source_name, year_select),
+      subtitle = wrap_label(subtitle_txt),
+      x = "Reduced World Bank agricultural value-added (current US$, log scale)",
+      y = "FABIO ISIC-A value-added aggregate (current US$, log scale)"
+    ) +
+    theme_minimal(base_size = 10) +
+    theme(
+      aspect.ratio        = 1,                      # square panel -> true 45 deg
+      panel.grid.minor    = element_line(colour = "grey92", linewidth = 0.2),
+      panel.grid.major    = element_line(colour = "grey85", linewidth = 0.3),
+      legend.position     = "bottom",
+      plot.title.position = "plot",
+      plot.title          = element_text(face = "bold", size = 13, margin = margin(b = 4)),
+      plot.subtitle       = element_text(size = 9, lineheight = 1.15, margin = margin(b = 12))
+    ) +
+    guides(colour = guide_legend(override.aes = list(size = 3)))
+  
+  # Labels: ggrepel if available, else plain geom_text.
+  p <- p + if (requireNamespace("ggrepel", quietly = TRUE)) {
+    ggrepel::geom_text_repel(data = lab_df, aes(x = x, y = y, label = iso3c),
+                             size = 2.6, colour = "grey20", max.overlaps = Inf,
+                             min.segment.length = 0, segment.size = 0.2,
+                             inherit.aes = FALSE)
+  } else {
+    geom_text(data = lab_df, aes(x = x, y = y, label = iso3c),
+              size = 2.6, colour = "grey20", hjust = -0.15, vjust = -0.4,
+              inherit.aes = FALSE)
+  }
+  
+  out_file <- file.path(out_dir,
+                        sprintf("fabio_validation_scatter_%d.svg", year_select))
+  ggsave(out_file, p, width = 8, height = 8.8, device = "svg")
+  message(sprintf("[scatter %d/%s] wrote %s  (n=%d, RMSLE=%.3f, bias=%.2fx)",
+                  year_select, source_name, out_file, nrow(pos), rmsle, gm_ratio))
+  
+  # GIF frame: same plot, fixed pixel size, year stamped large so it reads.
+  if (!is.null(frame_dir)) {
+    gl <- if (!is.null(gif_lim)) gif_lim else c(lim_lo, lim_hi)
+    pf <- p + labs(tag = as.character(year_select)) +
+      scale_x_log10(limits = gl, labels = log_lab) +
+      scale_y_log10(limits = gl, labels = log_lab) +
+      theme(plot.tag.position = c(0.86, 0.13),
+            plot.tag = element_text(size = 30, face = "bold", colour = "grey60"))
+    suppressMessages(ggsave(file.path(frame_dir, sprintf("frame_%d.png", year_select)), pf,
+                            width = gif_frame_px[1] / 100, height = gif_frame_px[2] / 100,
+                            dpi = 100, device = "png"))
+  }
+  
+  invisible(list(
+    summary = data.frame(
+      source = source_name, year = year_select, n = nrow(pos), n_dropped = n_drop,
+      rmsle = rmsle, bias_dex = bias_dex, gm_ratio = gm_ratio, median_fold = med_fold,
+      r2_identity = r2_id, pearson_log = pear,
+      ols_slope     = if (!is.null(ols)) unname(stats::coef(ols)[2]) else NA_real_,
+      ols_intercept = if (!is.null(ols)) unname(stats::coef(ols)[1]) else NA_real_,
+      rmse_usd = rmse_usd),
+    per_country = per_country))
 }
 
 # ---- 7. per-source output driver -------------------------------------------
@@ -1610,15 +1879,11 @@ if (do_parallel && .Platform$OS.type == "unix" && n_cores > 1L) {
 
 # Build the full chart set for ONE source (its two ISIC levels are already the
 # two facet rows in `src_pipelines`).  Writes to <out_dir_base>/<subdir>/ and
-# .../by_country/.  `primary_panels` is forwarded to make_country_chart; the
-# default covers the single-source case, the comparison driver (section 9)
-# overrides it with both bases' primary rows.  `measures` lists the per-country
-# figures to build ("total" plus, where the source carries the component-split
-# columns, the strands) — the per-year charts (A) are TOTAL-only regardless,
-# being shares of the strand-less WB headline.
-run_source_outputs <- function(src, src_pipelines,
-                               primary_panels = pipeline_levels[1],
-                               measures = "total") {
+# .../by_country/.  `measures` lists the per-country figures to build ("total"
+# plus, where the source carries the component-split columns, the strands) —
+# the per-year charts (A) are TOTAL-only regardless, being shares of the
+# strand-less WB headline.
+run_source_outputs <- function(src, src_pipelines, measures = "total") {
   out_dir         <- file.path(out_dir_base, src$subdir)
   out_dir_country <- file.path(out_dir, "by_country")
   dir.create(out_dir,         recursive = TRUE, showWarnings = FALSE)
@@ -1644,6 +1909,38 @@ run_source_outputs <- function(src, src_pipelines,
                  pipelines_all = src_pipelines, out_dir = out_dir,
                  source_name = src$name)
     }))
+  }
+  
+  # (A2) per-year validation scatter — one SVG per year, a metrics CSV, a
+  # per-country error-decomposition CSV, and (optionally) one animated GIF.
+  if (do_scatter_charts) {
+    xy_lim    <- if (do_scatter_gif) scatter_global_lim(available_years, src_pipelines) else NULL
+    frame_dir <- if (do_scatter_gif) file.path(out_dir, ".scatter_frames")          else NULL
+    if (!is.null(frame_dir)) dir.create(frame_dir, showWarnings = FALSE)
+    
+    res <- .par_apply(available_years, function(yr) {
+      make_scatter_chart(yr, pipelines_all = src_pipelines, out_dir = out_dir,
+                         source_name = src$name,
+                         svg_lim = scatter_year_lims[[as.character(yr)]],
+                         gif_lim = xy_lim, frame_dir = frame_dir)
+    })
+    res        <- Filter(is.list, res)              # drop any failed-worker rows
+    metrics_df <- dplyr::bind_rows(lapply(res, `[[`, "summary"))
+    percc_df   <- dplyr::bind_rows(lapply(res, `[[`, "per_country"))
+    
+    metrics_csv <- file.path(out_dir, "fabio_validation_scatter_metrics.csv")
+    percc_csv   <- file.path(out_dir, "fabio_validation_scatter_per_country.csv")
+    readr::write_csv(metrics_df, metrics_csv)
+    readr::write_csv(percc_df,   percc_csv)
+    message(sprintf("Wrote scatter fit-metrics for %d year(s) -> %s",
+                    nrow(metrics_df), metrics_csv))
+    message(sprintf("Wrote per-country decomposition (%d rows) -> %s",
+                    nrow(percc_df), percc_csv))
+    
+    if (do_scatter_gif) {
+      write_scatter_gif(available_years, frame_dir, out_dir, src$name)
+      unlink(frame_dir, recursive = TRUE)
+    }
   }
   
   # (B) per-country time-series charts — one TOTAL figure per country plus,
@@ -1672,7 +1969,6 @@ run_source_outputs <- function(src, src_pipelines,
                          pipelines_all   = src_pipelines,
                          out_dir_country = out_dir_country,
                          source_name     = src$name,
-                         primary_panels  = primary_panels,
                          measure         = country_jobs$measure[i])
     }))
   }
@@ -1687,83 +1983,6 @@ for (src in sources) {
   }
   run_source_outputs(src, pipelines_by_source[[src$name]],
                      measures = measures_src)
-}
-
-# ---- 9. base-comparison figures (GLORIA vs EXIOBASE in ONE chart) -----------
-# For each comparison pair below, the two members' pipelines are stacked into
-# a single tibble whose `pipeline` factor becomes base x ISIC level, ordered
-# so the two bases sit DIRECTLY above each other within each ISIC level:
-#   <GLORIA>  Primary (ISIC-A)
-#   <EXIOBASE> Primary (ISIC-A)
-#   <GLORIA>  Processing (ISIC-C)
-#   <EXIOBASE> Processing (ISIC-C)
-# The existing builders then do the rest unchanged: facet_wrap on `pipeline`
-# renders one panel per (base, level); the WB references, country order
-# (per-year charts) / x axis (country charts), y clipping and the shared item
-# palette are identical across panels by construction — so any difference
-# between two adjacent panels IS the difference between the bases.  The WB
-# overlay of the per-country charts is stamped into BOTH bases' primary rows
-# via `primary_panels`.
-#
-# A pair is only built when both members survived the input-file check above;
-# otherwise it is skipped with a message (e.g. before the EXIOBASE branch has
-# been produced).
-comparisons <- list(
-  list(
-    name    = "GLORIA vs EXIOBASE",
-    subdir  = "comparison_base",
-    members = c("GLORIA", "EXIOBASE")
-  ),
-  list(
-    name    = "COMBINED: GLORIA vs EXIOBASE",
-    subdir  = "comparison_combined",
-    members = c("COMBINED_GLORIA", "COMBINED_EXIOBASE")
-  )
-)
-
-# Panel label: "<base>\n<ISIC level>" — the newline keeps the left strips
-# narrow.  Level order interleaves the bases within each ISIC level (see
-# above).
-.panel_label <- function(member, level) paste0(member, "\n", level)
-
-build_comparison_pipelines <- function(members) {
-  panel_levels <- as.vector(vapply(
-    pipeline_levels,
-    function(lv) vapply(members, .panel_label, character(1), level = lv),
-    character(length(members))
-  ))
-  dat <- bind_rows(lapply(members, function(m) {
-    pipelines_by_source[[m]] %>%
-      mutate(pipeline = .panel_label(m, as.character(pipeline)))
-  })) %>%
-    mutate(pipeline = factor(pipeline, levels = panel_levels))
-  list(
-    pipelines      = dat,
-    # Both bases' primary rows — the WB overlay repeats into each.
-    primary_panels = vapply(members, .panel_label, character(1),
-                            level = pipeline_levels[1])
-  )
-}
-
-for (cmp in comparisons) {
-  if (!all(cmp$members %in% names(pipelines_by_source))) {
-    message("NOTE: skipping comparison '", cmp$name, "' — missing source(s): ",
-            paste(setdiff(cmp$members, names(pipelines_by_source)),
-                  collapse = ", "))
-    next
-  }
-  cmp_dat <- build_comparison_pipelines(cmp$members)
-  # Strand figures for a comparison only when BOTH members carry the
-  # component-split columns — half a comparison would be misleading.
-  measures_cmp <- if (do_strand_charts && all(strands_by_source[cmp$members])) {
-    MEASURES
-  } else {
-    "total"
-  }
-  run_source_outputs(list(name = cmp$name, subdir = cmp$subdir),
-                     cmp_dat$pipelines,
-                     primary_panels = cmp_dat$primary_panels,
-                     measures       = measures_cmp)
 }
 
 message("\nAll sources done.")

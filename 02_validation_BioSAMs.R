@@ -80,12 +80,13 @@
 #
 #   ISIC assignment of the RAW BioSAM bars.  BioSAM VA carries no ISIC tag, so
 #   each BioSAM item is assigned the ISIC level held by the MAJORITY of its
-#   mapped FABIO items in the concordance (ties -> A).  All but one category are
-#   unambiguous; only A_OANM ("Other animals, live and their products") straddles
-#   both levels and resolves to ISIC-A under this rule (7 A-tagged vs 4 C-tagged
-#   FABIO maps).  For GLORIA/COMBINED the ISIC level is intrinsic — it is simply
-#   which of the two ISIC-level RDS files the FABIO item came from; a category
-#   can therefore carry BOTH an A and a C segment (same colour, the C one framed).
+#   mapped FABIO items in the concordance (ties -> A); a FABIO item tagged at
+#   BOTH levels counts only toward A.  All but one category are unambiguous; only
+#   A_OANM ("Other animals, live and their products") maps across both levels,
+#   and resolves to ISIC-A.  For GLORIA/COMBINED the ISIC level is intrinsic — it
+#   is simply which of the two ISIC-level RDS files the FABIO item came from; a
+#   category can therefore carry BOTH an A and a C segment (same colour, the C one
+#   framed).
 #
 #   Colours: one stable colour per BioSAM category (a base palette interpolated
 #   to the category count, assigned in descending-total order),
@@ -104,6 +105,18 @@
 #   output/biosam_validation/eurostat_A01_A03_benchmark.csv
 #       the Eurostat NAMA A01+A03 benchmark behind every reference line
 #       (iso3c, year, strand, bench_usd) — written only if the fetch succeeded.
+#   output/biosam_validation/metrics_vs_nationalaccounts.csv
+#       agreement statistics, one row per (measure, source), for all five sources
+#       against the Eurostat A01+A03 national-accounts line at ISIC-A scope
+#       (measure, source, n, med_ratio, bias_dex, RMSLE_dex, within_2x,
+#       sign_agree, med_ratio_mag) — written only if the benchmark is available.
+#   output/biosam_validation/metrics_biosam_vs_fabio.csv
+#       the same statistics for the four FABIOv2 variants against the raw BioSAMs
+#       reference at full ISIC A+C scope (same columns).
+#   output/biosam_validation/metrics_biosam_vs_fabio_by_item.csv
+#       the same statistics resolved per BioSAM category, so each item's agreement
+#       is recoverable on its own (a leading `category` column, then the same
+#       columns, one row per category x measure x source).
 #
 #
 # Author:   Coco Vetter
@@ -250,6 +263,13 @@ VA_ACCOUNTS <- names(BIOSAM_ACCOUNT_TO_STRAND)   # CAPITAL, LABOUR, TLS-A
 # The two validation years (== the years the BioSAMs cover).
 YEARS <- c(2010L, 2015L)
 
+# Known-erroneous BioSAM country-years, identified against the Eurostat National
+# Accounts and dropped from the agreement statistics (the per-country figures
+# still draw them, so the discrepancy stays visible).  Romania 2010: the raw
+# BioSAM VA sub-components are clearly corrupt — net-negative agricultural capital
+# and a taxes-less-subsidies figure off by roughly +20 bn USD against Eurostat.
+BIOSAM_EXCLUDE <- data.table(iso3c = "ROU", year = 2010L)
+
 # Measures plotted, one figure each.  All four (total + three strands) take the
 # Eurostat A01+A03 reference line for the matching measure.
 STRANDS  <- c("wages", "capital", "tls")
@@ -309,9 +329,9 @@ SOURCE_LEVELS <- c("BioSAMs",
 # load_area_conc(): now in va_helpers.R
 
 #' Per-BioSAM-item ISIC assignment for the RAW BioSAM bars: the ISIC level held
-#' by the MAJORITY of the item's mapped FABIO items (ties -> A).  Also returns
-#' the canonical BioSAM label per code.  Built from the full (both-level)
-#' concordance.
+#' by the MAJORITY of the item's mapped FABIO items (ties -> A), where a FABIO
+#' item tagged at both levels counts only toward A.  Also returns the canonical
+#' BioSAM label per code.
 build_biosam_item_isic <- function(path) {
   ic <- fread(path)
   ic <- ic[
@@ -319,8 +339,14 @@ build_biosam_item_isic <- function(path) {
       !is.na(FABIO_item_code) & ISIC %in% c("A", "C"),
     .(biosam_item_code = trimws(as.character(BioSAM_item_code)),
       biosam_item      = trimws(as.character(BioSAM_item)),
+      fabio_item_code  = as.integer(FABIO_item_code),
       isic             = toupper(trimws(as.character(ISIC))))
   ]
+  # FABIO items tagged at both levels count only toward A: drop their C rows
+  # before the vote.
+  both <- ic[, .(n_isic = uniqueN(isic)), by = fabio_item_code][n_isic == 2L,
+                                                                fabio_item_code]
+  ic <- ic[!(isic == "C" & fabio_item_code %in% both)]
   counts <- ic[, .(n = .N), by = .(biosam_item_code, biosam_item, isic)]
   counts <- dcast(counts, biosam_item_code + biosam_item ~ isic,
                   value.var = "n", fill = 0)
@@ -517,6 +543,121 @@ load_eurostat_benchmark <- function(eur_per_usd, nace = EU_NACE_BENCH) {
 }
 
 
+# ── Agreement statistics ─────────────────────────────────────────────────────
+#
+# Two metric tables quantify how closely each source reproduces a reference,
+# scored across the BioSAM-covered countries x the two validation years.  Both
+# carry one row per (measure, source), where the measures are the TOTAL
+# value-added and its three strands (wages, capital, tls):
+#
+#   metrics_vs_nationalaccounts.csv — all five sources (BioSAMs included) against
+#       the Eurostat A01+A03 national-accounts line.  ISIC-A scope only: the
+#       A01+A03 reference is primary agriculture, with no counterpart to the
+#       ISIC-C processing sub-stack, so each source is summed over category
+#       within ISIC-A before the comparison.
+#   metrics_biosam_vs_fabio.csv     — the four FABIOv2 variants against the raw
+#       BioSAMs reference, at the full ISIC A+C scope (summed over isic and
+#       category).
+#   metrics_biosam_vs_fabio_by_item.csv — the BioSAMs comparison resolved within
+#       each BioSAM category (summed over isic only), so item-level agreement can
+#       be read directly instead of only through the national aggregate.
+#
+# n counts the country-years with finite values on both sides and a non-zero
+# reference.  The metric set depends on the measure:
+#   total / wages / capital — strictly-positive measures, computed on the
+#   country-years where BOTH source and reference are > 0 (NA if fewer than 3):
+#       med_ratio   median(source / reference)
+#       bias_dex    median(log10(source / reference))       (dex = log10 units)
+#       RMSLE_dex   sqrt(mean(log10(source / reference)^2))
+#       within_2x   share of pairs with 0.5 <= source/reference <= 2
+#   tls — net-negative (subsidies exceed taxes), so ratios/logs on the signed
+#   values are undefined; scored sign-robustly on the magnitudes instead:
+#       sign_agree     share of country-years with sign(source) == sign(reference)
+#       med_ratio_mag  median(|source| / |reference|) on same-sign, non-zero pairs
+#       RMSLE_dex      sqrt(mean(log10(|source|/|reference|)^2)) on those pairs
+# The columns not applicable to a measure are left NA — the ratio columns
+# (med_ratio, bias_dex, within_2x) for tls, the sign columns (sign_agree,
+# med_ratio_mag) for the positive measures.  Country-years flagged as erroneous
+# in the raw BioSAMs (BIOSAM_EXCLUDE) are dropped from both tables.
+
+#' Collapse a long source table to one value per (iso3c, year, source[, category],
+#' strand) within an ISIC scope, and append a derived `total` strand summing the
+#' strands present in each cell.
+#'   isic_keep   = "A"  -> ISIC-A (primary agriculture) only (national-accounts cmp)
+#'   isic_keep   = NULL -> full ISIC A+C scope               (BioSAMs comparison)
+#'   by_category = TRUE -> retain the BioSAM category as a grouping key (per-item)
+#' A strand absent from a cell counts as zero in that cell's total; at the
+#' aggregate scopes every cell carries all three, so the total is their full sum.
+aggregate_measures <- function(dat, isic_keep = NULL, by_category = FALSE) {
+  d   <- if (is.null(isic_keep)) dat else dat[isic == isic_keep]
+  lhs <- c("iso3c", "year", "source", if (by_category) "category")
+  s   <- d[is.finite(value_usd),
+           .(value_usd = sum(value_usd, na.rm = TRUE)),
+           by = c(lhs, "strand")]
+  w   <- dcast(s, as.formula(paste(paste(lhs, collapse = " + "), "~ strand")),
+               value.var = "value_usd")
+  for (col in STRANDS) if (!col %in% names(w)) w[, (col) := NA_real_]
+  w[, total := rowSums(.SD, na.rm = TRUE), .SDcols = STRANDS]
+  long <- melt(w, id.vars = lhs, measure.vars = MEASURES,
+               variable.name = "strand", value.name = "value_usd")
+  long[, strand := as.character(strand)][is.finite(value_usd)]
+}
+
+#' One metric row for a single (measure, source).  `cmp` holds that pair's
+#' matched country-years with columns `src` (source value) and `ref` (reference
+#' value); n counts those with finite values on both sides and a non-zero
+#' reference.  tls is scored sign-robustly, the other measures on positive pairs.
+agreement_row <- function(cmp, measure, source_label) {
+  ok  <- cmp[is.finite(src) & is.finite(ref) & ref != 0]
+  out <- data.table(
+    measure = measure, source = source_label, n = nrow(ok),
+    med_ratio = NA_real_, bias_dex = NA_real_, RMSLE_dex = NA_real_,
+    within_2x = NA_real_, sign_agree = NA_real_, med_ratio_mag = NA_real_)
+  if (measure == "tls") {
+    if (nrow(ok))
+      out[, sign_agree := mean(sign(ok$src) == sign(ok$ref))]
+    sm <- ok[src != 0 & sign(src) == sign(ref)]
+    if (nrow(sm)) {
+      r <- abs(sm$src) / abs(sm$ref)
+      out[, `:=`(med_ratio_mag = median(r),
+                 RMSLE_dex     = sqrt(mean(log10(r)^2)))]
+    }
+  } else {
+    pos <- ok[src > 0 & ref > 0]
+    if (nrow(pos) >= 3L) {
+      r <- pos$src / pos$ref
+      out[, `:=`(med_ratio = median(r),
+                 bias_dex  = median(log10(r)),
+                 RMSLE_dex = sqrt(mean(log10(r)^2)),
+                 within_2x = mean(r >= 0.5 & r <= 2))]
+    }
+  }
+  out[]
+}
+
+#' Score every (measure, source) of `src_long` (iso3c, year, source, strand,
+#' value_usd) against `ref_long` (iso3c, year, strand, ref).  Returns the metric
+#' table in MEASURES x `sources` order, one row per (measure, source); with
+#' by_category = TRUE the comparison is keyed on the BioSAM category too, giving
+#' a leading `category` column and one row per (category, measure, source).
+score_against <- function(src_long, ref_long, sources, by_category = FALSE) {
+  keys <- c("iso3c", "year", "strand", if (by_category) "category")
+  cmp  <- merge(src_long, ref_long, by = keys, all = FALSE)
+  setnames(cmp, "value_usd", "src")
+  groups <- if (by_category) sort(unique(cmp$category)) else NA_character_
+  res <- rbindlist(lapply(groups, function(g) {
+    cg  <- if (by_category) cmp[category == g] else cmp
+    out <- rbindlist(lapply(MEASURES, function(m)
+      rbindlist(lapply(sources, function(s)
+        agreement_row(cg[strand == m & source == s], m, s)))))
+    if (by_category) out[, category := g]
+    out
+  }))
+  if (by_category) setcolorder(res, c("category", setdiff(names(res), "category")))
+  res[]
+}
+
+
 # ── Colour palette ───────────────────────────────────────────────────────────
 #
 # One distinct, STABLE colour per BioSAM category, shared across every country
@@ -534,6 +675,12 @@ base_pal <- c(
   "#8c6d31","#843c39","#7b4173","#3182bd","#e6550d",
   "#31a354","#756bb1","#fd8d3c","#74c476","#9e9ac8"
 )
+
+# Linewidth of the black ISIC-C (processing) frame drawn on the top segments of
+# every bar.  Colour is mapped to ISIC (A -> NA = no outline, C -> black), so
+# this width only affects the visible ISIC-C frames.  Shared by both the
+# per-measure figures and the combined panel so the framing is uniform.
+ISIC_C_OUTLINE_LW <- 0.6
 
 # ── Per-country figure ───────────────────────────────────────────────────────
 #
@@ -591,7 +738,7 @@ make_country_chart <- function(iso, dat_iso, measure, bench_specs,
     # so the per-segment black frame (ISIC-C) lands in the right place.  A
     # segments get colour = NA (no frame); reverse = TRUE puts the first
     # stack level (an ISIC-A category) at the bottom.
-    geom_col(width = 0.8, linewidth = 0.35,
+    geom_col(width = 0.8, linewidth = ISIC_C_OUTLINE_LW,
              position = position_stack(reverse = TRUE))
   
   if (has_neg)
@@ -662,6 +809,133 @@ make_country_chart <- function(iso, dat_iso, measure, bench_specs,
 }
 
 
+# ── Combined four-measure panel for a single country-year ────────────────────
+#
+# One SVG holding all FOUR measures (TOTAL value-added + the wages / capital /
+# tls strands) for a SINGLE country and a SINGLE year, laid out as a 2x2 grid
+# (facet = measure).  y-scales are FREE per panel because the four measures
+# differ greatly in magnitude and tls can be net-negative.  Per-bar layout is
+# identical to make_country_chart: x = sources, bars stacked by BioSAM category,
+# ISIC-C (processing) framed in black on top of ISIC-A (primary).  Each
+# measure-panel carries its own Eurostat NAMA A01+A03 reference line for the
+# matching measure.  Arguments mirror make_country_chart; `dat_total` / `dat_all`
+# / `eu_bench` are the global tables assembled in the RUN section.
+make_combined_panel <- function(iso, year, dat_total, dat_all, eu_bench,
+                                cat_colors, stack_levels) {
+  yr <- as.integer(year)
+  
+  # Pull the four measures for this country-year and tag each with its measure:
+  #   total  <- dat_total (already the per-(source,isic,category) strand sum)
+  #   strands<- dat_all rows for wages / capital / tls
+  total_dt  <- as.data.table(dat_total)[iso3c == iso & year == yr]
+  if (nrow(total_dt))  total_dt[,  measure := "total"]
+  strand_dt <- as.data.table(dat_all)[iso3c == iso & year == yr &
+                                        strand %in% STRANDS]
+  if (nrow(strand_dt)) strand_dt[, measure := strand]
+  
+  keep <- c("iso3c", "year", "source", "isic", "biosam_item_code",
+            "category", "measure", "value_usd")
+  dat <- rbindlist(list(
+    if (nrow(total_dt))  total_dt[,  ..keep],
+    if (nrow(strand_dt)) strand_dt[, ..keep]
+  ), use.names = TRUE, fill = TRUE)
+  
+  if (!nrow(dat)) {
+    message("[", iso, "/", yr, "/panel] no rows; skipping.")
+    return(invisible(NULL))
+  }
+  
+  # Facet strips show the human measure labels, in canonical measure order.
+  meas_labs <- unname(MEASURE_TITLE[MEASURES])
+  dat <- as_tibble(dat) %>%
+    mutate(
+      source    = factor(source, levels = SOURCE_LEVELS),
+      isic      = factor(isic,   levels = c("A", "C")),
+      category  = factor(category, levels = names(cat_colors)),
+      measure   = factor(measure, levels = MEASURES, labels = meas_labs),
+      stack_grp = factor(paste(isic, category, sep = "|"), levels = stack_levels)
+    )
+  
+  # Per-measure Eurostat reference line for this country-year, tagged with the
+  # same measure factor so each line lands in its own panel.
+  bench_dt <- NULL
+  if (!is.null(eu_bench)) {
+    bench_dt <- as.data.table(eu_bench)[iso3c == iso & year == yr &
+                                          strand %in% MEASURES &
+                                          is.finite(bench_usd)]
+    if (nrow(bench_dt))
+      bench_dt[, measure := factor(strand, levels = MEASURES, labels = meas_labs)]
+    else bench_dt <- NULL
+  }
+  
+  has_neg  <- any(c(dat$value_usd,
+                    if (!is.null(bench_dt)) bench_dt$bench_usd) < 0, na.rm = TRUE)
+  y_expand <- if (has_neg) expansion(mult = c(0.04, 0.04))
+  else          expansion(mult = c(0, 0.04))
+  
+  p <- ggplot(dat, aes(x = source, y = value_usd,
+                       fill = category, colour = isic, group = stack_grp)) +
+    geom_col(width = 0.8, linewidth = ISIC_C_OUTLINE_LW,
+             position = position_stack(reverse = TRUE))
+  
+  if (has_neg)
+    p <- p + geom_hline(yintercept = 0, linewidth = 0.3, colour = "grey70")
+  
+  if (!is.null(bench_dt))
+    p <- p + geom_hline(data = bench_dt, aes(yintercept = bench_usd),
+                        inherit.aes = FALSE, linetype = "solid",
+                        linewidth = 0.6, colour = "black")
+  
+  p <- p +
+    facet_wrap(~ measure, nrow = 2, scales = "free_y") +
+    scale_x_discrete(drop = FALSE) +
+    scale_fill_manual(values = cat_colors, name = "BioSAM category", drop = TRUE) +
+    scale_colour_manual(values = c(A = NA, C = "black"), guide = "none",
+                        na.value = NA) +
+    scale_y_continuous(
+      labels = label_number(scale_cut = cut_short_scale()),
+      expand = y_expand
+    ) +
+    labs(
+      title    = sprintf("BioSAMs vs FABIOv2 — %s, %d", iso, yr),
+      subtitle = paste0(
+        "Total value-added and its wages / capital / taxes-less-subsidies ",
+        "strands (USD) for the raw JRC BioSAMs and the GLORIA / COMBINED-GLORIA / ",
+        "EXIOBASE / COMBINED-EXIOBASE FABIOv2 variants aggregated to BioSAM ",
+        "categories. Bars stacked by category; ISIC-C (processing) framed in ",
+        "black on top, ISIC-A (primary) below. Black line = Eurostat NAMA ",
+        "A01+A03 for each measure (primary-agriculture / ISIC-A reference, read ",
+        "against the lower sub-stack). Free y-scale per panel; BioSAMs converted ",
+        "EUR->USD via Germany's FAOSTAT SLC rate."),
+      x = NULL,
+      y = "Value (current US$)"
+    ) +
+    theme_minimal(base_size = 10) +
+    theme(
+      axis.text.x        = element_text(angle = 30, vjust = 1, hjust = 1, size = 8),
+      panel.grid.major.x = element_blank(),
+      panel.spacing      = unit(1, "lines"),
+      strip.text         = element_text(face = "bold"),
+      legend.position    = "bottom",
+      legend.key.size    = unit(0.35, "cm"),
+      legend.text        = element_text(size = 7),
+      plot.title         = element_text(face = "bold")
+    ) +
+    guides(fill = guide_legend(ncol = 4, byrow = TRUE))
+  
+  n_legend_rows <- ceiling(length(cat_colors) / 4)
+  svg_width     <- 14
+  svg_height    <- 10 + 0.25 * n_legend_rows   # 2 facet rows -> taller than the singles
+  out_file      <- file.path(OUT_DIR_COUNTRY, sprintf("%s_%d_panel.svg", iso, yr))
+  
+  ggsave(out_file, p, width = svg_width, height = svg_height,
+         limitsize = FALSE, device = "svg")
+  message(sprintf("[%s/%d/panel] wrote %s  (%.1f x %.1f in)",
+                  iso, yr, out_file, svg_width, svg_height))
+  invisible(out_file)
+}
+
+
 # ============================================================================
 # RUN
 # ============================================================================
@@ -669,6 +943,8 @@ make_country_chart <- function(iso, dat_iso, measure, bench_specs,
 message("Loading concordances ...")
 item_conc_a <- load_item_conc(ITEM_CONC_PATH, "A", "BioSAM_item_code", "BioSAM_item", out_code = "biosam_item_code", out_item = "biosam_item", keep_code_class_char = FALSE)
 item_conc_c <- load_item_conc(ITEM_CONC_PATH, "C", "BioSAM_item_code", "BioSAM_item", out_code = "biosam_item_code", out_item = "biosam_item", keep_code_class_char = FALSE)
+# ISIC-C keeps only FABIO items not also tagged at A (drop double-mapped items).
+item_conc_c <- item_conc_c[!fabio_item_code %in% item_conc_a$fabio_item_code]
 area_conc   <- load_area_conc(AREA_CONC_PATH, "BioSAM_area_code", "FABIO_iso3c", out_code = "biosam_area_code", out_fabio = "iso3c", fabio_as_integer = FALSE)
 item_isic   <- build_biosam_item_isic(ITEM_CONC_PATH)
 message(sprintf("  %d ISIC-A and %d ISIC-C item mappings; %d area mappings; %d categories.",
@@ -731,6 +1007,56 @@ if (!is.null(eu_bench)) {
   message("Eurostat benchmark -> ", eu_bench_path)
 }
 
+# Agreement statistics behind the figures: two metric tables scoring the sources
+# across the BioSAM-covered countries x the two validation years, written next to
+# the comparison CSV and echoed to the console.  NAs are written explicitly so a
+# downstream reader sees which columns apply to which measure.  Known-erroneous
+# BioSAM country-years (BIOSAM_EXCLUDE — Romania 2010) are dropped here, so the
+# metrics reflect only the trustworthy comparison; the figures and comparison CSV
+# keep them.
+dat_metrics <- dat_all[!BIOSAM_EXCLUDE, on = .(iso3c, year)]
+
+# Analysis 1 — all sources vs the Eurostat A01+A03 national-accounts line, at the
+# ISIC-A scope that line measures (primary agriculture).  Needs the benchmark, so
+# it degrades gracefully when the benchmark is unavailable.
+if (!is.null(eu_bench)) {
+  src_na     <- aggregate_measures(dat_metrics, isic_keep = "A")
+  ref_na     <- eu_bench[iso3c %in% biosam_countries,
+                         .(iso3c, year, strand, ref = bench_usd)]
+  metrics_na <- score_against(src_na, ref_na, SOURCE_LEVELS)
+  metrics_na_path <- file.path(OUT_DIR, "metrics_vs_nationalaccounts.csv")
+  fwrite(metrics_na, metrics_na_path, na = "NA")
+  message("National-accounts metrics -> ", metrics_na_path)
+  message("\nAgreement vs Eurostat A01+A03 national accounts (ISIC-A):")
+  print(metrics_na)
+} else {
+  message("Eurostat benchmark unavailable — skipping national-accounts metrics.")
+}
+
+# Analysis 2 — the four FABIOv2 variants vs the raw BioSAMs reference, at the full
+# ISIC A+C scope.
+src_bs     <- aggregate_measures(dat_metrics, isic_keep = NULL)
+ref_bs     <- src_bs[source == "BioSAMs", .(iso3c, year, strand, ref = value_usd)]
+fab_srcs   <- setdiff(SOURCE_LEVELS, "BioSAMs")
+metrics_bs <- score_against(src_bs[source %in% fab_srcs], ref_bs, fab_srcs)
+metrics_bs_path <- file.path(OUT_DIR, "metrics_biosam_vs_fabio.csv")
+fwrite(metrics_bs, metrics_bs_path, na = "NA")
+message("BioSAMs-reference metrics -> ", metrics_bs_path)
+message("\nAgreement vs raw BioSAMs (full ISIC A+C):")
+print(metrics_bs)
+
+# Analysis 3 — Analysis 2 resolved per BioSAM category: each FABIOv2 variant vs the
+# raw BioSAMs reference within every category, at the full ISIC A+C scope.
+src_bs_item     <- aggregate_measures(dat_metrics, isic_keep = NULL,
+                                      by_category = TRUE)
+ref_bs_item     <- src_bs_item[source == "BioSAMs",
+                               .(iso3c, year, category, strand, ref = value_usd)]
+metrics_bs_item <- score_against(src_bs_item[source %in% fab_srcs],
+                                 ref_bs_item, fab_srcs, by_category = TRUE)
+metrics_bs_item_path <- file.path(OUT_DIR, "metrics_biosam_vs_fabio_by_item.csv")
+fwrite(metrics_bs_item, metrics_bs_item_path, na = "NA")
+message("Per-item BioSAMs-reference metrics -> ", metrics_bs_item_path)
+
 # Global, stable category palette + stacking order (A combos first, then C, each
 # by descending TOTAL) so colours and stack positions match across every country
 # figure AND every measure (a category is one colour everywhere).  Computed on
@@ -779,6 +1105,18 @@ for (iso in countries) {
                        cat_colors, stack_levels,
                        ref_note = ref_note_for(measure))
   }
+}
+
+# Combined four-measure panel (total VA + the wages / capital / tls strands) for
+# Spain in 2015 only — the four per-measure views laid out as one 2x2 grid for an
+# at-a-glance look at that country-year.  Drawn in addition to the per-measure
+# figures above.
+if ("ESP" %in% countries && 2015L %in% YEARS) {
+  message("Building combined ESP 2015 four-measure panel ...")
+  make_combined_panel("ESP", 2015L, dat_total, dat_all, eu_bench,
+                      cat_colors, stack_levels)
+} else {
+  message("Skipping combined ESP 2015 panel (ESP not covered, or 2015 not in YEARS).")
 }
 
 message("\nDone.")
