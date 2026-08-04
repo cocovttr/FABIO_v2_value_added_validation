@@ -1,250 +1,298 @@
 # ==============================================================================
-# 00_validation_helpers.R — small shared helpers for the FABIO value-added
-#                           VALIDATION scripts (02_BioSAMs, 03_USA_SUTs,
-#                           04_Japan_IOTs).
+# 00_validation_helpers.R — shared agreement metrics and IHS scatter panels for
+#                           the FABIO value-added validators (01 global
+#                           agricultural GDP, 02 BioSAMs, 03 USA SUTs,
+#                           04 Japan IOTs).
 #
-# Why this file exists
-# --------------------
-# When the value-added pipeline was folded into FABIO, the *data* helpers the
-# validators use (load_item_conc, load_area_conc, faostat_rate_table,
-# read_faostat_exchange_long) were kept in R/00_value_added_helpers.R. The
-# *plotting / path-closure* helpers were deliberately dropped from that file
-# (see its header: "removed plotting / path-closure helpers") because the
-# validators moved to their own repo. hline_spec() is the one such helper the
-# validators still call — its definition went with the deleted local helper.
-# This file restores it. The data helpers are NOT redefined here; they still
-# come from the pipeline helper.
+# Sourced via the validation-repo anchor so it resolves regardless of working
+# directory:  source(validation_path("00_validation_helpers.R"))
 #
-# How to load it
-# --------------
-# 02 / 03 / 04 source this right after sourcing the FABIO value-added config,
-# via the validation-repo anchor so it resolves regardless of working directory:
-#     source(validation_path("00_validation_helpers.R"))
-# (The data helpers — load_item_conc etc. — come from the pipeline's
-# R/00_value_added_helpers.R, which the config sources; they are NOT redefined
-# here.) 01 does not use hline_spec and so does not source this file.
-#
-# Base R only — no extra dependencies.
+# Expects data.table, ggplot2 and scales to be attached by the caller.
+# Everything except va_metrics() also expects the caller's measure ordering,
+#     MEASURES = c("total", "wages", "capital", "tls")
 # ==============================================================================
 
-#' Build one horizontal benchmark-line spec for make_country_chart().
-#'
-#' Call sites (02/03/04, inside build_bench_specs()):
-#'   hline_spec(bench[iso3c == iso & strand == measure & year %in% YEARS],
-#'              "bench_usd", "solid",  "black")   # OECD / Eurostat
-#'   hline_spec(wb_bench[...],          "bench_usd", "dashed", "black")  # WB fb
-#'
-#' Consumer contract (make_country_chart):
-#'   bench_vals <- unlist(lapply(bench_specs, function(s) s$data$yintercept))
-#'   for (s in bench_specs)
-#'     p <- p + geom_hline(data = s$data, aes(yintercept = yintercept),
-#'                         inherit.aes = FALSE, linetype = s$linetype,
-#'                         linewidth = s$linewidth, colour = s$colour)
-#' so each spec must expose $data (a data.frame with `year` + `yintercept`,
-#' one row per faceted year), $linetype, $linewidth and $colour.
-#'
-#' @param df        benchmark rows ALREADY filtered to one iso3c + one strand +
-#'                  the plotted YEARS. Needs a `year` column (the facet var) and
-#'                  the value column named by `value_col`. May be empty / NULL.
-#' @param value_col name of the column holding the line's y position
-#'                  (the benchmark loaders write "bench_usd").
-#' @param linetype  ggplot2 linetype (callers pass "solid", or "dashed" for the
-#'                  World-Bank fallback line). Required, no default.
-#' @param colour    line colour (callers pass "black"). Required, no default.
-#' @param linewidth line width (default 0.45).
-#' @param years     factor levels to pin `year` to, so the line maps to the same
-#'                  facet panels the chart uses (it builds factor(year, YEARS)).
-#'                  Defaults to the script-level YEARS via get0().
-#'
-#' @return NULL when there is nothing to draw (no rows, or every value is
-#'   NA / non-finite) — the callers wrap this in Filter(Negate(is.null), ...),
-#'   so a NULL simply omits the line and the figure is still produced (the same
-#'   graceful degradation the scripts document when a benchmark is unavailable).
-#'   Otherwise a list(data, linetype, colour, linewidth) as described above.
-hline_spec <- function(df, value_col, linetype, colour, linewidth = 0.45,
-                       years = get0("YEARS", ifnotfound = NULL)) {
-  if (is.null(df)) return(NULL)
-  d <- as.data.frame(df)
-  if (!nrow(d) || !value_col %in% names(d)) return(NULL)
-  d$yintercept <- d[[value_col]]
-  d <- d[is.finite(d$yintercept), , drop = FALSE]
-  if (!nrow(d)) return(NULL)
-  # The chart builds its facet variable as factor(year, levels = YEARS), so the
-  # benchmark line's `year` must be the SAME factor or geom_hline won't land in
-  # the right year panel. `years` defaults to the script-level YEARS.
-  if (!is.null(years)) d$year <- factor(d$year, levels = years)
-  list(data = d[, c("year", "yintercept")],
-       linetype = linetype, colour = colour, linewidth = linewidth)
-}
 
-# ==============================================================================
-# Agreement scoring for the reference-comparison validators (03 / 04).
+# ── Cells ────────────────────────────────────────────────────────────────────
 #
-# Why this lives here now
-# -----------------------
-# 02_validation_BioSAMs.R grew an inline metrics layer (aggregate_measures /
-# agreement_row / score_against) that turns a long (iso3c, year, source, isic,
-# category, strand, value_usd) comparison table into tidy metric CSVs — med
-# ratio, RMSLE (dex), within-2x, plus sign-robust columns for the net-signed
-# TLS strand.  03 (USA SUTs) and 04 (Japan IOTs) report the SAME statistics in
-# the thesis text but previously wrote only the raw comparison CSV, so the
-# numbers cited there had to be read back off the figures.  These helpers let
-# 03 / 04 emit the metrics directly, in the BioSAM idiom.
+# A comparison table is long over (iso3c, year, source, isic, category, strand,
+# value_usd).  Three cell resolutions are scored:
 #
-# Difference from 02's inline copy: one extra dispersion column, `med_abs_dex`
-# = median|log10(ratio)| (the "median absolute residual in dex"), reported
-# alongside the RMSLE because the USA item-level comparison is summarised with
-# the median-absolute residual rather than the RMSLE.  02 is untouched and
-# keeps its own inline definitions; nothing here overrides them.
+#   L1  (iso3c, year)                            items and ISIC sections summed
+#   L2  (iso3c, year, isic, category)            strands summed
+#   L3  (iso3c, year, isic, category, strand)
 #
-# Requires data.table (loaded by 03 / 04) and two globals the caller defines:
-#   STRANDS  = c("wages","capital","tls")
-#   MEASURES = c("total", STRANDS)
-# ==============================================================================
+# `total` is a cell value only where the resolution sums the strands away — at
+# L1 alongside the three strand rows, at L2 as the only row.  The item key
+# carries its ISIC section because a category can contribute at both levels.
 
-#' Collapse a long source table to one value per (`group_keys`, strand) within
-#' an ISIC scope, appending a derived `total` strand summing the strands present
-#' in each cell.  `group_keys` always begins with iso3c/year/source and may add
-#' `isic` and/or `category` depending on the granularity the caller wants
-#' (national totals, per-ISIC, or per-item).  A strand absent from a cell counts
-#' as zero in that cell's total.
-va_aggregate <- function(dat, group_keys) {
-  stopifnot(all(c(STRANDS, MEASURES) %in% c("total", STRANDS)))
+VA_LEVEL_KEYS <- list(L1 = c("iso3c", "year"),
+                      L2 = c("iso3c", "year", "isic", "category"),
+                      L3 = c("iso3c", "year", "isic", "category"))
+
+VA_LEVEL_DESC <- c(L1 = "country x year",
+                   L2 = "country x year x item, strands summed",
+                   L3 = "country x year x item x strand")
+
+#' One value per (source, cell, strand) at the resolution `keys`.  `strands`
+#' keeps the three VA strands as separate rows; `total` appends their sum, where
+#' a strand absent from a cell counts as zero.
+va_cells <- function(dat, keys, strands = TRUE, total = TRUE) {
   s <- dat[is.finite(value_usd),
-           .(value_usd = sum(value_usd, na.rm = TRUE)),
-           by = c(group_keys, "strand")]
-  w <- data.table::dcast(
-    s, stats::as.formula(paste(paste(group_keys, collapse = " + "), "~ strand")),
-    value.var = "value_usd")
-  for (col in STRANDS) if (!col %in% names(w)) w[, (col) := NA_real_]
-  w[, total := rowSums(.SD, na.rm = TRUE), .SDcols = STRANDS]
-  long <- data.table::melt(w, id.vars = group_keys, measure.vars = MEASURES,
-                           variable.name = "strand", value.name = "value_usd")
-  long[, strand := as.character(strand)][is.finite(value_usd)]
+           .(value = sum(value_usd, na.rm = TRUE)),
+           by = c("source", keys, "strand")]
+  rbindlist(list(
+    if (strands) s,
+    if (total)   s[, .(strand = "total", value = sum(value)), by = c("source", keys)]
+  ), use.names = TRUE)
 }
 
-#' One metric row for a single (measure, source).  `ok_all` holds that pair's
-#' matched cells with columns `src` (source value) and `ref` (reference value).
-#' n counts cells finite on both sides with a non-zero reference.  tls is scored
-#' sign-robustly (sign agreement + magnitude ratio); the positive measures
-#' (total / wages / capital) on cells positive on both sides.  Dispersion is
-#' reported three ways so any of the thesis conventions is reproducible:
-#'   bias_dex    = median(log10 ratio)        signed central tendency
-#'   med_abs_dex = median|log10 ratio|        median absolute residual
-#'   RMSLE_dex   = sqrt(mean(log10 ratio^2))  root-mean-square log error
-va_agreement_row <- function(ok_all, measure, source_label) {
-  ok  <- ok_all[is.finite(src) & is.finite(ref) & ref != 0]
-  out <- data.table::data.table(
-    measure = measure, source = source_label, n = nrow(ok),
-    med_ratio = NA_real_, bias_dex = NA_real_, med_abs_dex = NA_real_,
-    RMSLE_dex = NA_real_, within_2x = NA_real_,
-    sign_agree = NA_real_, med_ratio_mag = NA_real_)
-  if (measure == "tls") {
-    if (nrow(ok))
-      out[, sign_agree := mean(sign(ok$src) == sign(ok$ref))]
-    sm <- ok[src != 0 & sign(src) == sign(ref)]
-    if (nrow(sm)) {
-      r <- abs(sm$src) / abs(sm$ref)
-      out[, `:=`(med_ratio_mag = stats::median(r),
-                 med_abs_dex   = stats::median(abs(log10(r))),
-                 RMSLE_dex     = sqrt(mean(log10(r)^2)))]
-    }
-  } else {
-    pos <- ok[src > 0 & ref > 0]
-    if (nrow(pos) >= 3L) {
-      r <- pos$src / pos$ref
-      out[, `:=`(med_ratio   = stats::median(r),
-                 bias_dex    = stats::median(log10(r)),
-                 med_abs_dex = stats::median(abs(log10(r))),
-                 RMSLE_dex   = sqrt(mean(log10(r)^2)),
-                 within_2x   = mean(r >= 0.5 & r <= 2))]
-    }
+va_level_cells <- function(dat, level) {
+  keys <- VA_LEVEL_KEYS[[level]]
+  switch(level,
+         L1 = va_cells(dat, keys),
+         L2 = va_cells(dat, keys, strands = FALSE),
+         L3 = va_cells(dat, keys, total   = FALSE))
+}
+
+
+# ── Matching ─────────────────────────────────────────────────────────────────
+
+#' Pair every source in `cells` against the reference table `ref` (the cell keys
+#' plus a `ref` column).  With `expand`, the cell universe is the union of the
+#' two sides and an absent row is carried as a structural zero, so a source that
+#' simply does not populate a cell registers as a coverage failure rather than
+#' vanishing from the comparison.  Without it the pairing is an inner join.
+va_match <- function(cells, ref, expand = TRUE) {
+  keys <- setdiff(names(ref), "ref")
+  if (!expand) {
+    out <- merge(cells, ref, by = keys)
+    setnames(out, "value", "src")
+    return(out[])
   }
+  srcs <- sort(unique(cells$source))
+  univ <- unique(rbindlist(list(ref[, ..keys], cells[, ..keys]), use.names = TRUE))
+  grid <- data.table(univ[rep(seq_len(nrow(univ)), length(srcs))],
+                     source = rep(srcs, each = nrow(univ)))
+  out  <- merge(merge(grid, ref, by = keys, all.x = TRUE),
+                cells, by = c(keys, "source"), all.x = TRUE)
+  out[is.na(ref),   ref   := 0]
+  out[is.na(value), value := 0]
+  setnames(out, "value", "src")
   out[]
 }
 
-#' Pooled agreement metrics.  `cmp` is an already-merged table carrying columns
-#' `source`, `strand`, `src`, `ref` (and, if `report_col` is given, that column
-#' too).  Returns one row per (measure, source), or per (`report_col`, measure,
-#' source) when `report_col` is set — e.g. report_col = "isic" gives separate
-#' ISIC-A and ISIC-C blocks.  Cells are pooled across whatever else is in `cmp`
-#' (typically item x year).
-va_score <- function(cmp, sources, report_col = NULL) {
-  grp <- if (is.null(report_col)) NA_character_ else sort(unique(cmp[[report_col]]))
-  res <- data.table::rbindlist(lapply(grp, function(g) {
-    cg  <- if (is.null(report_col)) cmp else cmp[get(report_col) == g]
-    out <- data.table::rbindlist(lapply(MEASURES, function(m)
-      data.table::rbindlist(lapply(sources, function(s)
-        va_agreement_row(cg[strand == m & source == s], m, s)))))
-    if (!is.null(report_col)) out[, (report_col) := g]
-    out
-  }))
-  if (!is.null(report_col))
-    data.table::setcolorder(res, c(report_col, setdiff(names(res), report_col)))
-  res[]
+#' va_match() where the reference is one of the sources in `cells`.
+va_match_source <- function(cells, reference, expand = TRUE) {
+  keys <- setdiff(names(cells), c("source", "value"))
+  ref  <- cells[source == reference, c(keys, "value"), with = FALSE]
+  setnames(ref, "value", "ref")
+  va_match(cells[source != reference], ref, expand = expand)
 }
 
-#' Convenience wrapper used by 03 / 04.  Given the long comparison table `dat`
-#' (cols iso3c, year, source, isic, category, strand, value_usd), the reference
-#' source label, and the source labels to score, write three CSVs into `out_dir`
-#' under the given `prefix`, and return them invisibly as a named list:
-#'
-#'   <prefix>_by_strand_by_year.csv  AGGREGATE ratio per (isic, year, source,
-#'       measure): source_usd, ref_usd, ratio.  ratio keeps its sign, so the net
-#'       TLS strand shows up signed.  Reproduces the per-year totals, the
-#'       per-year strand ratios, and (Japan) the per-year capture shares.
-#'   <prefix>_item_ratios.csv        the PRE-AGGREGATION frame: AGGREGATE ratio
-#'       per (isic, category, year, source, measure).  One row per mapped item x
-#'       year x source; reproduces any single-item or per-year item ratio.
-#'   metrics_<prefix>_pooled_items.csv  per (isic, source, measure): pooled
-#'       item-level metrics (n, med_ratio, bias/med_abs/RMSLE dex, within_2x,
-#'       and the sign columns for TLS), pooling item x year cells.
-#'
-#' All ratios are source / reference.  NAs are written explicitly.
-write_reference_metrics <- function(dat, reference, sources, out_dir, prefix) {
-  ref_lab <- reference
-  fab     <- setdiff(sources, ref_lab)
+#' The matched frames for a level cascade, named by level.
+va_matched_levels <- function(dat, reference, levels) {
+  setNames(lapply(levels, function(lv)
+    va_match_source(va_level_cells(dat, lv), reference)), levels)
+}
+
+
+# ── Metrics ──────────────────────────────────────────────────────────────────
+#
+# All dispersion is in log10 units ("dex").  On the cells that are non-zero on
+# both sides and of the same sign, with l = log10(|src| / |ref|):
+#
+#   med_ratio  = 10^median(l)
+#   mad_fold   = 10^median(|l - median(l)|)
+#   rmsle_dex  = sqrt(mean(l^2))         uncentred, about zero — the identity,
+#                                        not the fitted centre, is the target
+#
+# reported alongside, over all cells in the group:
+#
+#   n          cells in the group
+#   n_used     cells surviving the non-zero + same-sign filter
+#   coverage   share of cells non-zero on both sides
+#   sign_agree share of same-sign cells, among cells non-zero on both sides
+#
+# sign_agree conditions on the non-zero cells so that a structural zero reads as
+# missing coverage rather than as a sign flip; coverage carries that information.
+
+VA_MIN_USED <- 10L
+
+va_metrics <- function(ref, src) {
+  nz  <- ref != 0 & src != 0
+  use <- nz & sign(ref) == sign(src)
+  l   <- log10(abs(src[use]) / abs(ref[use]))
+  ok  <- length(l) >= VA_MIN_USED
+  data.table(
+    n          = length(ref),
+    n_used     = length(l),
+    coverage   = if (length(ref)) mean(nz) else NA_real_,
+    sign_agree = if (any(nz)) sum(use) / sum(nz) else NA_real_,
+    med_ratio  = if (ok) 10^median(l) else NA_real_,
+    mad_fold   = if (ok) 10^median(abs(l - median(l))) else NA_real_,
+    rmsle_dex  = if (ok) sqrt(mean(l^2)) else NA_real_)
+}
+
+#' One metric row per (strand, source) pooling all cells of `matched`, plus —
+#' with `by_item` — the same rows resolved within each item.
+va_score <- function(matched, sources, level, by_item = FALSE) {
+  m    <- matched[source %in% sources]
+  rows <- m[, va_metrics(ref, src), by = .(strand, source)]
+  rows[, item := NA_character_]
+  if (by_item)
+    rows <- rbindlist(list(
+      rows, m[, va_metrics(ref, src), by = .(strand, source, item = category)]),
+      use.names = TRUE)
+  set(rows, j = "level", value = level)
+  setcolorder(rows, c("level", "item", "strand", "source", "n", "n_used",
+                      "coverage", "sign_agree", "med_ratio", "mad_fold",
+                      "rmsle_dex"))
+  rows[order(match(strand, MEASURES), match(source, sources), item)]
+}
+
+#' The tidy metrics table for a level cascade: va_score() down the levels of
+#' `matched`, stacked, with the `level` column carrying the resolution.  The
+#' per-item breakout needs an item key, so it applies below L1 only.
+va_metrics_table <- function(matched, sources, by_item = FALSE) {
+  rbindlist(lapply(names(matched), function(lv)
+    va_score(matched[[lv]], sources, lv, by_item = by_item && lv != "L1")))
+}
+
+#' The aggregate ratio frames behind the metrics: one row per (cell, source,
+#' measure) with both sides and their signed ratio, at per-ISIC national scope
+#' and at item scope.  Inner-joined, so only cells both sides populate appear.
+va_write_ratio_frames <- function(dat, reference, sources, out_dir, prefix) {
+  fab <- setdiff(sources, reference)
+  frame <- function(keys, file) {
+    m <- copy(va_match_source(va_cells(dat, keys), reference,
+                              expand = FALSE)[source %in% fab])
+    setnames(m, c("src", "ref", "strand"), c("source_usd", "ref_usd", "measure"))
+    m[, ratio := source_usd / ref_usd]
+    setcolorder(m, c(keys, "source", "measure", "source_usd", "ref_usd", "ratio"))
+    setorderv(m, c("source", "measure", keys))
+    path <- file.path(out_dir, file)
+    fwrite(m, path, na = "NA")
+    message("Ratio frame -> ", path)
+    m
+  }
+  invisible(list(
+    by_year = frame(c("iso3c", "year", "isic"),
+                    paste0(prefix, "_by_strand_by_year.csv")),
+    items   = frame(c("iso3c", "year", "isic", "category"),
+                    paste0(prefix, "_item_ratios.csv"))))
+}
+
+
+# ── IHS scatter panels ───────────────────────────────────────────────────────
+#
+# One panel per (source, level), every cell of that resolution on shared axes:
+# reference on x, source on y, both as asinh(value / theta).  theta is a single
+# per-dataset scale, so the panel stays coherent across strands and ISIC
+# sections; the transform is near-linear inside a typical cell and logarithmic
+# beyond it, which keeps zero and the sign-crossing cells on the plot.
+
+VA_STRAND_COLOURS <- c(wages = "#1f77b4", capital = "#d62728",
+                       tls   = "#2ca02c", total   = "#4d4d4d")
+VA_ISIC_SHAPES    <- c(A = 21, C = 24, `A+C` = 21)
+
+#' Neutral interior fills: the outline already carries the strand, so countries
+#' separate by lightness alone.  Legible to about six.
+va_country_fills <- function(countries) {
+  countries <- sort(unique(as.character(countries)))
+  setNames(grey(seq(1, 0.3, length.out = length(countries))), countries)
+}
+
+#' The panel scale: the median magnitude of a non-zero reference cell.
+va_theta <- function(v) {
+  v <- abs(v[is.finite(v) & v != 0])
+  if (length(v)) median(v) else 1
+}
+
+#' Decade ticks either side of zero, labelled in the untransformed unit.
+va_ihs_axis <- function(v, theta) {
+  hi  <- max(abs(v[is.finite(v)]), theta)
+  dec <- theta * 10^(0:ceiling(log10(hi / theta)))
+  at  <- sort(unique(c(-rev(dec), 0, dec)))
+  list(breaks = asinh(at / theta),
+       labels = label_number(scale_cut = cut_short_scale())(at))
+}
+
+va_ihs_plot <- function(matched, theta, title, subtitle, reference,
+                        fill_country = FALSE) {
+  d <- copy(matched[is.finite(ref) & is.finite(src)])
+  if (!"isic" %in% names(d)) d[, isic := "A+C"]
+  d[, `:=`(xt     = asinh(ref / theta),
+           yt     = asinh(src / theta),
+           strand = factor(strand, levels = MEASURES),
+           isic   = factor(isic,   levels = names(VA_ISIC_SHAPES)))]
+  ax  <- va_ihs_axis(c(d$ref, d$src), theta)
+  sz  <- if (nrow(d) > 2000L) 1.2 else 2.0     # L3 panels run to thousands of cells
   
-  ## (1) aggregate by (isic, year[, category]) -------------------------------
-  agg_src  <- va_aggregate(dat[source %in% fab],     c("iso3c","year","isic","source"))
-  agg_ref  <- va_aggregate(dat[source == ref_lab],   c("iso3c","year","isic"))
-  by_year  <- merge(agg_src,
-                    agg_ref[, .(iso3c, year, isic, strand, ref_usd = value_usd)],
-                    by = c("iso3c","year","isic","strand"))
-  data.table::setnames(by_year, "value_usd", "source_usd")
-  by_year[, ratio := source_usd / ref_usd]
-  data.table::setnames(by_year, "strand", "measure")
-  data.table::setcolorder(by_year,
-                          c("iso3c","year","isic","source","measure","source_usd","ref_usd","ratio"))
-  data.table::setorder(by_year, isic, source, measure, year)
-  p1 <- file.path(out_dir, paste0(prefix, "_by_strand_by_year.csv"))
-  data.table::fwrite(by_year, p1, na = "NA")
+  p <- ggplot(d, aes(x = xt, y = yt)) +
+    geom_hline(yintercept = 0, linewidth = 0.3, colour = "grey75") +
+    geom_vline(xintercept = 0, linewidth = 0.3, colour = "grey75") +
+    geom_abline(slope = 1, intercept = 0, linetype = "dashed",
+                linewidth = 0.4, colour = "black") +
+    (if (fill_country)
+      geom_point(aes(colour = strand, shape = isic, fill = iso3c),
+                 size = sz, stroke = 0.45, alpha = 0.8)
+     else
+       geom_point(aes(colour = strand, shape = isic),
+                  fill = NA, size = sz, stroke = 0.45, alpha = 0.8)) +
+    scale_x_continuous(breaks = ax$breaks, labels = ax$labels) +
+    scale_y_continuous(breaks = ax$breaks, labels = ax$labels) +
+    scale_colour_manual(values = VA_STRAND_COLOURS, name = "VA strand") +
+    scale_shape_manual(values = VA_ISIC_SHAPES, name = "ISIC section") +
+    labs(title = title, subtitle = subtitle,
+         x = sprintf("%s (current US$, asinh scale)", reference),
+         y = "FABIOv2 source (current US$, asinh scale)") +
+    theme_minimal(base_size = 10) +
+    theme(
+      aspect.ratio        = 1,
+      panel.grid.minor    = element_blank(),
+      panel.grid.major    = element_line(colour = "grey90", linewidth = 0.25),
+      legend.position     = "bottom",
+      legend.box          = "vertical",
+      plot.title.position = "plot",
+      plot.title          = element_text(face = "bold", size = 12),
+      plot.subtitle       = element_text(size = 8.5, lineheight = 1.2)
+    ) +
+    guides(colour = guide_legend(override.aes = list(shape = 21, fill = NA, size = 2.8)),
+           shape  = guide_legend(override.aes = list(colour = "black", fill = NA, size = 2.8)))
   
-  ## (2) item-level pre-aggregation frame ------------------------------------
-  it_src <- va_aggregate(dat[source %in% fab],   c("iso3c","year","isic","category","source"))
-  it_ref <- va_aggregate(dat[source == ref_lab], c("iso3c","year","isic","category"))
-  items  <- merge(it_src,
-                  it_ref[, .(iso3c, year, isic, category, strand, ref_usd = value_usd)],
-                  by = c("iso3c","year","isic","category","strand"))
-  data.table::setnames(items, "value_usd", "source_usd")
-  items[, ratio := source_usd / ref_usd]
-  data.table::setnames(items, "strand", "measure")
-  data.table::setcolorder(items,
-                          c("iso3c","year","isic","category","source","measure","source_usd","ref_usd","ratio"))
-  data.table::setorder(items, isic, source, measure, category, year)
-  p2 <- file.path(out_dir, paste0(prefix, "_item_ratios.csv"))
-  data.table::fwrite(items, p2, na = "NA")
-  
-  ## (3) pooled item-level metrics per (isic, source, measure) ----------------
-  cmp <- merge(it_src[, .(iso3c, year, isic, category, source, strand, src = value_usd)],
-               it_ref[, .(iso3c, year, isic, category, strand, ref = value_usd)],
-               by = c("iso3c","year","isic","category","strand"))
-  metrics <- va_score(cmp, fab, report_col = "isic")
-  p3 <- file.path(out_dir, paste0("metrics_", prefix, "_pooled_items.csv"))
-  data.table::fwrite(metrics, p3, na = "NA")
-  
-  message("Reference metrics -> ", p1)
-  message("Reference metrics -> ", p2)
-  message("Reference metrics -> ", p3)
-  invisible(list(by_year = by_year, item_ratios = items, pooled = metrics))
+  if (fill_country)
+    p <- p + scale_fill_manual(values = va_country_fills(d$iso3c),
+                               name = "Country") +
+    guides(fill = guide_legend(override.aes = list(shape = 21, colour = "black",
+                                                   size = 2.8)))
+  p
+}
+
+va_slug <- function(x) gsub("(^-|-$)", "", tolower(gsub("[^A-Za-z0-9]+", "-", x)))
+
+#' One SVG per (source, level) of `matched` into `out_dir`.
+va_write_ihs_plots <- function(matched, theta, sources, out_dir, prefix,
+                               dataset, reference, fill_country = FALSE) {
+  scale_note <- sprintf(
+    paste0("Both axes asinh(value / theta), theta = %s = median |reference| ",
+           "across all strands and both ISIC sections. Dashed line = identity; ",
+           "grey lines mark zero, so sign disagreement reads off the ",
+           "off-diagonal quadrants."),
+    label_number(scale_cut = cut_short_scale())(theta))
+  for (lv in names(matched)) {
+    for (s in sources) {
+      d <- matched[[lv]][source == s]
+      if (!nrow(d)) next
+      p <- va_ihs_plot(
+        d, theta, reference = reference, fill_country = fill_country,
+        title    = sprintf("%s vs %s — %s", dataset, s, lv),
+        subtitle = paste0("One point per ", VA_LEVEL_DESC[[lv]], " cell. ",
+                          scale_note))
+      out_file <- file.path(out_dir,
+                            sprintf("%s_ihs_%s_%s.svg", prefix, va_slug(s), lv))
+      ggsave(out_file, p, width = 8, height = 9, limitsize = FALSE, device = "svg")
+      message(sprintf("[ihs/%s/%s] wrote %s  (n=%d)", lv, s, out_file, nrow(d)))
+    }
+  }
 }

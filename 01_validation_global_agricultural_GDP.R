@@ -201,6 +201,10 @@ if (!dir.exists(file.path(VALIDATION_ROOT, "input")))
   stop("VALIDATION_ROOT (", VALIDATION_ROOT, ") has no input/ folder. Run from ",
        "the validation repo root, or set the VALIDATION_ROOT env var.")
 validation_path       <- function(...) file.path(VALIDATION_ROOT, ...)
+
+# Shared metric layer, so every validator scores agreement the same way.
+source(validation_path("00_validation_helpers.R"))
+
 # Validation outputs default to the repo's own output/; flip via VALIDATION_OUTPUT_DIR.
 VALIDATION_OUTPUT_DIR <- path.expand(Sys.getenv("VALIDATION_OUTPUT_DIR",
                                                 unset = validation_path("output")))
@@ -336,10 +340,27 @@ STRAND_BENCH_PATHS <- c(
 )
 
 # Parallelization. Forking is Unix-only; on Windows we silently fall back to
-# sequential lapply. Set do_parallel <- FALSE to debug a single chart serially
-# (mclapply swallows interactive errors and hides traceback noise).
-do_parallel <- TRUE
-n_cores     <- min(8L, max(1L, parallel::detectCores(logical = FALSE) - 1L))
+# sequential lapply. VALIDATION_PARALLEL=FALSE runs every chart serially, which
+# is also how to get a real traceback out of a failing chart (mclapply swallows
+# interactive errors).
+do_parallel <- !identical(toupper(Sys.getenv("VALIDATION_PARALLEL", "TRUE")),
+                          "FALSE")
+
+# detectCores() reports the HOST's cores, so on a shared or containerised
+# server it oversubscribes badly — honour the cgroup quota where one is set.
+available_cores <- function() {
+  for (f in c("/sys/fs/cgroup/cpu.max", "/sys/fs/cgroup/cpu/cpu.cfs_quota_us")) {
+    if (!file.exists(f)) next
+    p <- strsplit(trimws(readLines(f, warn = FALSE)[1]), "[[:space:]]+")[[1]]
+    if (length(p) == 2L && p[1] != "max")
+      return(max(1L, floor(as.numeric(p[1]) / as.numeric(p[2]))))
+    if (length(p) == 1L && suppressWarnings(as.numeric(p[1])) > 0)
+      return(max(1L, floor(as.numeric(p[1]) / 1e5)))
+  }
+  parallel::detectCores(logical = FALSE)
+}
+n_cores <- as.integer(Sys.getenv("VALIDATION_CORES",
+                                 min(8L, max(1L, available_cores() - 1L))))
 
 # Facet-row order (top to bottom) on every chart.  Kept as a single source
 # of truth so the labels and the factor levels stay in sync.
@@ -1619,8 +1640,8 @@ make_country_chart <- function(iso_select, pipelines_all, out_dir_country,
 
 # ---- 6c. per-year validation scatter (family A2) ---------------------------
 # FABIO ISIC-A value-added aggregate vs reduced WB agricultural VA, one dot per
-# country per (source, year).  Dashed 45-degree line = identity; fit metrics
-# (RMSLE etc.) are reported in log10 space and written to a CSV, not the figure.
+# country per (source, year).  Dashed 45-degree line = identity; the agreement
+# metrics are written to a CSV, not the figure.
 
 # Reduced-WB rows for one year: iso3c, wb_ag_va_usd, wb_ag_va_reduced,
 # share_non_fabio, forestry_route.  Same derivation as make_chart's `wb` block.
@@ -1719,47 +1740,37 @@ make_scatter_chart <- function(year_select, pipelines_all, out_dir, source_name,
   na_row <- function(msg) {
     message("[scatter ", year_select, "/", source_name, "] ", msg)
     list(summary = data.frame(
-      source = source_name, year = year_select, n = 0L, n_dropped = NA_integer_,
-      rmsle = NA_real_, bias_dex = NA_real_, med_ratio = NA_real_,
-      median_fold = NA_real_, r2_identity = NA_real_, pearson_log = NA_real_,
-      ols_slope = NA_real_, ols_intercept = NA_real_, rmse_usd = NA_real_),
+      source = source_name, year = year_select, n = 0L, n_used = 0L,
+      coverage = NA_real_, sign_agree = NA_real_, med_ratio = NA_real_,
+      mad_fold = NA_real_, rmsle_dex = NA_real_, pearson_log = NA_real_,
+      ols_slope = NA_real_, ols_intercept = NA_real_),
       per_country = data.frame())
   }
   if (!nrow(dat)) return(invisible(na_row("no joinable rows; skipping.")))
   
-  # log10 needs strictly positive pairs; the rest are set aside and counted.
-  pos    <- dplyr::filter(dat, is.finite(x), is.finite(y), x > 0, y > 0)
-  n_drop <- nrow(dat) - nrow(pos)
+  fin <- dplyr::filter(dat, is.finite(x), is.finite(y))
+  fit <- va_metrics(fin$x, fin$y)
+  # The plotted window is log-log, so the figure keeps the strictly positive
+  # pairs; the rest are counted by coverage.
+  pos <- dplyr::filter(fin, x > 0, y > 0)
   if (nrow(pos) < 2L) return(invisible(na_row("fewer than 2 positive pairs; skipping.")))
   
-  # Fit metrics in log10 space (a USD RMSE would be size-dominated).
-  lr        <- log10(pos$y) - log10(pos$x)
-  rmsle     <- sqrt(mean(lr^2))
-  bias_dex  <- stats::median(lr)
-  med_ratio <- 10^bias_dex
-  med_fold  <- 10^stats::median(abs(lr))
-  pear     <- if (nrow(pos) >= 3L) stats::cor(log10(pos$x), log10(pos$y)) else NA_real_
-  rmse_usd <- sqrt(mean((pos$y - pos$x)^2))
-  ss_tot   <- sum((log10(pos$y) - mean(log10(pos$y)))^2)
-  r2_id    <- if (ss_tot > 0) 1 - sum(lr^2) / ss_tot else NA_real_
+  lr   <- log10(pos$y) - log10(pos$x)
+  pear <- if (nrow(pos) >= 3L) stats::cor(log10(pos$x), log10(pos$y)) else NA_real_
   # OLS slope/intercept go to the CSV only (slope != 1 flags size-dependent bias).
-  ols      <- if (nrow(pos) >= 3L) stats::lm(log10(y) ~ log10(x), data = pos) else NULL
+  ols  <- if (nrow(pos) >= 3L) stats::lm(log10(y) ~ log10(x), data = pos) else NULL
   
-  # Per-country error decomposition. pct_rmse2 / pct_rmsle2 are each country's
-  # share of the year's RMSE^2 / RMSLE^2 (each column sums to 1): the size-
-  # weighted vs scale-free attributions behind the aggregate metrics above.
+  # Per-country error decomposition: each country's share of the year's
+  # RMSLE^2, so the column sums to 1.
   per_country <- pos %>%
     dplyr::transmute(
       source = source_name, year = year_select, iso3c,
       wb_reduced_usd = x, fabio_usd = y,
       log_resid  = lr,
-      fold_err   = 10^abs(lr),
       direction  = dplyr::if_else(lr >= 0, "over", "under"),
-      sq_resid_usd2 = (y - x)^2,
-      pct_rmse2  = (y - x)^2 / sum((y - x)^2),
       pct_rmsle2 = lr^2 / sum(lr^2),
       forestry_route) %>%
-    dplyr::arrange(dplyr::desc(pct_rmse2))
+    dplyr::arrange(dplyr::desc(pct_rmsle2))
   
   # Square, equal-decade window so the dashed identity reads as a true 45 deg.
   # A supplied svg_lim (shared across sources for this year) wins; else fit to
@@ -1832,8 +1843,9 @@ make_scatter_chart <- function(year_select, pipelines_all, out_dir, source_name,
   out_file <- file.path(out_dir,
                         sprintf("fabio_validation_scatter_%d.svg", year_select))
   ggsave(out_file, p, width = 8, height = 8.8, device = "svg")
-  message(sprintf("[scatter %d/%s] wrote %s  (n=%d, RMSLE=%.3f, bias=%.2fx)",
-                  year_select, source_name, out_file, nrow(pos), rmsle, med_ratio))
+  message(sprintf("[scatter %d/%s] wrote %s  (n=%d, RMSLE=%.3f dex, med ratio=%.2fx)",
+                  year_select, source_name, out_file, fit$n_used, fit$rmsle_dex,
+                  fit$med_ratio))
   
   # GIF frame: same plot, fixed pixel size, year stamped large so it reads.
   if (!is.null(frame_dir)) {
@@ -1850,29 +1862,65 @@ make_scatter_chart <- function(year_select, pipelines_all, out_dir, source_name,
   
   invisible(list(
     summary = data.frame(
-      source = source_name, year = year_select, n = nrow(pos), n_dropped = n_drop,
-      rmsle = rmsle, bias_dex = bias_dex, med_ratio = med_ratio, median_fold = med_fold,
-      r2_identity = r2_id, pearson_log = pear,
+      source = source_name, year = year_select, as.data.frame(fit),
+      pearson_log = pear,
       ols_slope     = if (!is.null(ols)) unname(stats::coef(ols)[2]) else NA_real_,
-      ols_intercept = if (!is.null(ols)) unname(stats::coef(ols)[1]) else NA_real_,
-      rmse_usd = rmse_usd),
+      ols_intercept = if (!is.null(ols)) unname(stats::coef(ols)[1]) else NA_real_),
     per_country = per_country))
 }
 
 # ---- 7. per-source output driver -------------------------------------------
 # Both loops fan out via parallel::mclapply on Unix (fork-based — the big
 # shared tables are inherited copy-on-write, no per-worker re-read). Windows
-# can't fork, so we silently fall back to sequential lapply. Set
-# do_parallel <- FALSE to disable for debugging (mclapply swallows interactive
-# errors and hides traceback noise — when something breaks, run serially first).
+# can't fork, so we fall back to sequential lapply.
+#
+# Two things make a fork hang rather than fail, and both are guarded here. A
+# child inherits the parent's OpenMP thread pool but none of its threads, so it
+# deadlocks the first time it enters a parallel region: data.table is pinned to
+# one thread for the duration of each fan-out. And the font cache initialises
+# lazily on the first plot, so several children initialising it at once
+# deadlock: warm_graphics() forces it in the parent first.
+warm_graphics <- function() {
+  f <- tempfile(fileext = ".svg")
+  suppressMessages(ggsave(f, ggplot(data.frame(x = 1, y = 1), aes(x, y)) +
+                            geom_point() + labs(title = "warm"),
+                          width = 2, height = 2, device = "svg"))
+  unlink(f)
+}
+
+# A worker that dies takes its output with it, so failures are counted and
+# reported rather than left to surface as a short CSV.
+.report_failures <- function(res) {
+  bad <- vapply(res, function(r) inherits(r, c("error", "try-error")),
+                logical(1))
+  if (any(bad))
+    warning(sum(bad), " of ", length(res), " job(s) failed — the outputs of ",
+            "this block are INCOMPLETE.  Re-run with VALIDATION_PARALLEL=FALSE ",
+            "for a traceback.", call. = FALSE, immediate. = TRUE)
+  res
+}
+
+.guard <- function(FUN) function(...)
+  tryCatch(FUN(...), error = function(e) {
+    message("  JOB FAILED: ", conditionMessage(e)); e })
+
 .par_apply <- if (do_parallel && .Platform$OS.type == "unix" && n_cores > 1L) {
-  function(X, FUN, ...) parallel::mclapply(X, FUN, ..., mc.cores = n_cores)
+  function(X, FUN, ...) {
+    old_threads <- data.table::getDTthreads()
+    data.table::setDTthreads(1L)
+    on.exit(data.table::setDTthreads(old_threads), add = TRUE)
+    gc()                    # collect before forking, so the children inherit
+    # fewer pages a later GC would dirty and copy
+    .report_failures(parallel::mclapply(X, .guard(FUN), ...,
+                                        mc.cores = n_cores))
+  }
 } else {
-  function(X, FUN, ...) lapply(X, FUN, ...)
+  function(X, FUN, ...) .report_failures(lapply(X, .guard(FUN), ...))
 }
 
 if (do_parallel && .Platform$OS.type == "unix" && n_cores > 1L) {
   message(sprintf("Parallelizing chart generation across %d cores.", n_cores))
+  warm_graphics()
 } else if (do_parallel && .Platform$OS.type != "unix") {
   message("do_parallel = TRUE but platform is not Unix; running sequentially.")
 }
@@ -1924,7 +1972,7 @@ run_source_outputs <- function(src, src_pipelines, measures = "total") {
                          svg_lim = scatter_year_lims[[as.character(yr)]],
                          gif_lim = xy_lim, frame_dir = frame_dir)
     })
-    res        <- Filter(is.list, res)              # drop any failed-worker rows
+    res        <- Filter(is.list, res)              # .par_apply has warned already
     metrics_df <- dplyr::bind_rows(lapply(res, `[[`, "summary"))
     percc_df   <- dplyr::bind_rows(lapply(res, `[[`, "per_country"))
     
