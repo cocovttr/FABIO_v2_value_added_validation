@@ -1,6 +1,11 @@
 # =============================================================================
 # FABIO value-added validation chart
 #
+# Runs LAST of the three validators: section 3c reuses the A01+A03 component
+# benchmarks that 01 (BioSAMs / Eurostat NAMA) and 02 (national tables / OECD
+# SUT) export.  Without them the component figures just lose their reference
+# line; nothing else here depends on the other two.
+#
 # Runs for FOUR value-added sources, each written to its own sub-folder under
 # output/fabio_validation/:
 #   - gloria/            : the pure GLORIA decomposition              (script 14_1, GLORIA base)
@@ -66,18 +71,18 @@
 #     shared with the per-year item charts so the same item is the same
 #     colour everywhere.
 #
-# (B') Per-country VA sub-account (strand) charts  [do_strand_charts]
+# (B') Per-country VA sub-account (component) charts  [do_component_charts]
 #     For every source whose RDS files carry the component-split columns
 #     written by scripts 14_1 / 14_4 (value_added_wages|capital|tls [USD]),
-#     family (B) is repeated once per strand (WAGES, CAPITAL, TLS), written as
-#       by_country/fabio_validation_country_<ISO3>_<strand>.svg
+#     family (B) is repeated once per component (WAGES, CAPITAL, TLS), written
+#     as  by_country/fabio_validation_country_<ISO3>_<component>.svg
 #     next to the TOTAL figure.  These are FABIO-INTERNAL decompositions, not
 #     WB validations: the World Bank reference exists only as a TOTAL (no
-#     wages/capital/TLS split of agricultural VA is published), so the strand
-#     figures carry NO WB line and no reduced-WB reference.  Where scripts 02 /
-#     03 have already been run, their exported A01+A03 strand benchmarks
+#     wages/capital/TLS split of agricultural VA is published), so the component
+#     figures carry NO WB line and no reduced-WB reference.  Where scripts 01 /
+#     02 have already been run, their exported A01+A03 component benchmarks
 #     (Eurostat NAMA for the EU, OECD SUT T1600 for the USA; both
-#     (iso3c, year, strand, bench_usd) CSVs) are stamped into the Primary
+#     (iso3c, year, component, bench_usd) CSVs) are stamped into the Primary
 #     (ISIC-A) row(s) as a blue reference line — a primary-agriculture,
 #     forestry-free anchor for the covered (country, year) cells.  Everything
 #     else (item palette, "Other" grouping, facet layout, sizes) is shared
@@ -86,9 +91,9 @@
 #     items and one consistent legend.  TLS can be net negative (subsidies >
 #     taxes); those figures extend below zero and draw a thin zero baseline.
 #     The per-year cross-country charts (A) stay TOTAL-only by construction —
-#     they are shares of the WB headline, and there is no WB strand
+#     they are shares of the WB headline, and there is no WB component
 #     denominator to take a share of.  Sources without the component-split
-#     columns (older script 14_1 outputs) skip the strand figures with a
+#     columns (older script 14_1 outputs) skip the component figures with a
 #     message.
 #
 # Pipeline rows are matched to items.csv on the numeric `item_code`
@@ -192,7 +197,7 @@ local({
 })
 
 # This validation repo ships its OWN reference input (World Bank Agri GDP) and
-# both writes its figures/CSVs AND reads the benchmark CSVs that 02 / 03 write.
+# both writes its figures/CSVs AND reads the benchmark CSVs that 01 / 02 write.
 # Anchor those on the validation-repo root — the directory holding input/ and
 # output/. Defaults to the working directory (the .Rproj root); override with
 # the VALIDATION_ROOT env var when run head-less.
@@ -300,23 +305,23 @@ do_scatter_gif <- TRUE
 gif_delay      <- 0.9            # seconds per frame
 gif_frame_px   <- c(900L, 990L)  # frame W x H in px (fixed so frames align)
 
-# Per-country VA sub-account (strand) figures — family (B').  Requires the
+# Per-country VA sub-account (component) figures — family (B').  Requires the
 # component-split columns of scripts 14_1 / 14_4 in the source RDS files
 # (value_added_wages|capital|tls [USD]); sources without them fall back to
 # the TOTAL figure only, with a message.  Only family (B) is extended — the
 # per-year cross-country charts (A) are shares of the WB headline, which has
-# no strand decomposition, so they stay TOTAL-only.
-do_strand_charts <- TRUE
+# no component decomposition, so they stay TOTAL-only.
+do_component_charts <- TRUE
 
-STRANDS  <- c("wages", "capital", "tls")
-MEASURES <- c("total", STRANDS)
+COMPONENTS <- c("wages", "capital", "tls")
+MEASURES   <- c("total", COMPONENTS)
 
-# Strand columns as written by scripts 14_1 / 14_4 (same names scripts 02 / 03
-# hard-require).  The TOTAL measure keeps using `value_added [USD]` so the
+# Component columns as written by scripts 14_1 / 14_4 (same names scripts 01 /
+# 02 hard-require).  The TOTAL measure keeps using `value_added [USD]` so the
 # existing figures are bit-identical to before.
-strand_cols_usd <- c(wages   = "value_added_wages [USD]",
-                     capital = "value_added_capital [USD]",
-                     tls     = "value_added_tls [USD]")
+component_cols_usd <- c(wages   = "value_added_wages [USD]",
+                        capital = "value_added_capital [USD]",
+                        tls     = "value_added_tls [USD]")
 
 MEASURE_TITLE <- c(total   = "value-added",
                    wages   = "wages",
@@ -327,14 +332,14 @@ MEASURE_AXIS  <- c(total   = "Value-added (current US$)",
                    capital = "Capital — operating surplus etc. (current US$)",
                    tls     = "Taxes less subsidies on production (current US$)")
 
-# External strand benchmarks, REUSED from scripts 02 / 03 rather than
-# re-derived: both export an (iso3c, year, strand, bench_usd) CSV of their
+# External component benchmarks, REUSED from scripts 01 / 02 rather than
+# re-derived: both export an (iso3c, year, component, bench_usd) CSV of their
 # A01+A03 (agriculture + fishery, forestry-free) reference — Eurostat NAMA
-# (script 02, EU countries) and OECD SUT T1600 (script 03, USA). They are read
-# from VALIDATION_OUTPUT_DIR, where 02 / 03 write them. Where a file is missing
-# the strand figures simply draw without a benchmark line. On overlapping cells
-# (none expected) the order below is the priority.
-STRAND_BENCH_PATHS <- c(
+# (script 01, EU countries) and OECD SUT T1600 (script 02, USA). They are read
+# from VALIDATION_OUTPUT_DIR, where 01 / 02 write them. Where a file is missing
+# the component figures simply draw without a benchmark line. On overlapping
+# cells (none expected) the order below is the priority.
+COMPONENT_BENCH_PATHS <- c(
   EUROSTAT_NAMA = file.path(VALIDATION_OUTPUT_DIR, "biosam_validation", "eurostat_A01_A03_benchmark.csv"),
   OECD_SUT      = file.path(VALIDATION_OUTPUT_DIR, "usa_sut_validation", "oecd_A01_A03_benchmark.csv")
 )
@@ -387,11 +392,11 @@ forestry_route_colors <- c(EUROSTAT_NAMA = "#1b9e77",   # green  — measured (E
 # single source of truth for labels.
 read_pipeline <- function(path, label) {
   raw <- readRDS(path)
-  # Strand columns are OPTIONAL here (unlike scripts 02 / 03, which hard-fail):
-  # a source built before the component split simply loses its strand figures,
-  # not the whole run.  All-or-nothing per file — a partial set would make the
-  # TOTAL ≠ sum-of-strands silently.
-  has_strands <- all(unname(strand_cols_usd) %in% names(raw))
+  # Component columns are OPTIONAL here (unlike scripts 01 / 02, which
+  # hard-fail): a source built before the component split simply loses its
+  # component figures, not the whole run.  All-or-nothing per file — a partial
+  # set would make the TOTAL ≠ sum-of-components silently.
+  has_components <- all(unname(component_cols_usd) %in% names(raw))
   out <- raw %>%
     transmute(
       year,
@@ -399,9 +404,9 @@ read_pipeline <- function(path, label) {
       item_code     = fabio_item_code,
       comm_group,
       value_usd     = `value_added [USD]`,
-      value_wages   = if (has_strands) `value_added_wages [USD]`   else NA_real_,
-      value_capital = if (has_strands) `value_added_capital [USD]` else NA_real_,
-      value_tls     = if (has_strands) `value_added_tls [USD]`     else NA_real_,
+      value_wages   = if (has_components) `value_added_wages [USD]`   else NA_real_,
+      value_capital = if (has_components) `value_added_capital [USD]` else NA_real_,
+      value_tls     = if (has_components) `value_added_tls [USD]`     else NA_real_,
       pipeline      = label
     ) %>%
     group_by(pipeline, year, iso3c, item_code, comm_group) %>%
@@ -410,7 +415,7 @@ read_pipeline <- function(path, label) {
              ~ if (all(is.na(.x))) NA_real_ else sum(.x, na.rm = TRUE)),
       .groups = "drop"
     )
-  attr(out, "has_strands") <- has_strands
+  attr(out, "has_components") <- has_components
   out
 }
 
@@ -423,36 +428,38 @@ read_pipeline <- function(path, label) {
 read_source <- function(src) {
   lev_a <- read_pipeline(src$isic_a, "Primary (ISIC-A)")
   lev_c <- read_pipeline(src$isic_c, "Processing (ISIC-C)")
-  # Strands are usable for a source only when BOTH ISIC levels carry them —
-  # otherwise the two facet rows of a strand figure would not be comparable.
-  has_strands <- isTRUE(attr(lev_a, "has_strands")) &&
-    isTRUE(attr(lev_c, "has_strands"))
+  # Components are usable for a source only when BOTH ISIC levels carry them —
+  # otherwise the two facet rows of a component figure would not be comparable.
+  has_components <- isTRUE(attr(lev_a, "has_components")) &&
+    isTRUE(attr(lev_c, "has_components"))
   # ISIC-C keeps only items NOT also mapped at ISIC-A (drop double-mapped items,
   # whose physical output isn't meaningful at the processing level).
   lev_c <- lev_c %>% filter(!item_code %in% unique(lev_a$item_code))
   out <- bind_rows(lev_a, lev_c) %>%
     mutate(pipeline = factor(pipeline, levels = pipeline_levels))
-  attr(out, "has_strands") <- has_strands
+  attr(out, "has_components") <- has_components
   out
 }
 
 pipelines_by_source <- lapply(sources, read_source)
 names(pipelines_by_source) <- vapply(sources, `[[`, character(1), "name")
 
-# Which sources can drive strand figures (component-split columns present in
+# Which sources can drive component figures (component-split columns present in
 # both ISIC-level files).  Consulted by the run drivers (sections 8 / 9).
-strands_by_source <- vapply(pipelines_by_source,
-                            function(x) isTRUE(attr(x, "has_strands")),
-                            logical(1))
-if (do_strand_charts) {
-  if (any(strands_by_source)) {
-    message("Strand (sub-account) figures enabled for: ",
-            paste(names(strands_by_source)[strands_by_source], collapse = ", "))
+components_by_source <- vapply(pipelines_by_source,
+                               function(x) isTRUE(attr(x, "has_components")),
+                               logical(1))
+if (do_component_charts) {
+  if (any(components_by_source)) {
+    message("Component (sub-account) figures enabled for: ",
+            paste(names(components_by_source)[components_by_source],
+                  collapse = ", "))
   }
-  if (any(!strands_by_source)) {
+  if (any(!components_by_source)) {
     message("NOTE: no component-split columns (value_added_wages|capital|tls",
             " [USD]) for: ",
-            paste(names(strands_by_source)[!strands_by_source], collapse = ", "),
+            paste(names(components_by_source)[!components_by_source],
+                  collapse = ", "),
             " — TOTAL figures only for those.  Re-run scripts 14_1 / 14_4 ",
             "to generate the split.")
   }
@@ -651,7 +658,7 @@ build_forestry_reference <- function(rates_all, eur_usd, iso_xwalk, out_dir) {
   ref_csv <- file.path(out_dir, "FABIOv2_forestry_VA_ISIC-A02.csv")
   message("\n=== Forestry (A02) reference (Eurostat -> OECD) ===")
   
-  # OECD SUT A02 -> (iso3c, year, strands + total USD).  Reuses the generic
+  # OECD SUT A02 -> (iso3c, year, components + total USD).  Reuses the generic
   # loader; `iso3` it carries IS the iso3c the combined base supplied via
   # iso_xwalk.
   oecd_f  <- load_oecd_sut_activity(iso3_to_area = iso_xwalk, lcu_usd = rates_all,
@@ -666,7 +673,7 @@ build_forestry_reference <- function(rates_all, eur_usd, iso_xwalk, out_dir) {
                forestry_source      = "OECD_SUT")
   else NULL
   
-  # Eurostat NAMA A02 -> (iso3c, year, strands + total USD).
+  # Eurostat NAMA A02 -> (iso3c, year, components + total USD).
   eu_f  <- load_eurostat_nama_activity(eur_usd, FORESTRY_EU_NACE)
   eu_dt <- if (!is.null(eu_f) && nrow(eu_f) > 0L)
     data.table(iso3c                = eu_f$iso3c,
@@ -769,52 +776,52 @@ message(sprintf(
 fwrite(share_by_iso,
        file.path(out_dir_base, "non_fabio_sector_share_per_country_year.csv"))
 
-# ---- 3c. external strand benchmarks (from scripts 02 / 03) ------------------
-# The WB headline has no wages/capital/TLS split, so the strand figures (B')
-# have no WB line.  Instead, REUSE the A01+A03 strand benchmarks that scripts
-# 07 (Eurostat NAMA, EU) and 08 (OECD SUT T1600, USA) already export as tidy
-# (iso3c, year, strand, bench_usd) CSVs — a primary-agriculture, forestry-free
-# reference for the (country, year) cells they cover.  Missing files just mean
-# no benchmark line; nothing is fetched here.
-read_strand_bench <- function(path, source_tag) {
+# ---- 3c. external component benchmarks (from scripts 01 / 02) ---------------
+# The WB headline has no wages/capital/TLS split, so the component figures (B')
+# have no WB line.  Instead, REUSE the A01+A03 component benchmarks that scripts
+# 01 (Eurostat NAMA, EU) and 02 (OECD SUT T1600, USA) already export as tidy
+# (iso3c, year, component, bench_usd) CSVs — a primary-agriculture,
+# forestry-free reference for the (country, year) cells they cover.  Missing
+# files just mean no benchmark line; nothing is fetched here.
+read_component_bench <- function(path, source_tag) {
   if (!file.exists(path)) return(NULL)
   out <- tryCatch(read_csv(path, show_col_types = FALSE),
                   error = function(e) NULL)
-  need <- c("iso3c", "year", "strand", "bench_usd")
+  need <- c("iso3c", "year", "component", "bench_usd")
   if (is.null(out) || !all(need %in% names(out))) {
-    message("NOTE: strand benchmark '", path, "' unreadable or missing ",
+    message("NOTE: component benchmark '", path, "' unreadable or missing ",
             "column(s) — skipped.")
     return(NULL)
   }
   out %>%
     transmute(iso3c        = as.character(iso3c),
               year         = as.integer(year),
-              strand       = as.character(strand),
+              component    = as.character(component),
               bench_usd    = as.numeric(bench_usd),
               bench_source = source_tag) %>%
-    filter(is.finite(bench_usd), strand %in% STRANDS)
+    filter(is.finite(bench_usd), component %in% COMPONENTS)
 }
 
-strand_bench <- NULL
-if (do_strand_charts) {
-  .bench_list <- Filter(Negate(is.null), Map(read_strand_bench,
-                                             STRAND_BENCH_PATHS,
-                                             names(STRAND_BENCH_PATHS)))
+component_bench <- NULL
+if (do_component_charts) {
+  .bench_list <- Filter(Negate(is.null), Map(read_component_bench,
+                                             COMPONENT_BENCH_PATHS,
+                                             names(COMPONENT_BENCH_PATHS)))
   if (length(.bench_list)) {
-    strand_bench <- bind_rows(.bench_list) %>%
-      # Priority on (unexpected) overlapping cells = order of STRAND_BENCH_PATHS.
-      mutate(.prio = match(bench_source, names(STRAND_BENCH_PATHS))) %>%
-      arrange(iso3c, year, strand, .prio) %>%
-      distinct(iso3c, year, strand, .keep_all = TRUE) %>%
+    component_bench <- bind_rows(.bench_list) %>%
+      # Priority on (unexpected) overlaps = order of COMPONENT_BENCH_PATHS.
+      mutate(.prio = match(bench_source, names(COMPONENT_BENCH_PATHS))) %>%
+      arrange(iso3c, year, component, .prio) %>%
+      distinct(iso3c, year, component, .keep_all = TRUE) %>%
       select(-.prio)
     message(sprintf(
-      "Strand benchmarks loaded: %d (iso3c, year, strand) cells over %d country(ies) [%s].",
-      nrow(strand_bench), n_distinct(strand_bench$iso3c),
-      paste(sort(unique(strand_bench$bench_source)), collapse = ", ")))
+      "Component benchmarks loaded: %d (iso3c, year, component) cells over %d country(ies) [%s].",
+      nrow(component_bench), n_distinct(component_bench$iso3c),
+      paste(sort(unique(component_bench$bench_source)), collapse = ", ")))
   } else {
-    message("NOTE: no strand benchmark CSVs found (run scripts 02 / 03 first ",
-            "to enable the A01+A03 reference lines) — strand figures will be ",
-            "drawn without a benchmark.")
+    message("NOTE: no component benchmark CSVs found (run scripts 01 / 02 ",
+            "first to enable the A01+A03 reference lines) — component figures ",
+            "will be drawn without a benchmark.")
   }
 }
 
@@ -946,8 +953,9 @@ canonical_item_order <- all_items_meta %>%
   arrange(desc(group_total), comm_group, desc(total)) %>%
   pull(item)
 
-# Short helper for axis labels in absolute USD (e.g. "1.2B", "500M", "10K")
-usd_axis_labels <- scales::label_number(scale_cut = scales::cut_short_scale())
+# Axis labels in absolute USD, in the same scientific notation as the scatter
+# panels of 00_validation_helpers.R (e.g. 10^9, 1.5 x 10^9).
+usd_axis_labels <- va_sci_expr
 
 # Wrap long title/subtitle text onto multiple lines so it stays readable and
 # prints as a self-contained top band that crops off cleanly for publication.
@@ -1306,7 +1314,7 @@ repeat_facet_ylab <- function(p) {
 # `measure` selects what the bars stack: "total" stacks value_added [USD] with
 # the WB + reduced-WB overlays; "wages"/"capital"/"tls" stack the matching
 # component-split column instead, drop the WB overlays (the WB headline has no
-# strand decomposition) and stamp the external A01+A03 strand benchmark
+# component decomposition) and stamp the external A01+A03 component benchmark
 # (section 3c) into the primary row where it covers this country.  The "Other"
 # grouping is decided from the TOTAL measure for every figure, so a country's
 # four figures share one item set and legend.
@@ -1334,15 +1342,15 @@ make_country_chart <- function(iso_select, pipelines_all, out_dir_country,
   pipelines <- mutate(pipelines, value_plot = .data[[value_col]])
   if (measure != "total" &&
       !any(is.finite(pipelines$value_plot) & pipelines$value_plot != 0)) {
-    message("[", iso_select, "/", measure, "] no strand data; skipping.")
+    message("[", iso_select, "/", measure, "] no component data; skipping.")
     return(invisible(NULL))
   }
   
-  # External A01+A03 benchmark rows for this (country, strand) — section 3c.
+  # External A01+A03 benchmark rows for this (country, component) — section 3c.
   # NULL/empty for the TOTAL measure (which has the WB overlays instead) and
   # for countries outside the scripts-02/03 coverage.
-  bench_iso <- if (measure != "total" && !is.null(strand_bench)) {
-    filter(strand_bench, iso3c == iso_select, strand == measure,
+  bench_iso <- if (measure != "total" && !is.null(component_bench)) {
+    filter(component_bench, iso3c == iso_select, component == measure,
            year %in% available_years)
   } else {
     NULL
@@ -1449,7 +1457,7 @@ make_country_chart <- function(iso_select, pipelines_all, out_dir_country,
               MEASURE_TITLE[[measure]],
               paste(sort(unique(bench_iso$bench_source)), collapse = " / "))
     } else {
-      "No external strand benchmark covers this country. "
+      "No external component benchmark covers this country. "
     }
     subtitle_txt <- sprintf(
       paste0("FABIO %s per item for %s — a FABIO-internal decomposition; the ",
@@ -1473,8 +1481,8 @@ make_country_chart <- function(iso_select, pipelines_all, out_dir_country,
   .stamp_primary <- function(df)
     mutate(df, pipeline = factor(pipeline_levels[1], levels = panel_levels))
   
-  # WB overlays only on the TOTAL figure — the WB headline has no strand
-  # decomposition, so on strand figures these layers are simply absent.
+  # WB overlays only on the TOTAL figure — the WB headline has no component
+  # decomposition, so on component figures these layers are simply absent.
   wb_line_layers <- if (measure == "total" && nrow(wb_country)) {
     wb_country_primary <- .stamp_primary(wb_country)
     list(
@@ -1544,7 +1552,7 @@ make_country_chart <- function(iso_select, pipelines_all, out_dir_country,
     list()
   }
   
-  # External A01+A03 strand benchmark (section 3c), stamped into the primary
+  # External A01+A03 component benchmark (section 3c), stamped into the primary
   # row(s) like the WB overlays — it is a primary-agriculture reference.
   # Blue + triangles so it cannot be confused with the TOTAL figure's black
   # WB line; typically only a few covered years (02/03 validation years), so
@@ -1565,7 +1573,7 @@ make_country_chart <- function(iso_select, pipelines_all, out_dir_country,
     list()
   }
   
-  # TLS (and occasionally other strands) can be net negative where subsidies
+  # TLS (and occasionally other components) can be net negative where subsidies
   # exceed taxes; give those figures a thin zero baseline and a little bottom
   # expansion instead of pinning the columns to the panel floor.
   has_neg     <- any(dat_grouped$value_plot < 0, na.rm = TRUE)
@@ -1928,9 +1936,9 @@ if (do_parallel && .Platform$OS.type == "unix" && n_cores > 1L) {
 # Build the full chart set for ONE source (its two ISIC levels are already the
 # two facet rows in `src_pipelines`).  Writes to <out_dir_base>/<subdir>/ and
 # .../by_country/.  `measures` lists the per-country figures to build ("total"
-# plus, where the source carries the component-split columns, the strands) —
+# plus, where the source carries the component-split columns, the components) —
 # the per-year charts (A) are TOTAL-only regardless, being shares of the
-# strand-less WB headline.
+# component-less WB headline.
 run_source_outputs <- function(src, src_pipelines, measures = "total") {
   out_dir         <- file.path(out_dir_base, src$subdir)
   out_dir_country <- file.path(out_dir, "by_country")
@@ -1992,7 +2000,7 @@ run_source_outputs <- function(src, src_pipelines, measures = "total") {
   }
   
   # (B) per-country time-series charts — one TOTAL figure per country plus,
-  # when `measures` includes them, one figure per VA strand (family B').
+  # when `measures` includes them, one figure per VA component (family B').
   if (do_country_charts) {
     all_countries <- src_pipelines %>%
       filter(year %in% available_years) %>%
@@ -2024,7 +2032,7 @@ run_source_outputs <- function(src, src_pipelines, measures = "total") {
 
 # ---- 8. run every source ---------------------------------------------------
 for (src in sources) {
-  measures_src <- if (do_strand_charts && isTRUE(strands_by_source[[src$name]])) {
+  measures_src <- if (do_component_charts && isTRUE(components_by_source[[src$name]])) {
     MEASURES
   } else {
     "total"

@@ -3,19 +3,19 @@
 #
 # Compares the FABIOv2 value-added estimates with the raw JRC BioSAMs over the
 # two years the BioSAMs cover, at three cell resolutions (L1 country-year, L2
-# item, L3 item x strand), and with the Eurostat A01+A03 national accounts at
-# L1.  The value-added strands are intrinsic to all sources:
+# item, L3 item x component), and with the Eurostat A01+A03 national accounts at
+# L1.  The value-added components are intrinsic to all sources:
 #     • BioSAMs carry them as three VA accounts
 #         LABOUR -> wages, CAPITAL -> capital, TLS-A -> tls   (TLS-C excluded)
 #     • GLORIA / COMBINED carry them as the component-split columns written by
 #       scripts 14_1 / 14_4:  value_added_wages|capital|tls [USD]  (total is
 #       their sum).
 #
-#   Note on the TLS strand: all sources use the PRODUCTION-side taxes less
+#   Note on the TLS component: all sources use the PRODUCTION-side taxes less
 #   subsidies and exclude the product-side ones — BioSAMs keep TLS-A and drop
 #   TLS-C (a tax on products), GLORIA / COMBINED's tls is taxes/subsidies on
 #   production, and Eurostat's D29X39 is "other taxes less subsidies on
-#   production" (the product-tax code D21X31 is not used).  So the strand is
+#   production" (the product-tax code D21X31 is not used).  So the component is
 #   like-for-like across sources and reference.  It is often NET NEGATIVE where
 #   subsidies exceed taxes.
 #
@@ -23,30 +23,56 @@
 #     • BioSAMs are the RAW JRC input (the reference data), at BioSAM categories
 #       directly.  Their three retained VA accounts (CAPITAL, LABOUR, TLS-A;
 #       TLS-C excluded as a tax on products, not VA) are summed per (area, item,
-#       year, strand) and CONVERTED EUR -> USD using Germany's SLC series from
-#       the FAOSTAT exchange-rate file — the same file and direction script 14_4
+#       year, component) and CONVERTED EUR -> USD using Germany's SLC series
+#       from the FAOSTAT exchange-rate file — the same file and direction 14_4
 #       uses to fold FSDN into COMBINED (value_USD = value_EUR / rate(year)).
 #     • GLORIA-FABIOv2 and COMBINED-FABIOv2 are the 14_1 / 14_4 VA outputs
 #       (already USD).  Their FABIO-item value-added is AGGREGATED UP to the
 #       BioSAM categories via the BioSAM<->FABIO item concordance, separately
 #       per ISIC level.  The aggregation is clean: no FABIO item maps to more
 #       than one BioSAM category within a single ISIC level, so the sum involves
-#       no double-counting.
+#       no double-counting.  This holds as the concordance stands and is
+#       ASSERTED at load time (assert_conc_unique) rather than assumed — see the
+#       note on cross-level items below.
+#
+#   FABIO items tagged at BOTH ISIC levels.  Three items carry a concordance row
+#   at A and at C, because the two levels describe genuinely different stages:
+#       2848 Milk - Excluding Butter   A_MILK (A, farm-gate)  / A_DAIR (C, dairy)
+#       2807 Rice and products         A_PARI (A, paddy)      / A_RICE (C, milled)
+#   Their value added is likewise two different figures drawn from two different
+#   files (FABIOv2_*_value_added_ISIC-A.rds vs ISIC-C.rds), so aggregating the
+#   item at both levels double-counts NOTHING — it is the only way the C-side
+#   category gets its main constituent.  An earlier version dropped the C row of
+#   any item also tagged at A, which left A_DAIR at ISIC-C mapped to Butter/Ghee
+#   alone (an exact zero in the ~60 countries with no butter series, Cyprus
+#   among them) and left A_RICE with no mapping at all, so the raw BioSAM rice
+#   VA was silently dropped from BOTH sides of the comparison.  That filter is
+#   gone; the cross-level rows are kept at both levels.
 #
 #   ISIC assignment of the RAW BioSAM rows.  BioSAM VA carries no ISIC tag, so
 #   each BioSAM item is assigned the ISIC level held by the MAJORITY of its
-#   mapped FABIO items in the concordance (ties -> A); a FABIO item tagged at
-#   BOTH levels counts only toward A.  All but one category are unambiguous;
-#   only A_OANM ("Other animals, live and their products") maps across both
-#   levels, and resolves to ISIC-A.  For GLORIA/COMBINED the ISIC level is
-#   intrinsic — it is simply which of the two ISIC-level RDS files the FABIO
-#   item came from; a category can therefore carry both an A and a C cell.
+#   mapped FABIO items in the concordance (ties -> A).  For GLORIA/COMBINED the
+#   ISIC level is intrinsic — it is simply which of the two ISIC-level RDS files
+#   the FABIO item came from — so a category whose FABIO items span both levels
+#   would carry an A and a C cell on the source side against a single, undivided
+#   figure on the reference side.  Only A_OANM ("Other animals, live and their
+#   products") does this: 7 of its FABIO items are ISIC-A (rabbits, eggs, silk,
+#   honey, camels) and 4 are ISIC-C (other meat, edible offals, raw animal fats,
+#   hides and skins), so the vote sends the whole BioSAM figure to A.  Left
+#   alone that produces a phantom ISIC-C cell — reference zero against a real
+#   source value — AND an ISIC-A cell biased low, since the BioSAM side there
+#   also holds the VA of the four C-mapped products.  Both halves are the same
+#   artefact, so the fix is applied to the SOURCE side: every source row is
+#   re-tagged with the ISIC level its BioSAM category was assigned
+#   (align_source_isic), which folds the C-mapped VA back into the one cell the
+#   reference actually populates.  Categories that live at a single level — all
+#   but A_OANM — are untouched.  L1 is unaffected either way: it sums ISIC away.
 #
 #   Eurostat reference — EUROSTAT National Accounts (nama_10_a64, current
 #   prices), summed over NACE A01 (crop & animal production) + A03 (fishing &
 #   aquaculture).  A02 (forestry) is not in that sum, so the reference is
 #   forestry-free: the Eurostat A01+A03 total is the FABIO-comparable
-#   primary-agriculture figure directly.  Strand mapping:
+#   primary-agriculture figure directly.  Component mapping:
 #       wages   <- D1                         (compensation of employees)
 #       tls     <- D29X39                     (other taxes less subsidies on prod.)
 #       capital <- B1G - D1 - D29X39          (via the GVA identity; NAMA has no
@@ -61,10 +87,12 @@
 # Outputs:
 #   output/biosam_validation/biosam_vs_fabio_comparison.csv
 #       tidy long table behind everything else, BioSAM-covered countries only
-#       (iso3c, year, source, isic, biosam_item_code, category, strand, value_usd)
+#       (iso3c, year, source, isic, biosam_item_code, category, component,
+#       value_usd)
 #   output/biosam_validation/eurostat_A01_A03_benchmark.csv
-#       the Eurostat NAMA A01+A03 reference (iso3c, year, strand, bench_usd) —
-#       written only if the staged CSV was readable, and read back by 01.
+#       the Eurostat NAMA A01+A03 reference (iso3c, year, component,
+#       bench_usd) — written only if the staged CSV was readable, and read back
+#       by 03.
 #   output/biosam_validation/metrics_vs_nationalaccounts.csv
 #       agreement of all five sources with the Eurostat A01+A03 line at ISIC-A
 #       scope, L1 cells.
@@ -72,9 +100,9 @@
 #       agreement of the four FABIOv2 variants with the raw BioSAMs at full ISIC
 #       A+C scope, L1 / L2 / L3 down the `level` column, pooled over items and
 #       again resolved per item (`item`).
-#   output/biosam_validation/biosam_ihs_<source>_<level>.svg
-#       one IHS scatter panel per source and level, at that level's cell
-#       resolution.
+#   output/biosam_validation/biosam_symlog_<source>_<level>.svg
+#       one symlog scatter figure per source and level, at that level's cell
+#       resolution; L2 / L3 split into one panel per ISIC section.
 #
 # Author:   Coco Vetter
 # ==============================================================================
@@ -195,7 +223,7 @@ EXCHANGE_ELEMENT   <- VA_FX_ELEMENT_CODE
 
 # Output locations: this validator's figures/CSVs live in the validation repo's
 # own output/ tree (VALIDATION_OUTPUT_DIR). The eurostat benchmark CSV written
-# below is read back by 01 — both sides resolve it from VALIDATION_OUTPUT_DIR.
+# below is read back by 03 — both sides resolve it from VALIDATION_OUTPUT_DIR.
 OUT_DIR <- file.path(VALIDATION_OUTPUT_DIR, "biosam_validation")
 dir.create(OUT_DIR, recursive = TRUE, showWarnings = FALSE)
 
@@ -206,11 +234,12 @@ BIOSAM_ITEM_COL  <- "Spending Agent (Code)"
 BIOSAM_VA_COL    <- "Receiving Agent (Code)"
 BIOSAM_YEAR_COL  <- "Year"
 
-# Retained BioSAM VA accounts -> strand.  TLS-C (a tax on products, not VA) is
-# excluded by omission.  Each account is carried through as its own strand so the
-# per-strand metrics can be built; the total is their sum.
-BIOSAM_ACCOUNT_TO_STRAND <- c(CAPITAL = "capital", LABOUR = "wages", `TLS-A` = "tls")
-VA_ACCOUNTS <- names(BIOSAM_ACCOUNT_TO_STRAND)   # CAPITAL, LABOUR, TLS-A
+# Retained BioSAM VA accounts -> component.  TLS-C (a tax on products, not VA)
+# is excluded by omission.  Each account is carried through as its own component
+# so the per-component metrics can be built; the total is their sum.
+BIOSAM_ACCOUNT_TO_COMPONENT <- c(CAPITAL = "capital", LABOUR = "wages",
+                                 `TLS-A` = "tls")
+VA_ACCOUNTS <- names(BIOSAM_ACCOUNT_TO_COMPONENT)   # CAPITAL, LABOUR, TLS-A
 
 # The two validation years (== the years the BioSAMs cover).
 YEARS <- c(2010L, 2015L)
@@ -222,9 +251,9 @@ YEARS <- c(2010L, 2015L)
 # and a taxes-less-subsidies figure off by roughly +20 bn USD against Eurostat.
 BIOSAM_EXCLUDE <- data.table(iso3c = "ROU", year = 2010L)
 
-# The scored measures: the three strands and their sum.
-STRANDS  <- c("wages", "capital", "tls")
-MEASURES <- c("total", STRANDS)
+# The scored measures: the three components and their sum.
+COMPONENTS <- c("wages", "capital", "tls")
+MEASURES   <- c("total", COMPONENTS)
 
 # ── Eurostat benchmark (A01 + A03) config ────────────────────────────────────
 # Reads the staged nama_10_a64 CSV (same loader logic as script 14_4's
@@ -252,7 +281,7 @@ EU_ISO2_TO_ISO3 <- c(
   PL="POL", PT="PRT", RO="ROU", SK="SVK", SI="SVN", ES="ESP", SE="SWE",
   UK="GBR", GB="GBR", NO="NOR", IS="ISL", CH="CHE", LI="LIE", TR="TUR")
 
-# Source ordering / display labels.  Base-grouped to match script 01: each
+# Source ordering / display labels.  Base-grouped to match script 03: each
 # base's pure output then its COMBINED (FSDN-overlaid) version.  EXIOBASE
 # entries that produced no rows are dropped from this vector after the data are
 # assembled (see RUN), so a machine without the EXIOBASE pipeline still scores
@@ -267,9 +296,11 @@ SOURCE_LEVELS <- c("BioSAMs",
 # ── Concordance loading ──────────────────────────────────────────────────────
 
 #' Per-BioSAM-item ISIC assignment for the RAW BioSAM rows: the ISIC level held
-#' by the MAJORITY of the item's mapped FABIO items (ties -> A), where a FABIO
-#' item tagged at both levels counts only toward A.  Also returns the canonical
-#' BioSAM label per code.
+#' by the MAJORITY of the item's mapped FABIO items (ties -> A).  Every
+#' concordance row votes, including the C row of an item also tagged at A — that
+#' row is a real ISIC-C mapping (milled rice, dairy) and suppressing it used to
+#' erase A_RICE from the vote entirely, taking the raw BioSAM rice VA out of the
+#' comparison with it.  Also returns the canonical BioSAM label per code.
 build_biosam_item_isic <- function(path) {
   ic <- fread(path)
   ic <- ic[
@@ -280,11 +311,6 @@ build_biosam_item_isic <- function(path) {
       fabio_item_code  = as.integer(FABIO_item_code),
       isic             = toupper(trimws(as.character(ISIC))))
   ]
-  # FABIO items tagged at both levels count only toward A: drop their C rows
-  # before the vote.
-  both <- ic[, .(n_isic = uniqueN(isic)), by = fabio_item_code][n_isic == 2L,
-                                                                fabio_item_code]
-  ic <- ic[!(isic == "C" & fabio_item_code %in% both)]
   counts <- ic[, .(n = .N), by = .(biosam_item_code, biosam_item, isic)]
   counts <- dcast(counts, biosam_item_code + biosam_item ~ isic,
                   value.var = "n", fill = 0)
@@ -294,12 +320,51 @@ build_biosam_item_isic <- function(path) {
   counts[, .(biosam_item_code, biosam_item, isic)]
 }
 
+#' The aggregation up to BioSAM categories is only free of double-counting while
+#' each FABIO item maps to at most ONE category within a level.  That is true of
+#' the concordance as it stands, and the cross-level rows kept above do not
+#' threaten it (they are one category per level, not two within one).  Assert it
+#' rather than trust it, so a future concordance edit fails loudly here instead
+#' of quietly inflating a cell.
+assert_conc_unique <- function(conc, level) {
+  dup <- conc[, .(n = uniqueN(biosam_item_code)), by = fabio_item_code][n > 1L]
+  if (nrow(dup))
+    stop("Concordance maps FABIO item(s) to multiple BioSAM categories within ",
+         "ISIC-", level, ": ", paste(dup$fabio_item_code, collapse = ", "),
+         ".\n  Aggregating them would double-count. Fix the concordance.")
+  invisible(conc)
+}
+
+#' Re-tag the SOURCE rows with the ISIC level their BioSAM category was assigned
+#' by the majority vote, so both sides of a comparison resolve ISIC the same
+#' way.  Where a category's FABIO items span both levels the source would
+#' otherwise split into an A and a C cell while the reference carries one
+#' undivided figure — the C cell reading as a reference zero and the A cell
+#' reading low by exactly the VA that went to C.  Folding the source back onto
+#' the reference's level makes the pair like-for-like.  Reference rows already
+#' carry that level, so passing them through is a no-op; single-level
+#' categories (everything but A_OANM) are unchanged either way.
+align_source_isic <- function(dat, item_isic) {
+  out <- copy(dat)
+  out[item_isic, on = .(biosam_item_code), aligned_isic := i.isic]
+  moved <- out[!is.na(aligned_isic) & isic != aligned_isic,
+               sort(unique(biosam_item_code))]
+  if (length(moved))
+    message("  ISIC alignment: folded the off-level rows of ",
+            paste(moved, collapse = ", "), " onto their assigned level.")
+  out[!is.na(aligned_isic), isic := aligned_isic]
+  out[, .(value_usd = sum(value_usd, na.rm = TRUE)),
+      by = .(iso3c, year, source, isic, biosam_item_code, biosam_item,
+             component)]
+}
+
 
 # ── Raw BioSAMs loading + EUR -> USD ─────────────────────────────────────────
 
-#' Load one JRC BioSAM CSV to long VA rows (year, area, item, strand,
+#' Load one JRC BioSAM CSV to long VA rows (year, area, item, component,
 #' va_value[EUR]), filtered to the three retained VA accounts and tagged with
-#' the strand each account maps to (LABOUR->wages, CAPITAL->capital, TLS-A->tls).
+#' the component each account maps to (LABOUR->wages, CAPITAL->capital,
+#' TLS-A->tls).
 #' Source column is MILLION EUROS; multiplied by 1e6 to EUR here.
 load_biosam_va_single <- function(path) {
   df <- fread(path)
@@ -316,7 +381,7 @@ load_biosam_va_single <- function(path) {
     year             = as.integer(va[[BIOSAM_YEAR_COL]]),
     biosam_area_code = trimws(as.character(va[[BIOSAM_AREA_COL]])),
     biosam_item_code = trimws(as.character(va[[BIOSAM_ITEM_COL]])),
-    strand           = unname(BIOSAM_ACCOUNT_TO_STRAND[acct]),
+    component        = unname(BIOSAM_ACCOUNT_TO_COMPONENT[acct]),
     va_value_eur     = as.numeric(va[[BIOSAM_VALUE_COL]]) * 1e6
   )
 }
@@ -332,14 +397,14 @@ load_biosam_va <- function(paths) {
 # ── Build the per-source long tables (all at BioSAM categories) ──────────────
 
 #' GLORIA / COMBINED: aggregate FABIO-item VA up to BioSAM categories per ISIC
-#' level AND per strand.  `va_path_fun(suffix)` returns the RDS path for ISIC
-#' level `suffix`.  The component-split scripts 14_1 / 14_4 write the three strand
-#' columns; their sum is the total value-added (rebuilt downstream).
+#' level AND per component.  `va_path_fun(suffix)` returns the RDS path for ISIC
+#' level `suffix`.  The component-split scripts 14_1 / 14_4 write the three
+#' component columns; their sum is the total value-added (rebuilt downstream).
 build_fabio_source <- function(source_label, va_path_fun,
                                item_conc_a, item_conc_c) {
-  strand_cols <- c(wages   = "value_added_wages [USD]",
-                   capital = "value_added_capital [USD]",
-                   tls     = "value_added_tls [USD]")
+  component_cols <- c(wages   = "value_added_wages [USD]",
+                      capital = "value_added_capital [USD]",
+                      tls     = "value_added_tls [USD]")
   one_level <- function(suffix, conc) {
     path <- va_path_fun(suffix)
     if (!file.exists(path)) {
@@ -348,9 +413,9 @@ build_fabio_source <- function(source_label, va_path_fun,
       return(NULL)
     }
     raw  <- as.data.table(readRDS(path))
-    miss <- setdiff(unname(strand_cols), names(raw))
+    miss <- setdiff(unname(component_cols), names(raw))
     if (length(miss))
-      stop("VA file ", path, " is missing strand column(s): ",
+      stop("VA file ", path, " is missing component column(s): ",
            paste(miss, collapse = ", "), ".\n  The metrics need the ",
            "COMPONENT-SPLIT output of scripts 14_1 / 14_4 (value_added_wages|",
            "capital|tls [USD]).  Re-run those to generate it.")
@@ -362,15 +427,15 @@ build_fabio_source <- function(source_label, va_path_fun,
                 capital         = `value_added_capital [USD]`,
                 tls             = `value_added_tls [USD]`)]
     va <- melt(va, id.vars = c("iso3c", "year", "fabio_item_code"),
-               measure.vars = names(strand_cols),
-               variable.name = "strand", value.name = "value_usd")
-    va[, strand := as.character(strand)]
+               measure.vars = names(component_cols),
+               variable.name = "component", value.name = "value_usd")
+    va[, component := as.character(component)]
     # FABIO items with no BioSAM mapping at this level are dropped by the join
     # (outside the BioSAM agricultural scope).
     out <- conc[va, on = "fabio_item_code", nomatch = NULL,
                 allow.cartesian = TRUE]
     out[, .(value_usd = sum(value_usd, na.rm = TRUE)),
-        by = .(iso3c, year, biosam_item_code, biosam_item, strand)][
+        by = .(iso3c, year, biosam_item_code, biosam_item, component)][
           , isic := suffix][]
   }
   res <- rbindlist(list(one_level("A", item_conc_a),
@@ -380,12 +445,12 @@ build_fabio_source <- function(source_label, va_path_fun,
   res
 }
 
-#' Raw BioSAMs: sum within each strand per (area, item, year, strand), convert
-#' EUR -> USD, map area -> iso3c, restrict to mapped (agricultural) categories,
-#' assign ISIC via the majority rule, attach the BioSAM label.
+#' Raw BioSAMs: sum within each component per (area, item, year, component),
+#' convert EUR -> USD, map area -> iso3c, restrict to mapped (agricultural)
+#' categories, assign ISIC via the majority rule, attach the BioSAM label.
 build_biosam_source <- function(va_long, area_conc, item_isic, eur_per_usd) {
   agg <- va_long[, .(va_eur = sum(va_value_eur, na.rm = TRUE)),
-                 by = .(year, biosam_area_code, biosam_item_code, strand)]
+                 by = .(year, biosam_area_code, biosam_item_code, component)]
   agg[, rate := eur_per_usd[as.character(year)]]
   miss_rate <- agg[!is.finite(rate), sort(unique(year))]
   if (length(miss_rate))
@@ -399,7 +464,7 @@ build_biosam_source <- function(va_long, area_conc, item_isic, eur_per_usd) {
   agg <- item_isic[agg, on = "biosam_item_code", nomatch = NULL]
   
   agg[, .(value_usd = sum(value_usd, na.rm = TRUE)),
-      by = .(iso3c, year, biosam_item_code, biosam_item, isic, strand)][
+      by = .(iso3c, year, biosam_item_code, biosam_item, isic, component)][
         , source := "BioSAMs"][]
 }
 
@@ -408,7 +473,7 @@ build_biosam_source <- function(va_long, area_conc, item_isic, eur_per_usd) {
 #
 # Reads the staged nama_10_a64 CSV (mirrors script 14_4's
 # load_eurostat_nama_activity, generalized to a SET of NACE divisions summed
-# together).  Returns a tidy long table keyed (iso3c, year, strand) with
+# together).  Returns a tidy long table keyed (iso3c, year, component) with
 # bench_usd in USD, where
 #   wages   <- D1
 #   tls     <- D29X39
@@ -473,8 +538,8 @@ load_eurostat_benchmark <- function(eur_per_usd, nace = EU_NACE_BENCH) {
                     tls   = tx,  total   = tot)
   long <- melt(out, id.vars = c("iso3c", "year"),
                measure.vars = c("wages", "capital", "tls", "total"),
-               variable.name = "strand", value.name = "bench_usd")
-  long[, strand := as.character(strand)]
+               variable.name = "component", value.name = "bench_usd")
+  long[, component := as.character(component)]
   long[is.finite(bench_usd)]
 }
 
@@ -486,8 +551,13 @@ load_eurostat_benchmark <- function(eur_per_usd, nace = EU_NACE_BENCH) {
 message("Loading concordances ...")
 item_conc_a <- load_item_conc(ITEM_CONC_PATH, "A", "BioSAM_item_code", "BioSAM_item", out_code = "biosam_item_code", out_item = "biosam_item", keep_code_class_char = FALSE)
 item_conc_c <- load_item_conc(ITEM_CONC_PATH, "C", "BioSAM_item_code", "BioSAM_item", out_code = "biosam_item_code", out_item = "biosam_item", keep_code_class_char = FALSE)
-# ISIC-C keeps only FABIO items not also tagged at A (drop double-mapped items).
-item_conc_c <- item_conc_c[!fabio_item_code %in% item_conc_a$fabio_item_code]
+# Both levels keep every mapping the concordance gives them, including the C row
+# of a FABIO item also tagged at A (2848 milk -> A_DAIR, 2807 rice -> A_RICE).
+# The A and C value added are different figures from different files, so there
+# is nothing to double-count; what IS checked is that no item maps to two
+# categories within one level, which would double-count.
+assert_conc_unique(item_conc_a, "A")
+assert_conc_unique(item_conc_c, "C")
 area_conc   <- load_area_conc(AREA_CONC_PATH, "BioSAM_area_code", "FABIO_iso3c", out_code = "biosam_area_code", out_fabio = "iso3c", fabio_as_integer = FALSE)
 item_isic   <- build_biosam_item_isic(ITEM_CONC_PATH)
 message(sprintf("  %d ISIC-A and %d ISIC-C item mappings; %d area mappings; %d categories.",
@@ -513,9 +583,18 @@ dat_all <- rbindlist(
   list(src_biosam, src_gloria, src_combined_gloria,
        src_exiobase, src_combined_exiobase),
   use.names = TRUE, fill = TRUE
-)[, .(iso3c, year, source, isic, biosam_item_code, category = biosam_item,
-      strand, value_usd)]
+)
 dat_all <- dat_all[is.finite(value_usd)]
+
+# Resolve ISIC the same way on both sides.  Only A_OANM is affected: its four
+# ISIC-C FABIO items are folded into the ISIC-A cell the majority vote gave the
+# raw BioSAM figure, which removes a phantom C cell (reference zero against a
+# real source value) and restores the A cell that was reading low by exactly
+# that amount.
+message("Aligning source ISIC to the BioSAM category assignment ...")
+dat_all <- align_source_isic(dat_all, item_isic)[
+  , .(iso3c, year, source, isic, biosam_item_code, category = biosam_item,
+      component, value_usd)]
 
 # Restrict EVERYTHING to the countries the BioSAMs actually cover — GLORIA /
 # COMBINED span the full FABIO country set, but the comparison is only
@@ -531,7 +610,8 @@ message("Loading Eurostat A01+A03 benchmark ...")
 eu_bench <- load_eurostat_benchmark(eur_per_usd)        # may be NULL (skipped)
 
 # Tidy comparison CSV behind everything below (BioSAM-covered countries only),
-# at strand granularity.  The Eurostat benchmark (if any) is written alongside.
+# at component granularity.  The Eurostat benchmark (if any) is written
+# alongside.
 comparison_path <- file.path(OUT_DIR, "biosam_vs_fabio_comparison.csv")
 fwrite(dat_all, comparison_path)
 message("Comparison table -> ", comparison_path)
@@ -557,7 +637,7 @@ if (!is.null(eu_bench)) {
   cells_na   <- va_cells(dat_metrics[isic == "A"], VA_LEVEL_KEYS$L1)
   ref_na     <- eu_bench[iso3c %in% biosam_countries][
     !BIOSAM_EXCLUDE, on = .(iso3c, year)][
-      , .(iso3c, year, strand, ref = bench_usd)]
+      , .(iso3c, year, component, ref = bench_usd)]
   metrics_na <- va_score(va_match(cells_na, ref_na), SOURCE_LEVELS, "L1")
   metrics_na_path <- file.path(OUT_DIR, "metrics_vs_nationalaccounts.csv")
   fwrite(metrics_na, metrics_na_path, na = "NA")
@@ -579,10 +659,9 @@ message("BioSAMs-reference metrics -> ", metrics_bs_path)
 message("\nAgreement vs raw BioSAMs (full ISIC A+C), pooled over items:")
 print(metrics_bs[is.na(item)])
 
-message("\nBuilding IHS scatter panels ...")
-va_write_ihs_plots(
+message("\nBuilding symlog scatter panels ...")
+va_write_symlog_plots(
   matched,
-  theta        = va_theta(va_level_cells(dat_metrics[source == "BioSAMs"], "L3")$value),
   sources      = fab_srcs,
   out_dir      = OUT_DIR,
   prefix       = "biosam",

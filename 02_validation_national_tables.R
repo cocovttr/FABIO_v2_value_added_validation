@@ -6,8 +6,8 @@
 # country supplies an ingestion function; everything downstream — the
 # output-weighted disaggregation of the FABIOv2 items, the OECD A01+A03
 # reference, the metric cascade and the shared scatter panels — is generic.
-# Cells are scored at L2 (country x year x industry, strands summed) and L3
-# (x strand); L1 cells number one per benchmark year, so no national rows are
+# Cells are scored at L2 (country x year x industry, components summed) and L3
+# (x component); L1 cells number one per benchmark year, so no national rows are
 # emitted and the industries supply the sample size instead.
 #
 #   To add a country, write a load_<iso3>() returning
@@ -15,11 +15,11 @@
 #                               (year, fabio_item_code, code, item)
 #       isic    (year, code, item, isic)   one ISIC section per industry
 #       va      the raw reference in USD, long over
-#               (iso3c, year, code, item, isic, strand, value_usd, source)
+#               (iso3c, year, code, item, isic, component, value_usd, source)
 #       output  (year, code, output_usd)   the disaggregation weights' base
 #   and add a spec.  Nothing else in this file needs to change.
 #
-#   The strands are intrinsic to both sides of every comparison: the national
+#   The components are intrinsic to both sides of every comparison: the national
 #   table carries them as value-added rows, and GLORIA / COMBINED carry them as
 #   the component-split columns written by scripts 14_1 / 14_4
 #   (value_added_wages|capital|tls [USD]).  Their sum is the total.
@@ -39,7 +39,12 @@
 #   both ISIC levels in these concordances (enforced per country and year), so
 #   each industry carries the single level of its concordance rows.  For
 #   GLORIA/COMBINED the level is intrinsic — which of the two ISIC-level RDS
-#   files the FABIO item came from.
+#   files the FABIO item came from.  A FABIO ITEM, unlike an industry, routinely
+#   appears at both levels (wheat farming / flour milling, dairy farming /
+#   cheese manufacturing — around 35 items per concordance).  That is correct
+#   and both rows are kept: the two levels read their value added from two
+#   different files, so nothing is double-counted, and the C-side processing
+#   industries have no other source of mappings.
 #
 #   OECD reference — table T1600 "Use, Value added and its components by
 #   activity" (dataflow OECD.SDD.NAD : DSD_NASU@DF_USEVA_T1600), the same OECD
@@ -48,27 +53,28 @@
 #   needed.  It sums ISIC divisions A01 (crop & animal production) + A03
 #   (fishing & aquaculture); A02 (forestry) is simply NOT in the sum, so the
 #   agriculture+fishery total is the FABIO-comparable primary-agriculture
-#   figure directly.  Strand mapping — IDENTICAL to script 14_4's loader (T1600
-#   publishes the full GVA identity directly):
+#   figure directly.  Component mapping — IDENTICAL to script 14_4's loader
+#   (T1600 publishes the full GVA identity directly):
 #       wages   <- D1                  (compensation of employees)
 #       capital <- B2A3G (or B2G+B3G)  (gross operating surplus + mixed income)
 #       tls     <- D29X39              (other taxes less subsidies on prod.)
 #       total   <- B1G  == wages + capital + tls
-#   Any SINGLE missing strand is recovered from the identity (script 14_4's
+#   Any SINGLE missing component is recovered from the identity (script 14_4's
 #   rule); cells still incomplete are dropped, and an activity dropping out
 #   degrades the reference to the remaining divisions (reported).  UNIT_MEASURE
 #   "XDC" is national currency, so it passes through the same FX vector as the
-#   country's own table.  The USA export is read back by 01; Japan is typically
+#   country's own table.  The USA export is read back by 03; Japan is typically
 #   absent from the download, which costs nothing here.
 #
 # Outputs, per country, under output/<subdir>/:
 #   <prefix>_vs_fabio_comparison.csv
 #       tidy long table behind everything else
-#       (iso3c, year, source, isic, <code column>, category, strand, value_usd)
+#       (iso3c, year, source, isic, <code column>, category, component,
+#       value_usd)
 #   metrics_<prefix>.csv
 #       agreement of each FABIOv2 variant with the national reference, L2 / L3
 #       down the `level` column.
-#   <prefix>_by_strand_by_year.csv / <prefix>_item_ratios.csv
+#   <prefix>_by_component_by_year.csv / <prefix>_item_ratios.csv
 #       aggregate ratios per (year, ISIC level, source, measure), and the same
 #       resolved per industry.
 #   fabio_item_to_<prefix>_output_weights.csv
@@ -78,10 +84,11 @@
 #       the OECD A01+A03 reference — written only where the load succeeded.
 #
 # and once, across countries:
-#   output/national_sut_validation/national_sut_ihs_<source>_<level>.svg
-#       the IHS scatter panels, every country on one pair of axes.
+#   output/national_sut_validation/national_sut_symlog_<source>_<level>.svg
+#       the symlog scatter figures, every country on one pair of axes, split
+#       into one panel per ISIC section.
 #
-# Companion to: 02_validation_BioSAMs.R (EU, JRC BioSAMs reference)
+# Companion to: 01_validation_BioSAMs.R (EU, JRC BioSAMs reference)
 # ==============================================================================
 
 suppressPackageStartupMessages({
@@ -170,7 +177,7 @@ va_path       <- function(base) function(suffix)
   file.path(VA_OUTPUT_DIR,
             sprintf("FABIOv2_%s_value_added_ISIC-%s.rds", base, suffix))
 
-# Source labels -> the RDS family each reads.  Base-grouped to match script 01:
+# Source labels -> the RDS family each reads.  Base-grouped to match script 03:
 # each base's pure output then its COMBINED (FSDN-overlaid) version.
 FABIO_VA_SOURCES <- list(
   `GLORIA-FABIOv2 (disagg.)`            = va_path("GLORIA"),
@@ -178,9 +185,9 @@ FABIO_VA_SOURCES <- list(
   `EXIOBASE-FABIOv2 (disagg.)`          = va_path("EXIOBASE"),
   `COMBINED-EXIOBASE-FABIOv2 (disagg.)` = va_path("COMBINED_EXIOBASE"))
 
-# The scored measures: the three strands and their sum.
-STRANDS  <- c("wages", "capital", "tls")
-MEASURES <- c("total", STRANDS)
+# The scored measures: the three components and their sum.
+COMPONENTS <- c("wages", "capital", "tls")
+MEASURES   <- c("total", COMPONENTS)
 
 # The scatter panels put every country on one pair of axes, so they get their
 # own directory rather than any one country's.
@@ -209,10 +216,11 @@ OECD_SUT_FILTERS <- list(
   UNIT_MEASURE     = "XDC"         # national currency
 )
 
-# Transaction codes for the four VA strands — IDENTICAL to script 14_4's
+# Transaction codes for the four VA components — IDENTICAL to script 14_4's
 # OECD_SUT_TX: capital is B2A3G directly (T1600 publishes the full GVA
 # identity), falling back to B2G + B3G, then to the identity for any SINGLE
-# missing strand.  D29/D39 are deliberately not split (subsidy-sign ambiguity).
+# missing component.  D29/D39 are deliberately not split (subsidy-sign
+# ambiguity).
 OECD_SUT_TX <- c(total = "B1G", wages = "D1", capital = "B2A3G",
                  capital_os = "B2G", capital_mi = "B3G", tls = "D29X39")
 
@@ -234,11 +242,24 @@ concordance_isic <- function(conc_a, conc_c, where) {
     unique(conc_c[, .(code, item)])[, isic := "C"]))
 }
 
-#' ISIC-C keeps only FABIO items not also tagged at ISIC-A, per year.
-drop_double_mapped <- function(conc_a, conc_c) {
-  if (is.null(conc_c) || nrow(conc_c) == 0L) return(conc_c)
-  conc_c[!fabio_item_code %in% conc_a$fabio_item_code]
-}
+#' Both ISIC levels keep every mapping the concordance gives them, including the
+#' C row of a FABIO item also tagged at A.  A cross-level item is the normal
+#' case here, not an anomaly: 2511 "Wheat and products" is wheat farming at A and
+#' flour milling at C, 2848 "Milk - Excluding Butter" is dairy farming at A and
+#' cheese manufacturing at C, and so on for ~35 items per concordance.  The two
+#' levels draw their value added from two different files (ISIC-A vs ISIC-C), so
+#' carrying the item at both double-counts nothing, and a FABIO item feeding
+#' several industries WITHIN a level is exactly what build_split_weights()
+#' exists to apportion.  An earlier version dropped the C row of any item also
+#' tagged at A; because concordance_isic() is built from the filtered C table and
+#' `cols` then selects which reference rows to read, that silently removed 12-14
+#' processing industries per country from BOTH sides of the comparison (US flour
+#' milling, cheese, canning, seafood, tobacco, fiber mills; Japan's five seafood
+#' sectors, grain milling, condiments, tobacco, fiber yarns) and stripped part of
+#' the mapping from several more (Dairy farm products, Tea and roasted coffee,
+#' Starch, Wet corn milling, Fluid milk and butter).  No filter is applied now.
+#' The one thing that WOULD corrupt the comparison — an industry appearing at
+#' both ISIC levels — is caught by concordance_isic() below.
 
 
 # ── Generic: output-weighted disaggregation ──────────────────────────────────
@@ -270,17 +291,17 @@ build_split_weights <- function(conc_by_year, out_tbl, isic_level, years) {
   w[, .(year, isic, fabio_item_code, code, item, output_usd, weight)]
 }
 
-#' GLORIA / COMBINED: melt the strand columns of one ISIC level's VA RDS (this
-#' country's rows, benchmark years), split each FABIO item's strand VA across
-#' its mapped industries by the output weights, and aggregate to (year,
-#' industry, strand).  The mapped item set is year-specific, so conservation
+#' GLORIA / COMBINED: melt the component columns of one ISIC level's VA RDS
+#' (this country's rows, benchmark years), split each FABIO item's component VA
+#' across its mapped industries by the output weights, and aggregate to (year,
+#' industry, component).  The mapped item set is year-specific, so conservation
 #' (post-split total == pre-split total of the mapped cells) is checked per
 #' level and reported.
 build_fabio_source <- function(source_label, va_path_fun, weights_a, weights_c,
                                iso3, years) {
-  strand_cols <- c(wages   = "value_added_wages [USD]",
-                   capital = "value_added_capital [USD]",
-                   tls     = "value_added_tls [USD]")
+  component_cols <- c(wages   = "value_added_wages [USD]",
+                      capital = "value_added_capital [USD]",
+                      tls     = "value_added_tls [USD]")
   one_level <- function(suffix, weights) {
     path <- va_path_fun(suffix)
     if (!file.exists(path)) {
@@ -289,9 +310,9 @@ build_fabio_source <- function(source_label, va_path_fun, weights_a, weights_c,
       return(NULL)
     }
     raw  <- as.data.table(readRDS(path))
-    miss <- setdiff(unname(strand_cols), names(raw))
+    miss <- setdiff(unname(component_cols), names(raw))
     if (length(miss))
-      stop("VA file ", path, " is missing strand column(s): ",
+      stop("VA file ", path, " is missing component column(s): ",
            paste(miss, collapse = ", "), ".\n  The metrics need the ",
            "COMPONENT-SPLIT output of scripts 14_1 / 14_4 (value_added_wages|",
            "capital|tls [USD]).  Re-run those to generate it.")
@@ -308,18 +329,18 @@ build_fabio_source <- function(source_label, va_path_fun, weights_a, weights_c,
       return(NULL)
     }
     va <- melt(va, id.vars = c("iso3c", "year", "fabio_item_code"),
-               measure.vars = names(strand_cols),
-               variable.name = "strand", value.name = "value_usd")
-    va[, strand := as.character(strand)]
-
+               measure.vars = names(component_cols),
+               variable.name = "component", value.name = "value_usd")
+    va[, component := as.character(component)]
+    
     mapped  <- unique(weights[, .(year, fabio_item_code)])
     pre_tot <- va[mapped, on = c("year", "fabio_item_code"), nomatch = NULL][
       , sum(value_usd, na.rm = TRUE)]
-
+    
     out <- weights[va, on = c("year", "fabio_item_code"),
                    nomatch = NULL, allow.cartesian = TRUE]
     out[, value_usd := value_usd * weight]
-
+    
     post_tot <- out[, sum(value_usd, na.rm = TRUE)]
     if (is.finite(pre_tot) && abs(pre_tot) > 0 &&
         abs(post_tot - pre_tot) > 1e-6 * abs(pre_tot))
@@ -331,9 +352,9 @@ build_fabio_source <- function(source_label, va_path_fun, weights_a, weights_c,
       source_label, suffix,
       label_number(scale_cut = cut_short_scale())(pre_tot),
       nrow(mapped), uniqueN(out$code)))
-
+    
     out[, .(value_usd = sum(value_usd, na.rm = TRUE)),
-        by = .(iso3c, year, code, item, strand)][, isic := suffix][]
+        by = .(iso3c, year, code, item, component)][, isic := suffix][]
   }
   res <- rbindlist(list(one_level("A", weights_a),
                         one_level("C", weights_c)),
@@ -346,13 +367,13 @@ build_fabio_source <- function(source_label, va_path_fun, weights_a, weights_c,
 # ── Generic: OECD SUT A01+A03 reference ──────────────────────────────────────
 #
 # Specialization of script 14_4's load_oecd_sut_activity() to one REF_AREA:
-# same file, same dimension filters, same transaction codes and strand
+# same file, same dimension filters, same transaction codes and component
 # construction, run per activity in OECD_ACTIVITIES and summed across them.
-# Only (activity, year) cells with all four strands finite AFTER identity
+# Only (activity, year) cells with all four components finite AFTER identity
 # recovery enter the sum (script 14_4's completeness rule).  `lcu_per_usd` is
 # the same year -> rate vector the country's own table uses, since XDC is
-# national currency.  Returns a long (iso3c, year, strand, bench_usd) table, or
-# NULL (with a message) when the file is missing or the country is absent.
+# national currency.  Returns a long (iso3c, year, component, bench_usd) table,
+# or NULL (with a message) when the file is missing or the country is absent.
 load_oecd_benchmark <- function(iso3, years, lcu_per_usd,
                                 path = OECD_SUT_PATH,
                                 activities = OECD_ACTIVITIES) {
@@ -363,7 +384,7 @@ load_oecd_benchmark <- function(iso3, years, lcu_per_usd,
     return(NULL)
   }
   s <- as.data.table(fread(path))
-
+  
   need <- c("REF_AREA", "ACTIVITY", "TRANSACTION", "PRODUCT", "PRICE_BASE",
             "SECTOR", "VALUATION", "UNIT_MEASURE", "TABLE_IDENTIFIER",
             "TIME_PERIOD", "OBS_VALUE", "UNIT_MULT")
@@ -374,7 +395,7 @@ load_oecd_benchmark <- function(iso3, years, lcu_per_usd,
             " — is this the crafting.R download?  Export skipped.")
     return(NULL)
   }
-
+  
   s <- s[TABLE_IDENTIFIER == OECD_SUT_FILTERS$TABLE_IDENTIFIER &
            PRODUCT      == OECD_SUT_FILTERS$PRODUCT       &
            PRICE_BASE   == OECD_SUT_FILTERS$PRICE_BASE    &
@@ -389,7 +410,7 @@ load_oecd_benchmark <- function(iso3, years, lcu_per_usd,
             "country may not report these divisions in T1600.  Export skipped.")
     return(NULL)
   }
-
+  
   # National-currency absolute value; UNIT_MULT is a power of ten (millions = 6).
   s[, `:=`(value_lcu = suppressWarnings(as.numeric(OBS_VALUE)) *
              10^suppressWarnings(as.integer(UNIT_MULT)),
@@ -402,7 +423,7 @@ load_oecd_benchmark <- function(iso3, years, lcu_per_usd,
             paste(years, collapse = "/"), " — export skipped.")
     return(NULL)
   }
-
+  
   # One value per (activity, year, TRANSACTION); warn-and-sum on duplicates
   # (script 14_4's rule — duplicates mean a filter dimension is off).
   tx_all <- unname(OECD_SUT_TX)
@@ -416,7 +437,7 @@ load_oecd_benchmark <- function(iso3, years, lcu_per_usd,
          .(value_usd = sum(value_usd, na.rm = TRUE)),
          by = .(activity = as.character(ACTIVITY), year, TRANSACTION)]
   w <- dcast(s, activity + year ~ TRANSACTION, value.var = "value_usd")
-
+  
   gettx <- function(dt, code) {
     if (code %in% names(dt)) suppressWarnings(as.numeric(dt[[code]]))
     else rep(NA_real_, nrow(dt))
@@ -431,8 +452,8 @@ load_oecd_benchmark <- function(iso3, years, lcu_per_usd,
     capital = fcase(is.finite(capB2A3G),                   capB2A3G,
                     is.finite(capB2G) & is.finite(capB3G), capB2G + capB3G,
                     default = NA_real_))]
-
-  # Recover one missing strand from the identity B1G = D1 + B2A3G + D29X39
+  
+  # Recover one missing component from the identity B1G = D1 + B2A3G + D29X39
   # (same recovery order as script 14_4).
   w[!is.finite(capital) & is.finite(total) & is.finite(wages)   & is.finite(tls),
     capital := total - wages - tls]
@@ -442,7 +463,7 @@ load_oecd_benchmark <- function(iso3, years, lcu_per_usd,
     wages   := total - capital - tls]
   w[!is.finite(total)   & is.finite(wages) & is.finite(capital) & is.finite(tls),
     total   := wages + capital + tls]
-
+  
   # Identity residual where all four were published (sanity, not enforced).
   full <- w[is.finite(wages) & is.finite(capital) &
               is.finite(tls) & is.finite(total)]
@@ -452,7 +473,7 @@ load_oecd_benchmark <- function(iso3, years, lcu_per_usd,
       "  OECD SUT GVA identity (%s %s): max |residual| = %.2e (rel) over %d cell(s).",
       iso3, paste(activities, collapse = "+"), max(rr, na.rm = TRUE), nrow(full)))
   }
-
+  
   n_pre <- nrow(w)
   w <- w[is.finite(wages) & is.finite(capital) &
            is.finite(tls) & is.finite(total)]
@@ -468,14 +489,14 @@ load_oecd_benchmark <- function(iso3, years, lcu_per_usd,
   if (!setequal(kept, activities))
     message("  OECD reference degrades to activity set {",
             paste(kept, collapse = ", "), "} (incomplete divisions dropped).")
-
+  
   out <- w[, .(wages = sum(wages), capital = sum(capital),
                tls = sum(tls), total = sum(total)), by = year]
   out[, iso3c := iso3]
   long <- melt(out, id.vars = c("iso3c", "year"),
                measure.vars = c("wages", "capital", "tls", "total"),
-               variable.name = "strand", value.name = "bench_usd")
-  long[, strand := as.character(strand)]
+               variable.name = "component", value.name = "bench_usd")
+  long[, component := as.character(component)]
   long[is.finite(bench_usd)]
 }
 
@@ -494,12 +515,13 @@ USA_CONC_PATH <- file.path(VALIDATION_CONC_DIR,
 USE_TABLE_OBJECTS <- c(`2012` = "Detail_Use_SUT_2012_17sch",
                        `2017` = "Detail_Use_SUT_2017_17sch")
 
-# BEA Use-table row codes: the three VA strand rows, their total, and the
+# BEA Use-table row codes: the three VA component rows, their total, and the
 # total-industry-output row used for the disaggregation weights.
-SUT_ROW_TO_STRAND <- c(V00100 = "wages", T00OTOP = "tls", V00300 = "capital")
-SUT_VA_TOTAL_ROW  <- "VABAS"   # identity check only
-SUT_OUTPUT_ROW    <- "T018"    # total industry output (basic value) -> weights
-SUT_MILLIONS      <- 1e6       # BEA tables are in million USD
+SUT_ROW_TO_COMPONENT <- c(V00100 = "wages", T00OTOP = "tls",
+                          V00300 = "capital")
+SUT_VA_TOTAL_ROW     <- "VABAS"   # identity check only
+SUT_OUTPUT_ROW       <- "T018"    # total industry output (basic) -> weights
+SUT_MILLIONS         <- 1e6       # BEA tables are in million USD
 
 #' Fetch one useeior Detail_Use_SUT object by name, as a numeric matrix with
 #' NA -> 0 and any "/US" location suffix stripped from the dimnames.
@@ -528,25 +550,24 @@ load_usa <- function(years) {
   conc_a <- load_item_conc(USA_CONC_PATH, "A", "USA_SUT_code", "USA_SUT_item",
                            out_code = "code", out_item = "item",
                            keep_code_class_char = FALSE)
-  conc_c <- drop_double_mapped(
-    conc_a,
-    load_item_conc(USA_CONC_PATH, "C", "USA_SUT_code", "USA_SUT_item",
-                   out_code = "code", out_item = "item",
-                   keep_code_class_char = FALSE))
+  conc_c <- load_item_conc(USA_CONC_PATH, "C", "USA_SUT_code", "USA_SUT_item",
+                           out_code = "code", out_item = "item",
+                           keep_code_class_char = FALSE)
   isic <- concordance_isic(conc_a, conc_c, "USA")
   message(sprintf(
     "  %d ISIC-A and %d ISIC-C item mappings onto %d SUT industries (%d A / %d C).",
     nrow(conc_a), nrow(conc_c), nrow(isic),
     sum(isic$isic == "A"), sum(isic$isic == "C")))
-
+  
   message("  Loading useeior Use (SUT) tables ...")
   tables <- setNames(lapply(USE_TABLE_OBJECTS, load_use_table),
                      names(USE_TABLE_OBJECTS))
-
+  
   cols <- isic$code
   per_year <- lapply(years, function(yr) {
     m <- tables[[as.character(yr)]]
-    need_rows <- c(names(SUT_ROW_TO_STRAND), SUT_VA_TOTAL_ROW, SUT_OUTPUT_ROW)
+    need_rows <- c(names(SUT_ROW_TO_COMPONENT), SUT_VA_TOTAL_ROW,
+                   SUT_OUTPUT_ROW)
     miss_rows <- setdiff(need_rows, rownames(m))
     if (length(miss_rows) > 0L)
       stop("Use table for ", yr, " is missing row(s): ",
@@ -556,27 +577,27 @@ load_usa <- function(years) {
       stop("Use table for ", yr, " has no industry column for mapped SUT ",
            "code(s): ", paste(miss_cols, collapse = ", "),
            "\n  Either the concordance codes or the useeior schema changed.")
-
-    va  <- m[names(SUT_ROW_TO_STRAND), cols, drop = FALSE]
+    
+    va  <- m[names(SUT_ROW_TO_COMPONENT), cols, drop = FALSE]
     # Identity check (tolerance: $1m absolute or 0.1% relative per column).
     tot <- m[SUT_VA_TOTAL_ROW, cols]
     bad <- abs(colSums(va) - tot) > pmax(1, 0.001 * abs(tot))
     if (any(bad))
-      warning("Year ", yr, ": strand identity V00100+T00OTOP+V00300 != VABAS ",
-              "for: ", paste(cols[bad], collapse = ", "))
-
+      warning("Year ", yr, ": component identity V00100+T00OTOP+V00300 != ",
+              "VABAS for: ", paste(cols[bad], collapse = ", "))
+    
     long <- as.data.table(as.table(va))
     setnames(long, c("row_code", "code", "value"))
     long[, `:=`(iso3c     = "USA",
                 year      = as.integer(yr),
-                strand    = unname(SUT_ROW_TO_STRAND[as.character(row_code)]),
+                component = unname(SUT_ROW_TO_COMPONENT[as.character(row_code)]),
                 value_usd = as.numeric(value) * SUT_MILLIONS)]
-    list(va = long[, .(iso3c, year, code, strand, value_usd)],
+    list(va = long[, .(iso3c, year, code, component, value_usd)],
          output = data.table(year = as.integer(yr), code = cols,
                              output_usd = as.numeric(m[SUT_OUTPUT_ROW, cols]) *
                                SUT_MILLIONS))
   })
-
+  
   va <- isic[rbindlist(lapply(per_year, `[[`, "va")), on = "code",
              nomatch = NULL]
   va[, source := "US SUT (BEA)"]
@@ -587,14 +608,15 @@ load_usa <- function(years) {
       A = setNames(rep(list(conc_a), length(years)), as.character(years)),
       C = setNames(rep(list(conc_c), length(years)), as.character(years))),
     isic   = isic,
-    va     = va[, .(iso3c, year, code, item, isic, strand, value_usd, source)],
+    va     = va[, .(iso3c, year, code, item, isic, component, value_usd,
+                    source)],
     output = rbindlist(lapply(per_year, `[[`, "output")))
 }
 
 
 # ── Japan: e-Stat Input Table workbooks ──────────────────────────────────────
 #
-# The Input Tables (basic sector, English edition) carry the VA strands as
+# The Input Tables (basic sector, English edition) carry the VA components as
 # component rows, the published GVA as row 9600000 and domestic production as
 # row 9700000 — the output tables are NOT needed.  Each workbook is a LONG
 # table (Column Code | Row Code | ... | Producers Price); row 1 is the sheet
@@ -627,11 +649,11 @@ JPN_AREA_CODE <- 110L   # not in the config (only Germany is named there)
 # GVA identity — depends on this flag.
 INCLUDE_CEOH <- TRUE
 
-IOT_ROW_TO_STRAND <- c(`9111000` = "wages", `9112000` = "wages",
-                       `9113000` = "wages",
-                       `9211000` = "capital", `9311000` = "capital",
-                       `9321000` = "capital",
-                       `9411000` = "tls", `9511000` = "tls")
+IOT_ROW_TO_COMPONENT <- c(`9111000` = "wages", `9112000` = "wages",
+                          `9113000` = "wages",
+                          `9211000` = "capital", `9311000` = "capital",
+                          `9321000` = "capital",
+                          `9411000` = "tls", `9511000` = "tls")
 IOT_CEOH_ROWS    <- c("7111001", "7111002", "7111003")
 IOT_VA_TOTAL_ROW <- "9600000"   # gross value added — identity check only
 IOT_OUTPUT_ROW   <- "9700000"   # domestic production -> weights
@@ -652,7 +674,7 @@ load_iot_table <- function(yr) {
   dt[, `:=`(col_code  = trimws(as.character(col_code)),
             row_code  = trimws(as.character(row_code)),
             value_jpy = suppressWarnings(as.numeric(value_jpy)))]
-  keep_rows <- c(names(IOT_ROW_TO_STRAND), IOT_CEOH_ROWS,
+  keep_rows <- c(names(IOT_ROW_TO_COMPONENT), IOT_CEOH_ROWS,
                  IOT_VA_TOTAL_ROW, IOT_OUTPUT_ROW)
   dt <- dt[row_code %in% keep_rows & !is.na(col_code) & col_code != ""]
   dt[is.na(value_jpy), value_jpy := 0]
@@ -674,9 +696,7 @@ load_jpn <- function(years) {
                    out_code = "code", out_item = "item",
                    keep_code_class_char = FALSE)
   conc_a <- setNames(lapply(years, read_conc, lvl = "A"), as.character(years))
-  conc_c <- setNames(lapply(years, function(yr)
-    drop_double_mapped(conc_a[[as.character(yr)]], read_conc(yr, "C"))),
-    as.character(years))
+  conc_c <- setNames(lapply(years, read_conc, lvl = "C"), as.character(years))
   isic <- rbindlist(lapply(years, function(yr) {
     x <- concordance_isic(conc_a[[as.character(yr)]],
                           conc_c[[as.character(yr)]], paste("JPN", yr))
@@ -688,19 +708,19 @@ load_jpn <- function(years) {
       yr, nrow(conc_a[[as.character(yr)]]), nrow(conc_c[[as.character(yr)]]),
       nrow(isic[year == yr]), isic[year == yr, sum(isic == "A")],
       isic[year == yr, sum(isic == "C")]))
-
+  
   message("  Loading Japan Input Tables ...")
   jpy_per_usd <- faostat_rate_vector(VA_EXCHANGE_RATE_CSV, JPN_AREA_CODE,
                                      element = VA_FX_ELEMENT_CODE,
                                      require_years = years)
   tables <- setNames(lapply(years, load_iot_table), as.character(years))
-
+  
   per_year <- lapply(years, function(yr) {
     dt     <- tables[[as.character(yr)]]
     codes  <- isic[year == yr, code]
     to_usd <- JPY_UNIT[[as.character(yr)]] / jpy_per_usd[[as.character(yr)]]
-
-    miss_rows <- setdiff(c(names(IOT_ROW_TO_STRAND), IOT_VA_TOTAL_ROW,
+    
+    miss_rows <- setdiff(c(names(IOT_ROW_TO_COMPONENT), IOT_VA_TOTAL_ROW,
                            IOT_OUTPUT_ROW), unique(dt$row_code))
     if (length(miss_rows) > 0L)
       stop("Input Table for ", yr, " is missing row(s): ",
@@ -710,49 +730,50 @@ load_jpn <- function(years) {
       stop("Input Table for ", yr, " has no industry column for mapped IOT ",
            "code(s): ", paste(miss_cols, collapse = ", "),
            "\n  Either the concordance codes or the e-Stat layout changed.")
-
+    
     sec <- dt[col_code %in% codes]
-    # CEOH is routed into wages (or dropped from the strands but NOT from the
+    # CEOH is routed into wages (or dropped from the components but NOT from the
     # identity check) per INCLUDE_CEOH.
-    sec[, strand := IOT_ROW_TO_STRAND[row_code]]
+    sec[, component := IOT_ROW_TO_COMPONENT[row_code]]
     sec[row_code %in% IOT_CEOH_ROWS,
-        strand := if (INCLUDE_CEOH) "wages" else "ceoh_excluded"]
-
+        component := if (INCLUDE_CEOH) "wages" else "ceoh_excluded"]
+    
     # Per-sector GVA identity: components must reproduce row 9600000 within
     # rounding of the source's last published digit.
     comp <- sec[!row_code %in% c(IOT_VA_TOTAL_ROW, IOT_OUTPUT_ROW),
-                .(strands_jpy = sum(value_jpy)), by = col_code]
+                .(components_jpy = sum(value_jpy)), by = col_code]
     pub  <- sec[row_code == IOT_VA_TOTAL_ROW, .(col_code, gva_jpy = value_jpy)]
     chk  <- merge(comp, pub, by = "col_code")
     tol  <- if (JPY_UNIT[[as.character(yr)]] >= 1e9) 0.5 else 2  # last digit
-    bad  <- chk[abs(strands_jpy - gva_jpy) > pmax(tol, 1e-4 * abs(gva_jpy))]
+    bad  <- chk[abs(components_jpy - gva_jpy) > pmax(tol, 1e-4 * abs(gva_jpy))]
     if (nrow(bad) > 0L)
       warning("Year ", yr, ": GVA identity (CEOH+wages+capital+tls != ",
               "9600000) fails for: ", paste(bad$col_code, collapse = ", "))
     message(sprintf(
       "  %d: GVA identity max |dev| = %s yen over %d mapped sector(s).",
-      yr, format(chk[, max(abs(strands_jpy - gva_jpy))] *
+      yr, format(chk[, max(abs(components_jpy - gva_jpy))] *
                    JPY_UNIT[[as.character(yr)]], big.mark = ","), nrow(chk)))
-
+    
     out <- sec[row_code == IOT_OUTPUT_ROW,
                .(code = col_code, output_usd = value_jpy * to_usd)]
     miss <- setdiff(codes, out$code)
     if (length(miss) > 0L)
       out <- rbind(out, data.table(code = miss, output_usd = 0))
-
-    list(va = sec[strand %in% STRANDS,
+    
+    list(va = sec[component %in% COMPONENTS,
                   .(iso3c = "JPN", year = as.integer(yr),
                     value_usd = sum(value_jpy) * to_usd),
-                  by = .(code = col_code, strand)],
+                  by = .(code = col_code, component)],
          output = out[, .(year = as.integer(yr), code, output_usd)])
   })
-
+  
   va <- isic[rbindlist(lapply(per_year, `[[`, "va")),
              on = c("year", "code"), nomatch = NULL]
   va[, source := "Japan IOT (MIC)"]
   list(conc   = list(A = conc_a, C = conc_c),
        isic   = isic,
-       va     = va[, .(iso3c, year, code, item, isic, strand, value_usd, source)],
+       va     = va[, .(iso3c, year, code, item, isic, component, value_usd,
+                       source)],
        output = rbindlist(lapply(per_year, `[[`, "output")),
        fx     = jpy_per_usd)
 }
@@ -792,42 +813,42 @@ run_country <- function(spec) {
   message("\n=== ", spec$iso3, " (", spec$reference, ") ===")
   out_dir <- file.path(VALIDATION_OUTPUT_DIR, spec$subdir)
   dir.create(out_dir, recursive = TRUE, showWarnings = FALSE)
-
+  
   ing       <- spec$load(spec$years)
   weights_a <- build_split_weights(ing$conc$A, ing$output, "A", spec$years)
   weights_c <- build_split_weights(ing$conc$C, ing$output, "C", spec$years)
   fwrite(rbindlist(list(weights_a, weights_c)),
          file.path(out_dir,
                    sprintf("fabio_item_to_%s_output_weights.csv", spec$prefix)))
-
+  
   fabio <- lapply(names(FABIO_VA_SOURCES), function(lab)
     build_fabio_source(lab, FABIO_VA_SOURCES[[lab]], weights_a, weights_c,
                        spec$iso3, spec$years))
-
+  
   dat_all <- rbindlist(c(list(ing$va), fabio), use.names = TRUE, fill = TRUE)[
-    , .(iso3c, year, source, isic, code, category = item, strand, value_usd)]
+    , .(iso3c, year, source, isic, code, category = item, component, value_usd)]
   dat_all <- dat_all[is.finite(value_usd)]
-
+  
   # Keep only the sources that actually produced rows, in the canonical order —
   # a machine without the EXIOBASE pipeline still scores the GLORIA pair.
   sources <- intersect(c(spec$reference, names(FABIO_VA_SOURCES)),
                        unique(dat_all$source))
   fab     <- setdiff(sources, spec$reference)
-
+  
   comparison <- copy(dat_all)
   setnames(comparison, "code", spec$code_col)
   comparison_path <- file.path(out_dir,
                                sprintf("%s_vs_fabio_comparison.csv", spec$prefix))
   fwrite(comparison, comparison_path)
   message("Comparison table -> ", comparison_path)
-
+  
   oecd <- load_oecd_benchmark(spec$iso3, spec$years, spec$fx(ing, spec$years))
   if (!is.null(oecd)) {
     oecd_path <- file.path(out_dir, "oecd_A01_A03_benchmark.csv")
     fwrite(oecd, oecd_path)
     message("OECD reference -> ", oecd_path)
   }
-
+  
   # L2 / L3 only: L1 cells number one per benchmark year, and a per-item
   # breakout would too, so the industries are the sample here.
   matched <- va_matched_levels(dat_all, spec$reference, c("L2", "L3"))
@@ -836,9 +857,9 @@ run_country <- function(spec) {
   fwrite(metrics, metrics_path, na = "NA")
   message("Metrics -> ", metrics_path)
   print(metrics)
-
+  
   va_write_ratio_frames(dat_all, spec$reference, sources, out_dir, spec$prefix)
-
+  
   invisible(list(dat = dat_all, reference = spec$reference, sources = fab))
 }
 
@@ -849,20 +870,15 @@ run_country <- function(spec) {
 
 national <- lapply(COUNTRY_SPECS, run_country)
 
-message("\nBuilding shared IHS scatter panels ...")
+message("\nBuilding shared symlog scatter panels ...")
 LEVELS  <- c("L2", "L3")
 matched <- setNames(lapply(LEVELS, function(lv)
   rbindlist(lapply(national, function(x)
     va_match_source(va_level_cells(x$dat, lv), x$reference)),
     use.names = TRUE)), LEVELS)
 
-# One theta over every country's reference cells, so the panels share an axis.
-theta <- va_theta(unlist(lapply(national, function(x)
-  va_level_cells(x$dat[source == x$reference], "L3")$value)))
-
-va_write_ihs_plots(
+va_write_symlog_plots(
   matched,
-  theta        = theta,
   sources      = Reduce(union, lapply(national, `[[`, "sources")),
   out_dir      = NATIONAL_OUT_DIR,
   prefix       = "national_sut",
