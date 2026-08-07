@@ -71,7 +71,10 @@ va_level_cells <- function(dat, level) {
 #' plus a `ref` column).  With `expand`, the cell universe is the union of the
 #' two sides and an absent row is carried as a structural zero, so a source that
 #' simply does not populate a cell registers as a coverage failure rather than
-#' vanishing from the comparison.  Without it the pairing is an inner join.
+#' vanishing from the comparison.  A cell neither side populates carries no
+#' disagreement and is dropped, so the pairing does not depend on which other
+#' sources happen to be in `cells`.  Without `expand` the pairing is an inner
+#' join.
 va_match <- function(cells, ref, expand = TRUE) {
   keys <- setdiff(names(ref), "ref")
   if (!expand) {
@@ -88,7 +91,7 @@ va_match <- function(cells, ref, expand = TRUE) {
   out[is.na(ref),   ref   := 0]
   out[is.na(value), value := 0]
   setnames(out, "value", "src")
-  out[]
+  out[ref != 0 | src != 0]
 }
 
 #' va_match() where the reference is one of the sources in `cells`.
@@ -116,11 +119,13 @@ va_matched_levels <- function(dat, reference, levels) {
 #   rmsle_dex  = sqrt(mean(l^2))         uncentred, about zero — the identity,
 #                                        not the fitted centre, is the target
 #
-# reported alongside, over all cells in the group:
+# reported alongside, over the cells at least one side populates — a cell zero
+# on both sides is agreement on an empty cell, not a miss, so it is scored by
+# neither:
 #
-#   n          cells in the group
+#   n          cells at least one side populates
 #   n_used     cells surviving the non-zero + same-sign filter
-#   coverage   share of cells non-zero on both sides
+#   coverage   share of populated cells non-zero on both sides
 #   sign_agree share of same-sign cells, among cells non-zero on both sides
 #
 # sign_agree conditions on the non-zero cells so that a structural zero reads as
@@ -129,14 +134,15 @@ va_matched_levels <- function(dat, reference, levels) {
 VA_MIN_USED <- 10L
 
 va_metrics <- function(ref, src) {
+  pop <- ref != 0 | src != 0
   nz  <- ref != 0 & src != 0
   use <- nz & sign(ref) == sign(src)
   l   <- log10(abs(src[use]) / abs(ref[use]))
   ok  <- length(l) >= VA_MIN_USED
   data.table(
-    n          = length(ref),
+    n          = sum(pop),
     n_used     = length(l),
-    coverage   = if (length(ref)) mean(nz) else NA_real_,
+    coverage   = if (any(pop)) sum(nz) / sum(pop) else NA_real_,
     sign_agree = if (any(nz)) sum(use) / sum(nz) else NA_real_,
     med_ratio  = if (ok) 10^median(l) else NA_real_,
     mad_fold   = if (ok) 10^median(abs(l - median(l))) else NA_real_,
