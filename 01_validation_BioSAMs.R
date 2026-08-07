@@ -40,15 +40,19 @@
 #   at A and at C, because the two levels describe genuinely different stages:
 #       2848 Milk - Excluding Butter   A_MILK (A, farm-gate)  / A_DAIR (C, dairy)
 #       2807 Rice and products         A_PARI (A, paddy)      / A_RICE (C, milled)
-#   Their value added is likewise two different figures drawn from two different
-#   files (FABIOv2_*_value_added_ISIC-A.rds vs ISIC-C.rds), so aggregating the
-#   item at both levels double-counts NOTHING — it is the only way the C-side
-#   category gets its main constituent.  An earlier version dropped the C row of
-#   any item also tagged at A, which left A_DAIR at ISIC-C mapped to Butter/Ghee
-#   alone (an exact zero in the ~60 countries with no butter series, Cyprus
-#   among them) and left A_RICE with no mapping at all, so the raw BioSAM rice
-#   VA was silently dropped from BOTH sides of the comparison.  That filter is
-#   gone; the cross-level rows are kept at both levels.
+#   The model reads ONE strand per commodity (35_bcp_value_added_extension.R
+#   selects the ISIC-A strand for A-tagged items and the ISIC-C strand for
+#   C-tagged ones), so the ISIC-C value added of these items never enters the
+#   results and is out of scope for validation.  Their ISIC-C CATEGORIES —
+#   A_DAIR and A_RICE — are therefore dropped from BOTH sides
+#   (va_crosslevel_c_units).  Dropping the source rows alone is what an earlier
+#   version did, and it left A_DAIR at ISIC-C mapped to Butter/Ghee alone (an
+#   exact zero in the ~60 countries with no butter series, Cyprus among them)
+#   against the undivided BioSAM dairy figure, and left A_RICE with no mapping
+#   while the raw BioSAM rice VA stayed in the reference.  Taking the whole
+#   category removes the mismatch instead of creating it.  Script 02 applies the
+#   same rule to the national SUT industries, so the scope is identical across
+#   the two validators.
 #
 #   ISIC assignment of the RAW BioSAM rows.  BioSAM VA carries no ISIC tag, so
 #   each BioSAM item is assigned the ISIC level held by the MAJORITY of its
@@ -297,15 +301,12 @@ SOURCE_LEVELS <- c("BioSAMs",
 
 # ── Concordance loading ──────────────────────────────────────────────────────
 
-#' Per-BioSAM-item ISIC assignment for the RAW BioSAM rows: the ISIC level held
-#' by the MAJORITY of the item's mapped FABIO items (ties -> A).  Every
-#' concordance row votes, including the C row of an item also tagged at A — that
-#' row is a real ISIC-C mapping (milled rice, dairy) and suppressing it used to
-#' erase A_RICE from the vote entirely, taking the raw BioSAM rice VA out of the
-#' comparison with it.  Also returns the canonical BioSAM label per code.
-build_biosam_item_isic <- function(path) {
+#' The item concordance long over (biosam_item_code, biosam_item,
+#' fabio_item_code, isic), ISIC-tagged rows only.  Read once and used both for
+#' the majority vote below and for the cross-level exclusion.
+read_biosam_item_conc <- function(path) {
   ic <- fread(path)
-  ic <- ic[
+  ic[
     !is.na(BioSAM_item_code) & BioSAM_item_code != "" &
       !is.na(FABIO_item_code) & ISIC %in% c("A", "C"),
     .(biosam_item_code = trimws(as.character(BioSAM_item_code)),
@@ -313,6 +314,15 @@ build_biosam_item_isic <- function(path) {
       fabio_item_code  = as.integer(FABIO_item_code),
       isic             = toupper(trimws(as.character(ISIC))))
   ]
+}
+
+#' Per-BioSAM-item ISIC assignment for the RAW BioSAM rows: the ISIC level held
+#' by the MAJORITY of the item's mapped FABIO items (ties -> A).  Every
+#' concordance row votes, including the C row of an item also tagged at A — that
+#' row is a real ISIC-C mapping (milled rice, dairy) and suppressing it used to
+#' erase A_RICE from the vote entirely, taking the raw BioSAM rice VA out of the
+#' comparison with it.  Also returns the canonical BioSAM label per code.
+build_biosam_item_isic <- function(ic) {
   counts <- ic[, .(n = .N), by = .(biosam_item_code, biosam_item, isic)]
   counts <- dcast(counts, biosam_item_code + biosam_item ~ isic,
                   value.var = "n", fill = 0)
@@ -553,18 +563,22 @@ load_eurostat_benchmark <- function(eur_per_usd, nace = EU_NACE_BENCH) {
 message("Loading concordances ...")
 item_conc_a <- load_item_conc(ITEM_CONC_PATH, "A", "BioSAM_item_code", "BioSAM_item", out_code = "biosam_item_code", out_item = "biosam_item", keep_code_class_char = FALSE)
 item_conc_c <- load_item_conc(ITEM_CONC_PATH, "C", "BioSAM_item_code", "BioSAM_item", out_code = "biosam_item_code", out_item = "biosam_item", keep_code_class_char = FALSE)
-# Both levels keep every mapping the concordance gives them, including the C row
-# of a FABIO item also tagged at A (2848 milk -> A_DAIR, 2807 rice -> A_RICE).
-# The A and C value added are different figures from different files, so there
-# is nothing to double-count; what IS checked is that no item maps to two
-# categories within one level, which would double-count.
+# Both levels load every mapping the concordance gives them; the ISIC-C
+# categories of the cross-level items (2848 milk -> A_DAIR, 2807 rice ->
+# A_RICE) are removed further down, from both sides at once, because the model
+# uses those items at ISIC-A only.  What IS checked here is that no item maps
+# to two categories within one level, which would double-count.
 assert_conc_unique(item_conc_a, "A")
 assert_conc_unique(item_conc_c, "C")
 area_conc   <- load_area_conc(AREA_CONC_PATH, "BioSAM_area_code", "FABIO_iso3c", out_code = "biosam_area_code", out_fabio = "iso3c", fabio_as_integer = FALSE)
-item_isic   <- build_biosam_item_isic(ITEM_CONC_PATH)
-message(sprintf("  %d ISIC-A and %d ISIC-C item mappings; %d area mappings; %d categories.",
-                nrow(item_conc_a), nrow(item_conc_c), nrow(area_conc),
-                nrow(item_isic)))
+item_conc   <- read_biosam_item_conc(ITEM_CONC_PATH)
+item_isic   <- build_biosam_item_isic(item_conc)
+drop_c      <- va_crosslevel_c_units(
+  item_conc[, .(fabio_item_code, isic, unit = biosam_item_code)])
+message(sprintf(
+  "  %d ISIC-A and %d ISIC-C item mappings; %d area mappings; %d categories.",
+  nrow(item_conc_a), nrow(item_conc_c), nrow(area_conc),
+  nrow(item_isic)))
 
 message("Loading raw BioSAMs + exchange rate ...")
 va_long     <- load_biosam_va(BIOSAM_FILES)
@@ -597,6 +611,17 @@ message("Aligning source ISIC to the BioSAM category assignment ...")
 dat_all <- align_source_isic(dat_all, item_isic)[
   , .(iso3c, year, source, isic, biosam_item_code, category = biosam_item,
       component, value_usd)]
+
+# Out of scope: the ISIC-C categories whose FABIO items the model uses at
+# ISIC-A (A_DAIR from 2848 milk, A_RICE from 2807 rice).  Both sides go, so the
+# reference is never left standing against a partial mapping.
+if (length(drop_c)) {
+  message("  Cross-level ISIC-C categories excluded from both sides: ",
+          paste(sort(unique(dat_all[biosam_item_code %in% drop_c &
+                                      isic == "C", category])),
+                collapse = ", "))
+  dat_all <- dat_all[!(isic == "C" & biosam_item_code %in% drop_c)]
+}
 
 # Restrict EVERYTHING to the countries the BioSAMs actually cover — GLORIA /
 # COMBINED span the full FABIO country set, but the comparison is only

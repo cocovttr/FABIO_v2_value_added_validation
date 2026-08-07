@@ -71,10 +71,10 @@ va_level_cells <- function(dat, level) {
 #' plus a `ref` column).  With `expand`, the cell universe is the union of the
 #' two sides and an absent row is carried as a structural zero, so a source that
 #' simply does not populate a cell registers as a coverage failure rather than
-#' vanishing from the comparison.  A cell neither side populates carries no
-#' disagreement and is dropped, so the pairing does not depend on which other
-#' sources happen to be in `cells`.  Without `expand` the pairing is an inner
-#' join.
+#' vanishing from the comparison.  The full grid is returned, empty cells
+#' included, so `n` is the designed cell count; va_metrics() decides which of
+#' them a given statistic is defined over.  Without `expand` the pairing is an
+#' inner join.
 va_match <- function(cells, ref, expand = TRUE) {
   keys <- setdiff(names(ref), "ref")
   if (!expand) {
@@ -91,7 +91,7 @@ va_match <- function(cells, ref, expand = TRUE) {
   out[is.na(ref),   ref   := 0]
   out[is.na(value), value := 0]
   setnames(out, "value", "src")
-  out[ref != 0 | src != 0]
+  out[]
 }
 
 #' va_match() where the reference is one of the sources in `cells`.
@@ -109,6 +109,35 @@ va_matched_levels <- function(dat, reference, levels) {
 }
 
 
+# ── Cross-level items ────────────────────────────────────────────────────────
+#
+# A FABIO item can carry a concordance row at BOTH ISIC levels, because the two
+# levels describe different stages of the same commodity: 2848 "Milk -
+# Excluding Butter" is raw milk at A and dairy products at C, 2511 "Wheat and
+# products" is wheat farming at A and flour milling at C.  The MODEL, however,
+# reads one strand per commodity — 35_bcp_value_added_extension.R takes the
+# ISIC-A strand for items tagged A and the ISIC-C strand for items tagged C,
+# never both — so the ISIC-C value added of an item the model uses at ISIC-A
+# never reaches the results.  Validating it would score a quantity the research
+# does not use, so those cells are out of scope.
+#
+# The exclusion has to take the whole ISIC-C mapping unit, on BOTH sides.
+# Dropping the source rows alone leaves the reference figure covering items the
+# source no longer supplies — the BioSAM dairy category would stand against
+# Butter/Ghee alone, reading low by the whole milk strand — which is a worse
+# artefact than the one being removed.
+
+#' The ISIC-C mapping units (BioSAM categories, national industries) fed by any
+#' FABIO item the concordance also tags at ISIC-A.  `conc` is long over
+#' (fabio_item_code, isic, unit); the returned units are dropped from both
+#' sides of the comparison.
+va_crosslevel_c_units <- function(conc) {
+  dual <- conc[isic %in% c("A", "C"), .(lv = uniqueN(isic)),
+               by = fabio_item_code][lv > 1L, fabio_item_code]
+  sort(unique(conc[isic == "C" & fabio_item_code %in% dual, unit]))
+}
+
+
 # ── Metrics ──────────────────────────────────────────────────────────────────
 #
 # All dispersion is in log10 units ("dex").  On the cells that are non-zero on
@@ -119,14 +148,19 @@ va_matched_levels <- function(dat, reference, levels) {
 #   rmsle_dex  = sqrt(mean(l^2))         uncentred, about zero — the identity,
 #                                        not the fitted centre, is the target
 #
-# reported alongside, over the cells at least one side populates — a cell zero
-# on both sides is agreement on an empty cell, not a miss, so it is scored by
-# neither:
+# reported alongside:
 #
-#   n          cells at least one side populates
+#   n          cells in the group — the designed grid, matching the cell counts
+#              quoted in the write-up (55 country-years, 2,145 item cells)
+#   n_pop      cells at least one side populates
 #   n_used     cells surviving the non-zero + same-sign filter
-#   coverage   share of populated cells non-zero on both sides
+#   coverage   share of POPULATED cells non-zero on both sides
 #   sign_agree share of same-sign cells, among cells non-zero on both sides
+#
+# A cell zero on both sides is agreement on an empty cell, not a miss, so it is
+# counted by n but by neither coverage nor sign_agree: whether such a cell is in
+# the grid at all depends on which other sources populate it, which must not
+# move a source's score.  n - n_pop is that empty remainder.
 #
 # sign_agree conditions on the non-zero cells so that a structural zero reads as
 # missing coverage rather than as a sign flip; coverage carries that information.
@@ -140,7 +174,8 @@ va_metrics <- function(ref, src) {
   l   <- log10(abs(src[use]) / abs(ref[use]))
   ok  <- length(l) >= VA_MIN_USED
   data.table(
-    n          = sum(pop),
+    n          = length(ref),
+    n_pop      = sum(pop),
     n_used     = length(l),
     coverage   = if (any(pop)) sum(nz) / sum(pop) else NA_real_,
     sign_agree = if (any(nz)) sum(use) / sum(nz) else NA_real_,
@@ -161,9 +196,9 @@ va_score <- function(matched, sources, level, by_item = FALSE) {
               by = .(component, source, item = category)]),
       use.names = TRUE)
   set(rows, j = "level", value = level)
-  setcolorder(rows, c("level", "item", "component", "source", "n", "n_used",
-                      "coverage", "sign_agree", "med_ratio", "mad_fold",
-                      "rmsle_dex"))
+  setcolorder(rows, c("level", "item", "component", "source", "n", "n_pop",
+                      "n_used", "coverage", "sign_agree", "med_ratio",
+                      "mad_fold", "rmsle_dex"))
   rows[order(match(component, MEASURES), match(source, sources), item)]
 }
 
@@ -288,7 +323,9 @@ va_symlog_axis <- function(v) {
 
 va_symlog_plot <- function(matched, title, subtitle, reference,
                            fill_country = FALSE) {
-  d <- copy(matched[is.finite(ref) & is.finite(src)])
+  # Cells empty on both sides sit exactly on the origin and carry no
+  # disagreement to read; they are not plotted.
+  d <- copy(matched[is.finite(ref) & is.finite(src) & (ref != 0 | src != 0)])
   by_isic <- va_facets_isic(d)
   if (!"isic" %in% names(d)) d[, isic := "A+C"]
   d[, `:=`(xt        = va_symlog(ref),

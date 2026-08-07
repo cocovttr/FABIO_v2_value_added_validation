@@ -35,6 +35,17 @@
 #   item's VA exactly (conservation is checked and reported).  Items whose
 #   mapped industries all have zero/missing output fall back to an equal split.
 #
+#   Cross-level items.  A FABIO item routinely carries a concordance row at BOTH
+#   levels — 2511 "Wheat and products" is wheat farming at A and flour milling at
+#   C, 2848 "Milk - Excluding Butter" is dairy farming at A and cheese at C, ~35
+#   items per concordance.  The model reads one strand per commodity, so the
+#   ISIC-C value added of an item it uses at ISIC-A never enters the results.
+#   Those ISIC-C INDUSTRIES are therefore dropped from both sides
+#   (build_crosslevel_c_drop), the same rule script 01 applies to the BioSAM
+#   categories, so the two validators share one scope.  Taking the whole
+#   industry rather than just the source rows is what keeps the national figure
+#   from standing against a partial mapping.
+#
 #   ISIC assignment of the raw national rows is direct: no industry appears at
 #   both ISIC levels in these concordances (enforced per country and year), so
 #   each industry carries the single level of its concordance rows.  For
@@ -260,6 +271,26 @@ concordance_isic <- function(conc_a, conc_c, where) {
 #' Starch, Wet corn milling, Fluid milk and butter).  No filter is applied now.
 #' The one thing that WOULD corrupt the comparison — an industry appearing at
 #' both ISIC levels — is caught by concordance_isic() below.
+
+
+#' The ISIC-C industries to exclude, per year: those fed by a FABIO item the
+#' concordance also tags at ISIC-A.  The model reads one strand per commodity
+#' (see va_crosslevel_c_units), so their ISIC-C value added is out of scope, and
+#' the industry leaves BOTH sides — dropping only the source rows would leave
+#' the national figure standing against a partial mapping.  Year-specific,
+#' because the Japanese concordances are.
+build_crosslevel_c_drop <- function(conc, years) {
+  rbindlist(lapply(years, function(yr) {
+    a <- conc$A[[as.character(yr)]]; cc <- conc$C[[as.character(yr)]]
+    if (is.null(cc) || nrow(cc) == 0L) return(NULL)
+    long <- rbindlist(list(
+      if (!is.null(a) && nrow(a)) a[, .(fabio_item_code, isic = "A", unit = code)],
+      cc[, .(fabio_item_code, isic = "C", unit = code)]), use.names = TRUE)
+    drop <- va_crosslevel_c_units(long)
+    if (!length(drop)) return(NULL)
+    data.table(year = as.integer(yr), code = drop)
+  }))
+}
 
 
 # ── Generic: output-weighted disaggregation ──────────────────────────────────
@@ -828,6 +859,18 @@ run_country <- function(spec) {
   dat_all <- rbindlist(c(list(ing$va), fabio), use.names = TRUE, fill = TRUE)[
     , .(iso3c, year, source, isic, code, category = item, component, value_usd)]
   dat_all <- dat_all[is.finite(value_usd)]
+  
+  # Out of scope: the ISIC-C industries whose FABIO items the model uses at
+  # ISIC-A.  Both sides go, so no industry is left facing a partial mapping.
+  drop_c <- build_crosslevel_c_drop(ing$conc, spec$years)
+  if (nrow(drop_c)) {
+    gone <- sort(unique(dat_all[drop_c, on = .(year, code), nomatch = NULL,
+                                category]))
+    message(sprintf(
+      "  Cross-level ISIC-C industries excluded from both sides (%d industry-years): %s",
+      nrow(drop_c), paste(gone, collapse = ", ")))
+    dat_all <- dat_all[!drop_c, on = .(year, code)]
+  }
   
   # Keep only the sources that actually produced rows, in the canonical order —
   # a machine without the EXIOBASE pipeline still scores the GLORIA pair.

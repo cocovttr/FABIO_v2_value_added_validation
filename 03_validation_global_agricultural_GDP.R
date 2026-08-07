@@ -1748,7 +1748,8 @@ make_scatter_chart <- function(year_select, pipelines_all, out_dir, source_name,
   na_row <- function(msg) {
     message("[scatter ", year_select, "/", source_name, "] ", msg)
     list(summary = data.frame(
-      source = source_name, year = year_select, n = 0L, n_used = 0L,
+      source = source_name, year = year_select, n = 0L, n_pop = 0L,
+      n_used = 0L,
       coverage = NA_real_, sign_agree = NA_real_, med_ratio = NA_real_,
       mad_fold = NA_real_, rmsle_dex = NA_real_, pearson_log = NA_real_,
       ols_slope = NA_real_, ols_intercept = NA_real_),
