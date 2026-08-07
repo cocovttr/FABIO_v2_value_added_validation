@@ -18,23 +18,28 @@
 # ── Cells ────────────────────────────────────────────────────────────────────
 #
 # A comparison table is long over (iso3c, year, source, isic, category,
-# component, value_usd).  Three cell resolutions are scored:
+# component, value_usd).  Four cell resolutions are scored, disaggregating the
+# components first and the items second:
 #
-#   L1  (iso3c, year)                            items and ISIC sections summed
-#   L2  (iso3c, year, isic, category)            components summed
-#   L3  (iso3c, year, isic, category, component)
+#   L1  (iso3c, year)                            items and components summed
+#   L2  (iso3c, year, component)                 items summed
+#   L3  (iso3c, year, isic, category)            components summed
+#   L4  (iso3c, year, isic, category, component)
 #
-# `total` is a cell value only where the resolution sums the components away —
-# at L1 alongside the three component rows, at L2 as the only row.  The item key
-# carries its ISIC section because a category can contribute at both levels.
+# `total` is the cell value exactly where the resolution sums the components
+# away, at L1 and L3; L2 and L4 carry the three components as separate rows
+# instead.  The item key carries its ISIC section because a category can
+# contribute at both levels.
 
 VA_LEVEL_KEYS <- list(L1 = c("iso3c", "year"),
-                      L2 = c("iso3c", "year", "isic", "category"),
-                      L3 = c("iso3c", "year", "isic", "category"))
+                      L2 = c("iso3c", "year"),
+                      L3 = c("iso3c", "year", "isic", "category"),
+                      L4 = c("iso3c", "year", "isic", "category"))
 
-VA_LEVEL_DESC <- c(L1 = "country x year",
-                   L2 = "country x year x item, components summed",
-                   L3 = "country x year x item x component")
+VA_LEVEL_DESC <- c(L1 = "country x year, items and components summed",
+                   L2 = "country x year x component, items summed",
+                   L3 = "country x year x item, components summed",
+                   L4 = "country x year x item x component")
 
 #' One value per (source, cell, component) at the resolution `keys`.
 #' `components` keeps the three VA components as separate rows; `total` appends
@@ -53,9 +58,10 @@ va_cells <- function(dat, keys, components = TRUE, total = TRUE) {
 va_level_cells <- function(dat, level) {
   keys <- VA_LEVEL_KEYS[[level]]
   switch(level,
-         L1 = va_cells(dat, keys),
-         L2 = va_cells(dat, keys, components = FALSE),
-         L3 = va_cells(dat, keys, total      = FALSE))
+         L1 = va_cells(dat, keys, components = FALSE),
+         L2 = va_cells(dat, keys, total      = FALSE),
+         L3 = va_cells(dat, keys, components = FALSE),
+         L4 = va_cells(dat, keys, total      = FALSE))
 }
 
 
@@ -157,10 +163,11 @@ va_score <- function(matched, sources, level, by_item = FALSE) {
 
 #' The tidy metrics table for a level cascade: va_score() down the levels of
 #' `matched`, stacked, with the `level` column carrying the resolution.  The
-#' per-item breakout needs an item key, so it applies below L1 only.
+#' per-item breakout needs an item key, so it applies to the item levels only.
 va_metrics_table <- function(matched, sources, by_item = FALSE) {
   rbindlist(lapply(names(matched), function(lv)
-    va_score(matched[[lv]], sources, lv, by_item = by_item && lv != "L1")))
+    va_score(matched[[lv]], sources, lv,
+             by_item = by_item && "category" %in% names(matched[[lv]]))))
 }
 
 #' The aggregate ratio frames behind the metrics: one row per (cell, source,
@@ -198,7 +205,7 @@ va_write_ratio_frames <- function(dat, reference, sources, out_dir, prefix) {
 # the plot while every decade — and the linear core itself — takes the same
 # width, so the axis reads evenly from -10^n through 0 to 10^n.
 #
-# Wherever the cells resolve the ISIC sections (L2 / L3) the figure splits into
+# Wherever the cells resolve the ISIC sections (L3 / L4) the figure splits into
 # one panel per section, which stops the two clouds overplotting each other;
 # the axes stay shared, so the panels remain directly comparable.
 
@@ -214,8 +221,8 @@ va_country_fills <- function(countries) {
 }
 
 #' TRUE where the cells carry both ISIC sections, and the figure therefore
-#' splits into one panel each.  At L1 the sections are summed away into a single
-#' A+C cell, which stays one panel.
+#' splits into one panel each.  At L1 / L2 the sections are summed away into a
+#' single A+C cell, which stays one panel.
 va_facets_isic <- function(d) "isic" %in% names(d) && uniqueN(d$isic) > 1L
 
 #' Mantissa and exponent of `x` in scientific notation, with the mantissa
@@ -283,7 +290,7 @@ va_symlog_plot <- function(matched, title, subtitle, reference,
            component = factor(component, levels = MEASURES),
            isic      = factor(isic,      levels = names(VA_ISIC_SHAPES)))]
   ax  <- va_symlog_axis(c(d$ref, d$src))
-  sz  <- if (nrow(d) > 2000L) 1.2 else 2.0     # L3 panels run to thousands of cells
+  sz  <- if (nrow(d) > 2000L) 1.2 else 2.0     # L4 panels run to thousands of cells
   
   p <- ggplot(d, aes(x = xt, y = yt)) +
     geom_hline(yintercept = 0, linewidth = 0.3, colour = "grey75") +

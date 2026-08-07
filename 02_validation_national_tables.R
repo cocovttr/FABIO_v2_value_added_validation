@@ -6,9 +6,9 @@
 # country supplies an ingestion function; everything downstream — the
 # output-weighted disaggregation of the FABIOv2 items, the OECD A01+A03
 # reference, the metric cascade and the shared scatter panels — is generic.
-# Cells are scored at L2 (country x year x industry, components summed) and L3
-# (x component); L1 cells number one per benchmark year, so no national rows are
-# emitted and the industries supply the sample size instead.
+# Cells are scored at L3 (country x year x industry, components summed) and L4
+# (x component); the L1 / L2 cells number one per benchmark year, so no national
+# rows are emitted and the industries supply the sample size instead.
 #
 #   To add a country, write a load_<iso3>() returning
 #       conc    list(A =, C =)  per-year concordances, columns
@@ -72,7 +72,7 @@
 #       (iso3c, year, source, isic, <code column>, category, component,
 #       value_usd)
 #   metrics_<prefix>.csv
-#       agreement of each FABIOv2 variant with the national reference, L2 / L3
+#       agreement of each FABIOv2 variant with the national reference, L3 / L4
 #       down the `level` column.
 #   <prefix>_by_component_by_year.csv / <prefix>_item_ratios.csv
 #       aggregate ratios per (year, ISIC level, source, measure), and the same
@@ -849,9 +849,9 @@ run_country <- function(spec) {
     message("OECD reference -> ", oecd_path)
   }
   
-  # L2 / L3 only: L1 cells number one per benchmark year, and a per-item
-  # breakout would too, so the industries are the sample here.
-  matched <- va_matched_levels(dat_all, spec$reference, c("L2", "L3"))
+  # L3 / L4 only: the L1 / L2 cells number one per benchmark year, and a
+  # per-item breakout would too, so the industries are the sample here.
+  matched <- va_matched_levels(dat_all, spec$reference, c("L3", "L4"))
   metrics <- va_metrics_table(matched, fab)
   metrics_path <- file.path(out_dir, sprintf("metrics_%s.csv", spec$prefix))
   fwrite(metrics, metrics_path, na = "NA")
@@ -871,7 +871,7 @@ run_country <- function(spec) {
 national <- lapply(COUNTRY_SPECS, run_country)
 
 message("\nBuilding shared symlog scatter panels ...")
-LEVELS  <- c("L2", "L3")
+LEVELS  <- c("L3", "L4")
 matched <- setNames(lapply(LEVELS, function(lv)
   rbindlist(lapply(national, function(x)
     va_match_source(va_level_cells(x$dat, lv), x$reference)),

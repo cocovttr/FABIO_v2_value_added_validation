@@ -2,9 +2,10 @@
 # BioSAMs validation — VA agreement against the JRC BioSAMs at BioSAM categories
 #
 # Compares the FABIOv2 value-added estimates with the raw JRC BioSAMs over the
-# two years the BioSAMs cover, at three cell resolutions (L1 country-year, L2
-# item, L3 item x component), and with the Eurostat A01+A03 national accounts at
-# L1.  The value-added components are intrinsic to all sources:
+# two years the BioSAMs cover, at four cell resolutions (L1 country-year, L2
+# component, L3 item, L4 item x component), and with the Eurostat A01+A03
+# national accounts at L1 / L2.  The value-added components are intrinsic to all
+# sources:
 #     • BioSAMs carry them as three VA accounts
 #         LABOUR -> wages, CAPITAL -> capital, TLS-A -> tls   (TLS-C excluded)
 #     • GLORIA / COMBINED carry them as the component-split columns written by
@@ -66,7 +67,8 @@
 #   re-tagged with the ISIC level its BioSAM category was assigned
 #   (align_source_isic), which folds the C-mapped VA back into the one cell the
 #   reference actually populates.  Categories that live at a single level — all
-#   but A_OANM — are untouched.  L1 is unaffected either way: it sums ISIC away.
+#   but A_OANM — are untouched.  L1 / L2 are unaffected either way: they sum
+#   ISIC away.
 #
 #   Eurostat reference — EUROSTAT National Accounts (nama_10_a64, current
 #   prices), summed over NACE A01 (crop & animal production) + A03 (fishing &
@@ -95,14 +97,14 @@
 #       by 03.
 #   output/biosam_validation/metrics_vs_nationalaccounts.csv
 #       agreement of all five sources with the Eurostat A01+A03 line at ISIC-A
-#       scope, L1 cells.
+#       scope, L1 / L2 cells.
 #   output/biosam_validation/metrics_biosam_vs_fabio.csv
 #       agreement of the four FABIOv2 variants with the raw BioSAMs at full ISIC
-#       A+C scope, L1 / L2 / L3 down the `level` column, pooled over items and
-#       again resolved per item (`item`).
+#       A+C scope, L1 / L2 / L3 / L4 down the `level` column, pooled over items
+#       and again resolved per item (`item`).
 #   output/biosam_validation/biosam_symlog_<source>_<level>.svg
 #       one symlog scatter figure per source and level, at that level's cell
-#       resolution; L2 / L3 split into one panel per ISIC section.
+#       resolution; L3 / L4 split into one panel per ISIC section.
 #
 # Author:   Coco Vetter
 # ==============================================================================
@@ -629,16 +631,22 @@ dat_metrics <- dat_all[!BIOSAM_EXCLUDE, on = .(iso3c, year)]
 
 # Analysis 1 — all sources vs the Eurostat A01+A03 national-accounts line, at
 # the ISIC-A scope that line measures (primary agriculture).  The reference is
-# national, so L1 is the only resolution it supports.  BIOSAM_EXCLUDE has to
+# national, so L1 / L2 are the resolutions it supports.  BIOSAM_EXCLUDE has to
 # drop from the reference as well: a country-year left in on one side only
 # would come back as a structural zero on the other, and read as a coverage
-# failure rather than the deliberate exclusion it is.
+# failure rather than the deliberate exclusion it is.  The reference is cut to
+# the components the level actually scores, for the same reason: matching is
+# over the union of the two sides, so the rows a level sums away would come
+# back as source-side zeros.
 if (!is.null(eu_bench)) {
-  cells_na   <- va_cells(dat_metrics[isic == "A"], VA_LEVEL_KEYS$L1)
   ref_na     <- eu_bench[iso3c %in% biosam_countries][
     !BIOSAM_EXCLUDE, on = .(iso3c, year)][
       , .(iso3c, year, component, ref = bench_usd)]
-  metrics_na <- va_score(va_match(cells_na, ref_na), SOURCE_LEVELS, "L1")
+  metrics_na <- rbindlist(lapply(c("L1", "L2"), function(lv) {
+    cells_na <- va_level_cells(dat_metrics[isic == "A"], lv)
+    va_score(va_match(cells_na, ref_na[component %in% cells_na$component]),
+             SOURCE_LEVELS, lv)
+  }))
   metrics_na_path <- file.path(OUT_DIR, "metrics_vs_nationalaccounts.csv")
   fwrite(metrics_na, metrics_na_path, na = "NA")
   message("National-accounts metrics -> ", metrics_na_path)
@@ -649,9 +657,10 @@ if (!is.null(eu_bench)) {
 }
 
 # Analysis 2 — the four FABIOv2 variants vs the raw BioSAMs reference, at the
-# full ISIC A+C scope, down the L1 / L2 / L3 cascade and per BioSAM category.
+# full ISIC A+C scope, down the L1 / L2 / L3 / L4 cascade and per BioSAM
+# category.
 fab_srcs   <- setdiff(SOURCE_LEVELS, "BioSAMs")
-matched    <- va_matched_levels(dat_metrics, "BioSAMs", c("L1", "L2", "L3"))
+matched    <- va_matched_levels(dat_metrics, "BioSAMs", c("L1", "L2", "L3", "L4"))
 metrics_bs <- va_metrics_table(matched, fab_srcs, by_item = TRUE)
 metrics_bs_path <- file.path(OUT_DIR, "metrics_biosam_vs_fabio.csv")
 fwrite(metrics_bs, metrics_bs_path, na = "NA")
