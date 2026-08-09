@@ -344,6 +344,11 @@ do_parallel <- TRUE
 COMPONENTS <- c("wages", "capital", "tls")
 MEASURES   <- c("total", COMPONENTS)   # the helpers use this for factor levels
 
+# Fixed seed for the ggrepel label layer of the scatter figures, so repeated
+# runs place the country labels identically.  Any integer does; changing it
+# reshuffles every labelled figure, so it is left alone once a draft is set.
+VA_REPEL_SEED <- 42L
+
 # ---- switch validation ------------------------------------------------------
 # Caught here rather than 20 minutes into a run.
 stopifnot(
@@ -1869,10 +1874,20 @@ make_scatter_chart <- function(year_select, pipelines_all, out_dir, source_name,
     guides(colour = guide_legend(override.aes = list(size = 3)))
   
   # Labels: ggrepel if available, else plain geom_text.
+  #
+  # `seed` pins the repulsion.  Without it ggrepel starts from the session RNG
+  # and settles the labels somewhere slightly different on every run: the points
+  # are identical but the country labels and their leader lines move, so two
+  # runs of the same data produce figures that are not byte-identical and that
+  # cannot be described by label position in the write-up.  The argument seeds
+  # ggrepel locally and restores the RNG state afterwards, which a bare
+  # set.seed() here would not — and this function is called from the forked
+  # per-year fan-out, where touching global RNG state is best avoided.
   p <- p + if (requireNamespace("ggrepel", quietly = TRUE)) {
     ggrepel::geom_text_repel(data = lab_df, aes(x = x, y = y, label = iso3c),
                              size = 2.6, colour = "grey20", max.overlaps = Inf,
                              min.segment.length = 0, segment.size = 0.2,
+                             seed = VA_REPEL_SEED,
                              inherit.aes = FALSE)
   } else {
     geom_text(data = lab_df, aes(x = x, y = y, label = iso3c),
