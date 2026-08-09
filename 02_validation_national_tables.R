@@ -925,9 +925,14 @@ va_write_symlog_plots(
   sources      = Reduce(union, lapply(national, `[[`, "sources")),
   out_dir      = NATIONAL_OUT_DIR,
   prefix       = "national_sut",
-  dataset      = paste(vapply(COUNTRY_SPECS, `[[`, character(1), "iso3"),
-                       collapse = " + "),
   reference    = "National SUT / IOT",
-  fill_country = TRUE)
+  scope        = paste(vapply(COUNTRY_SPECS, `[[`, character(1), "iso3"),
+                       collapse = " + "),
+  note         = paste0("The reference industries are disaggregated to FABIO ",
+                        "items by the extension's own item weights."),
+  # USA and JPN pool onto shared axes but answer to different reference tables
+  # (BEA SUT, MIC IOT) over different years, so they take a panel row each
+  # rather than an interior shade.
+  panel_country = TRUE)
 
 message("\nDone.")

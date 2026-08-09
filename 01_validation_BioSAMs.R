@@ -699,7 +699,8 @@ va_write_symlog_plots(
   sources      = fab_srcs,
   out_dir      = OUT_DIR,
   prefix       = "biosam",
-  dataset      = "BioSAMs",
-  reference    = "raw JRC BioSAMs")
+  reference    = "JRC BioSAMs",
+  note         = paste0("The extension's FABIO-item value added is aggregated ",
+                        "up to BioSAM categories."))
 
 message("\nDone.")

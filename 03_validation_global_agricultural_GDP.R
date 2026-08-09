@@ -157,7 +157,7 @@
 #   in-memory pipelines / WB / palette tables copy-on-write — no per-worker
 #   re-read). On Windows the loops fall back to sequential lapply. Number of
 #   workers is configurable via `n_cores` and the whole feature can be
-#   toggled off with `do_parallel <- FALSE` for easier debugging.
+#   toggled off with `do_parallel <- FALSE` in the switch block at the top.
 # =============================================================================
 
 # ---- packages ---------------------------------------------------------------
@@ -291,12 +291,32 @@ items_path    <- file.path(VA_FABIO_V2_DIR, "items.csv")
 out_dir_base <- file.path(VALIDATION_OUTPUT_DIR, "fabio_validation")
 dir.create(out_dir_base, recursive = TRUE, showWarnings = FALSE)
 
-# Toggles — set to FALSE to skip a family of outputs.
+# =============================================================================
+# SWITCHES — edit these, then source the script.  TRUE = build, FALSE = skip.
+# =============================================================================
+
+# (A) per-year cross-country charts: one SVG per year, per source.  ~25 s/source.
 do_yearly_charts  <- TRUE
+
+# (A2) per-year validation scatter + metrics CSVs.  ~25 s/source.
+do_scatter_charts <- TRUE
+
+# (B) per-country time-series charts.  THE EXPENSIVE ONE: one SVG per
+# (country x measure) per source — 181 x 4 = 724 figures for GLORIA alone, and
+# ~15 min per source running sequentially.  Leave FALSE for a routine run.
 do_country_charts <- TRUE
 
-# Per-year validation scatter — family (A2).  Builder in section 6c.
-do_scatter_charts <- TRUE
+# Build the per-country charts for a few countries only.  character(0) means
+# every country in the source; a vector means just those.  Use this first when
+# you turn do_country_charts on — three countries takes seconds, so you find
+# out it works before committing an hour.
+#     country_filter <- c("DEU", "USA", "BRA")
+country_filter <- c("DEU", "USA", "BRA")
+
+# Which measures the per-country charts cover.  MEASURES is all four (total +
+# the three VA components); "total" alone cuts the run to a quarter.
+#     country_measures <- "total"
+country_measures <- c("total", "wages", "capital", "tls")
 
 # Animated GIF stitched from the per-year scatters (family A2).  When on, the
 # scatters share one fixed axis window so points drift on a stable frame, and a
@@ -313,8 +333,38 @@ gif_frame_px   <- c(900L, 990L)  # frame W x H in px (fixed so frames align)
 # no component decomposition, so they stay TOTAL-only.
 do_component_charts <- TRUE
 
+# Fan out chart building across cores.  This is IGNORED inside RStudio, which
+# cannot be forked safely (see section 7) — an RStudio run is always sequential,
+# which for families A and A2 costs well under a minute per source anyway.
+# Set FALSE to force sequential everywhere, e.g. to get a real traceback.
+do_parallel <- TRUE
+
+# =============================================================================
+
 COMPONENTS <- c("wages", "capital", "tls")
-MEASURES   <- c("total", COMPONENTS)
+MEASURES   <- c("total", COMPONENTS)   # the helpers use this for factor levels
+
+# ---- switch validation ------------------------------------------------------
+# Caught here rather than 20 minutes into a run.
+stopifnot(
+  is.logical(do_yearly_charts),  length(do_yearly_charts)  == 1L,
+  is.logical(do_scatter_charts), length(do_scatter_charts) == 1L,
+  is.logical(do_country_charts), length(do_country_charts) == 1L,
+  is.logical(do_scatter_gif),    length(do_scatter_gif)    == 1L,
+  is.logical(do_component_charts), length(do_component_charts) == 1L,
+  is.logical(do_parallel),       length(do_parallel)       == 1L,
+  is.character(country_filter),
+  is.character(country_measures)
+)
+country_filter   <- toupper(trimws(country_filter))
+country_measures <- tolower(trimws(country_measures))
+if (length(setdiff(country_measures, MEASURES)))
+  stop("country_measures may only contain ",
+       paste(MEASURES, collapse = ", "), " — got: ",
+       paste(setdiff(country_measures, MEASURES), collapse = ", "), call. = FALSE)
+if (do_country_charts && !length(country_measures))
+  stop("do_country_charts is TRUE but country_measures is empty.", call. = FALSE)
+do_scatter_gif <- do_scatter_gif && do_scatter_charts
 
 # Component columns as written by scripts 14_1 / 14_4 (same names scripts 01 /
 # 02 hard-require).  The TOTAL measure keeps using `value_added [USD]` so the
@@ -323,14 +373,8 @@ component_cols_usd <- c(wages   = "value_added_wages [USD]",
                         capital = "value_added_capital [USD]",
                         tls     = "value_added_tls [USD]")
 
-MEASURE_TITLE <- c(total   = "value-added",
-                   wages   = "wages",
-                   capital = "capital",
-                   tls     = "taxes less subsidies")
-MEASURE_AXIS  <- c(total   = "Value-added (current US$)",
-                   wages   = "Wages — compensation of employees (current US$)",
-                   capital = "Capital — operating surplus etc. (current US$)",
-                   tls     = "Taxes less subsidies on production (current US$)")
+# Measure names come from VA_MEASURE in 00_validation_helpers.R; axis titles
+# are assembled from it by va_axis_label().
 
 # External component benchmarks, REUSED from scripts 01 / 02 rather than
 # re-derived: both export an (iso3c, year, component, bench_usd) CSV of their
@@ -344,12 +388,8 @@ COMPONENT_BENCH_PATHS <- c(
   OECD_SUT      = file.path(VALIDATION_OUTPUT_DIR, "usa_sut_validation", "oecd_A01_A03_benchmark.csv")
 )
 
-# Parallelization. Forking is Unix-only; on Windows we silently fall back to
-# sequential lapply. VALIDATION_PARALLEL=FALSE runs every chart serially, which
-# is also how to get a real traceback out of a failing chart (mclapply swallows
-# interactive errors).
-do_parallel <- !identical(toupper(Sys.getenv("VALIDATION_PARALLEL", "TRUE")),
-                          "FALSE")
+# Parallelization is switched at the top of this file (`do_parallel`); forking
+# is Unix-only and is disabled under RStudio regardless (see section 7).
 
 # detectCores() reports the HOST's cores, so on a shared or containerised
 # server it oversubscribes badly — honour the cgroup quota where one is set.
@@ -1107,15 +1147,14 @@ make_chart <- function(year_select, denominator = c("raw", "reduced"),
   out_file       <- file.path(
     out_dir, sprintf("fabio_validation_%d_%s.svg", year_select, variant_tag))
   
-  y_axis_label <- if (denominator == "raw") {
-    "Share of national agricultural value-added"
-  } else {
-    "Share of FABIO-comparable national agricultural value-added"
-  }
+  y_axis_label <- sprintf(
+    "%s, as a share of %s World Bank agricultural value added",
+    va_source_label(source_name, "axis"),
+    if (denominator == "raw") "full" else "FABIO-comparable")
   
   subtitle_txt <- if (denominator == "raw") {
     sprintf(
-      paste0("Stacked bars: FABIO value-added as a share of full World Bank ",
+      paste0("Stacked bars: extension value added as a share of full World Bank ",
              "agricultural VA (black dashed line = 100%%). Grey tick = FABIO-",
              "comparable WB (WB minus seeds and forestry); coloured square = ",
              "forestry source (see legend). Items below %.0f%% |share| per ",
@@ -1126,7 +1165,7 @@ make_chart <- function(year_select, denominator = c("raw", "reduced"),
     )
   } else {
     sprintf(
-      paste0("Stacked bars: FABIO value-added as a share of FABIO-comparable ",
+      paste0("Stacked bars: extension value added as a share of FABIO-comparable ",
              "WB agricultural VA (WB minus seeds and forestry; black dashed ",
              "line = 100%%). Grey tick = where full WB sits; coloured square = ",
              "forestry source (see legend). Items below %.0f%% |share| per ",
@@ -1234,8 +1273,8 @@ make_chart <- function(year_select, denominator = c("raw", "reduced"),
     ) +
     labs(
       title    = sprintf(
-        "FABIO value-added [%s] vs World Bank agricultural value-added %s, %d",
-        source_name, variant_title, year_select),
+        "%s vs World Bank agricultural value added %s, %d",
+        va_source_label(source_name, "title"), variant_title, year_select),
       subtitle = wrap_label(subtitle_txt),
       x = NULL,
       y = y_axis_label
@@ -1282,23 +1321,8 @@ make_chart <- function(year_select, denominator = c("raw", "reduced"),
                   svg_width, svg_height, n_countries))
 }
 
-# ggplot draws ONE y-axis title centred across the stacked facet rows; this
-# replicates it so the value-added label sits next to BOTH the ISIC-A and
-# ISIC-C panels.  Returns the untouched grob if the layout is unexpected.
-repeat_facet_ylab <- function(p) {
-  g          <- ggplot2::ggplotGrob(p)
-  yt         <- which(g$layout$name == "ylab-l")
-  panel_rows <- sort(unique(g$layout$t[grepl("^panel", g$layout$name)]))
-  if (!length(yt) || length(panel_rows) < 2L) return(g)
-  ylab_grob <- g$grobs[[yt]]
-  ylab_col  <- g$layout$l[yt]
-  g$grobs[[yt]] <- grid::nullGrob()
-  for (r in panel_rows) {
-    g <- gtable::gtable_add_grob(g, ylab_grob, t = r, b = r, l = ylab_col, r = ylab_col,
-                                 clip = "off", name = sprintf("ylab-l-%d", r))
-  }
-  g
-}
+# The y-axis title is repeated next to BOTH the ISIC-A and ISIC-C panel rows by
+# va_repeat_facet_ylab() in 00_validation_helpers.R.
 
 # ---- 6b. per-country time-series chart builder ------------------------------
 # Threshold-based grouping into "Other" using MAX share across years (so the
@@ -1430,10 +1454,10 @@ make_country_chart <- function(iso_select, pipelines_all, out_dir_country,
       sprintf("fabio_validation_country_%s.svg", iso_select)
     )
     title_txt   <- sprintf(
-      "FABIO value-added [%s] vs World Bank agricultural value-added — %s",
-      source_name, title_country)
+      "%s vs World Bank agricultural value added, %s",
+      va_source_label(source_name, "title"), title_country)
     subtitle_txt <- sprintf(
-      paste0("FABIO value-added per item for %s; items below %.0f%% max ",
+      paste0("Extension value added per item for %s; items below %.0f%% max ",
              "|share| of WB across years are grouped as \"Other\". Primary ",
              "(ISIC-A) row: black line = WB ag VA, grey dashed = FABIO-",
              "comparable WB (WB minus seeds and forestry), points coloured by ",
@@ -1447,25 +1471,26 @@ make_country_chart <- function(iso_select, pipelines_all, out_dir_country,
       sprintf("fabio_validation_country_%s_%s.svg", iso_select, measure)
     )
     title_txt   <- sprintf(
-      "FABIO %s [%s] — %s (value-added sub-account)",
-      MEASURE_TITLE[[measure]], source_name, title_country)
+      "%s %s, %s (value-added sub-account)",
+      va_source_label(source_name, "title"), VA_MEASURE[[measure]], title_country)
     bench_note  <- if (!is.null(bench_iso) && nrow(bench_iso)) {
       sprintf(paste0("Blue line/triangles on the Primary (ISIC-A) row(s) = ",
                      "external A01+A03 %s benchmark (%s; exported by scripts ",
                      "02/03), a primary-agriculture, forestry-free reference ",
                      "for the covered years. "),
-              MEASURE_TITLE[[measure]],
+              VA_MEASURE[[measure]],
               paste(sort(unique(bench_iso$bench_source)), collapse = " / "))
     } else {
       "No external component benchmark covers this country. "
     }
     subtitle_txt <- sprintf(
-      paste0("FABIO %s per item for %s — a FABIO-internal decomposition; the ",
-             "World Bank reference is TOTAL-only, so no WB line is drawn. ",
+      paste0("Extension %s per item for %s, a FABIO-internal decomposition; ",
+             "the World Bank reference is TOTAL-only, so no WB line is drawn. ",
+             "Taxes less subsidies is the production-side measure throughout. ",
              "%sItems grouped as \"Other\" exactly as in the TOTAL figure ",
              "(below %.0f%% max |share| of WB across years). Rows: primary ",
              "(ISIC-A) vs processing (ISIC-C)."),
-      MEASURE_TITLE[[measure]], title_country, bench_note, threshold * 100
+      VA_MEASURE[[measure]], title_country, bench_note, threshold * 100
     )
   }
   
@@ -1605,7 +1630,10 @@ make_country_chart <- function(iso_select, pipelines_all, out_dir_country,
       title    = title_txt,
       subtitle = wrap_label(subtitle_txt),
       x = NULL,
-      y = MEASURE_AXIS[[measure]]
+      # The measure slot stays empty on the TOTAL figure, where the extension's
+      # own name already says value added.
+      y = va_axis_label(va_source_label(source_name, "axis"),
+                        if (measure == "total") NULL else VA_MEASURE[[measure]])
     ) +
     theme_minimal(base_size = 10) +
     theme(
@@ -1637,7 +1665,7 @@ make_country_chart <- function(iso_select, pipelines_all, out_dir_country,
   n_panels      <- length(panel_levels)
   svg_height    <- 4 * n_panels + 0.25 * n_legend_rows + 0.8
   
-  ggsave(out_file, repeat_facet_ylab(p),
+  ggsave(out_file, va_repeat_facet_ylab(p),
          width = svg_width, height = svg_height,
          limitsize = FALSE, device = "svg")
   
@@ -1819,11 +1847,14 @@ make_scatter_chart <- function(year_select, pipelines_all, out_dir, source_name,
                         drop   = FALSE, na.translate = FALSE) +
     labs(
       title = sprintf(
-        "FABIO ISIC-A value-added vs reduced World Bank agricultural VA [%s], %d",
-        source_name, year_select),
+        "%s vs reduced World Bank agricultural value added at ISIC-A, %d",
+        va_source_label(source_name, "title"), year_select),
       subtitle = wrap_label(subtitle_txt),
-      x = "Reduced World Bank agricultural value-added (current US$, log scale)",
-      y = "FABIO ISIC-A value-added aggregate (current US$, log scale)"
+      x = va_axis_label("Reduced World Bank agricultural value added",
+                        scale = "log10 scale"),
+      # Scope on the axis because this figure is restricted to ISIC-A.
+      y = va_axis_label(va_source_label(source_name, "axis"),
+                        scope = "ISIC-A", scale = "log10 scale")
     ) +
     theme_minimal(base_size = 10) +
     theme(
@@ -1833,7 +1864,7 @@ make_scatter_chart <- function(year_select, pipelines_all, out_dir, source_name,
       legend.position     = "bottom",
       plot.title.position = "plot",
       plot.title          = element_text(face = "bold", size = 13, margin = margin(b = 4)),
-      plot.subtitle       = element_text(size = 9, lineheight = 1.15, margin = margin(b = 12))
+      plot.subtitle       = element_text(size = 9, lineheight = 1.15, margin = margin(b = 16))
     ) +
     guides(colour = guide_legend(override.aes = list(size = 3)))
   
@@ -1886,60 +1917,134 @@ make_scatter_chart <- function(year_select, pipelines_all, out_dir, source_name,
 # Two things make a fork hang rather than fail, and both are guarded here. A
 # child inherits the parent's OpenMP thread pool but none of its threads, so it
 # deadlocks the first time it enters a parallel region: data.table is pinned to
-# one thread for the duration of each fan-out. And the font cache initialises
-# lazily on the first plot, so several children initialising it at once
-# deadlock: warm_graphics() forces it in the parent first.
+# one thread for the duration of each fan-out. And the graphics stack
+# initialises lazily on the first plot, so several children initialising it at
+# once deadlock: warm_graphics() forces it in the parent first.
+#
+# The warm-up plot exercises everything the real figures reach that initialises
+# lazily — the font cache, plotmath metrics (the log10 axis titles and the
+# scientific tick labels), and the ggplotGrob / gtable path va_repeat_facet_ylab
+# takes — so a worker never meets any of them cold.
 warm_graphics <- function() {
   f <- tempfile(fileext = ".svg")
-  suppressMessages(ggsave(f, ggplot(data.frame(x = 1, y = 1), aes(x, y)) +
-                            geom_point() + labs(title = "warm"),
-                          width = 2, height = 2, device = "svg"))
+  d <- data.frame(x = 1:2, y = 1:2, g = c("a", "b"))
+  p <- ggplot(d, aes(x, y)) + geom_point() +
+    facet_wrap(~ g, ncol = 1) +
+    labs(title = "warm", y = expression("warm"[10]))
+  suppressMessages(ggsave(f, va_repeat_facet_ylab(p),
+                          width = 2, height = 3, device = "svg"))
   unlink(f)
 }
 
-# A worker that dies takes its output with it, so failures are counted and
-# reported rather than left to surface as a short CSV.
-.report_failures <- function(res) {
-  bad <- vapply(res, function(r) inherits(r, c("error", "try-error")),
-                logical(1))
-  if (any(bad))
-    warning(sum(bad), " of ", length(res), " job(s) failed — the outputs of ",
-            "this block are INCOMPLETE.  Re-run with VALIDATION_PARALLEL=FALSE ",
-            "for a traceback.", call. = FALSE, immediate. = TRUE)
-  res
+# NEVER fork an RStudio session.  ?mcparallel: forking "is strongly discouraged
+# in a GUI or embedded environment".  Diagnosed on this box: every forked child
+# of an rsession blocks in futex_wait_queue_me having consumed <0.5s of CPU —
+# it inherited a mutex held by one of rsession's threads, and that thread does
+# not exist in the child, so the lock is never released.  The children sleep
+# forever, mclapply() waits on them forever, and each attempt leaves eight
+# unkillable-by-SIGTERM processes behind.  RStudio also cannot show worker
+# output, so the whole fan-out is silent even when it works.
+#
+# There is deliberately no override.  Sequential is not a hardship here: the
+# whole of families A and A2 takes well under a minute per source, and the
+# per-country fan-out is bounded by ggsave() rather than by core count.
+.in_rstudio <- identical(Sys.getenv("RSTUDIO"), "1")
+if (do_parallel && .in_rstudio) {
+  message("NOTE: RStudio session — running sequentially (forking an rsession ",
+          "deadlocks its children).")
+  do_parallel <- FALSE
 }
 
-.guard <- function(FUN) function(...)
-  tryCatch(FUN(...), error = function(e) {
-    message("  JOB FAILED: ", conditionMessage(e)); e })
+.fork_ok <- do_parallel && .Platform$OS.type == "unix" && n_cores > 1L
 
-.par_apply <- if (do_parallel && .Platform$OS.type == "unix" && n_cores > 1L) {
-  function(X, FUN, ...) {
+# A worker comes back one of three ways: a result, a caught error, or nothing at
+# all because the child died.  .guard() tags every return so the third case is
+# distinguishable — a bare NULL is ambiguous here, since several builders return
+# invisible(NULL) on purpose when they skip a figure.
+.guard <- function(FUN) function(...)
+  tryCatch(list(ok = TRUE, value = FUN(...)),
+           error = function(e) {
+             message("  JOB FAILED: ", conditionMessage(e))
+             list(ok = FALSE, value = NULL, error = e)
+           })
+
+.unwrap <- function(res, label) {
+  killed <- !vapply(res, function(r) is.list(r) && !is.null(r$ok), logical(1))
+  failed <- !killed & !vapply(res, function(r) isTRUE(r$ok), logical(1))
+  if (any(failed))
+    warning(sum(failed), " of ", length(res), " [", label, "] job(s) raised an ",
+            "error — the outputs of this block are INCOMPLETE.  Re-run with ",
+            "do_parallel <- FALSE at the top of this file for a traceback.",
+            call. = FALSE, immediate. = TRUE)
+  if (any(killed))
+    warning(sum(killed), " of ", length(res), " [", label, "] worker(s) died ",
+            "without returning.  Check `dmesg -T | tail` for an OOM kill, and ",
+            "`cat /proc/<pid>/wchan` on any survivor for a deadlock.",
+            call. = FALSE, immediate. = TRUE)
+  lapply(res, function(r) if (is.list(r) && isTRUE(r$ok)) r$value else NULL)
+}
+
+# Work goes out n_cores at a time and the PARENT prints a counter between
+# batches.  The old code handed the whole job list to ONE mclapply() call, which
+# is a single blocking statement — it could not report progress even in a
+# terminal, so a slow run and a dead run looked identical.
+#
+# mc.preschedule = FALSE forks one child per job rather than n_cores children
+# that each chew through ~90 ggsave() calls.  Children exit and hand their
+# memory straight back, and a child that dies costs one figure, not ninety.
+.par_apply <- function(X, FUN, ..., label = "jobs") {
+  n <- length(X)
+  if (!n) return(list())
+  G   <- .guard(FUN)
+  t0  <- Sys.time()
+  out <- vector("list", n)
+  
+  # A forked child inherits the parent's OpenMP pool but none of its threads, so
+  # it deadlocks the first time it enters a parallel region: pin data.table to
+  # one thread for the duration of the fan-out.
+  if (.fork_ok) {
     old_threads <- data.table::getDTthreads()
     data.table::setDTthreads(1L)
     on.exit(data.table::setDTthreads(old_threads), add = TRUE)
-    gc()                    # collect before forking, so the children inherit
-    # fewer pages a later GC would dirty and copy
-    .report_failures(parallel::mclapply(X, .guard(FUN), ...,
-                                        mc.cores = n_cores))
   }
-} else {
-  function(X, FUN, ...) .report_failures(lapply(X, .guard(FUN), ...))
+  
+  batch  <- if (.fork_ok) n_cores else 1L
+  starts <- seq.int(1L, n, by = batch)
+  every  <- max(1L, ceiling(length(starts) / 40L))   # ~40 progress lines max
+  
+  for (k in seq_along(starts)) {
+    b <- starts[k]:min(starts[k] + batch - 1L, n)
+    if (.fork_ok) {
+      if (k %% 10L == 1L) gc(verbose = FALSE)   # fewer dirty pages to inherit
+      out[b] <- parallel::mclapply(X[b], G, ...,
+                                   mc.cores       = min(n_cores, length(b)),
+                                   mc.preschedule = FALSE)
+    } else {
+      out[b] <- lapply(X[b], G, ...)
+    }
+    if (k %% every == 0L || k == length(starts))
+      message(sprintf("  [%s] %d/%d done, %.1f min elapsed",
+                      label, max(b), n,
+                      as.numeric(difftime(Sys.time(), t0, units = "mins"))))
+  }
+  .unwrap(out, label)
 }
 
-if (do_parallel && .Platform$OS.type == "unix" && n_cores > 1L) {
+if (.fork_ok) {
   message(sprintf("Parallelizing chart generation across %d cores.", n_cores))
   warm_graphics()
 } else if (do_parallel && .Platform$OS.type != "unix") {
   message("do_parallel = TRUE but platform is not Unix; running sequentially.")
+} else {
+  message("Running chart generation sequentially.")
 }
 
 # Build the full chart set for ONE source (its two ISIC levels are already the
 # two facet rows in `src_pipelines`).  Writes to <out_dir_base>/<subdir>/ and
-# .../by_country/.  `measures` lists the per-country figures to build ("total"
-# plus, where the source carries the component-split columns, the components) —
-# the per-year charts (A) are TOTAL-only regardless, being shares of the
-# component-less WB headline.
+# .../by_country/.  `measures` lists the per-country figures the SOURCE can
+# support; `country_measures` (the switch block at the top) then says which of
+# those this run actually asked for.  The per-year charts (A) are TOTAL-only
+# regardless, being shares of the component-less WB headline.
 run_source_outputs <- function(src, src_pipelines, measures = "total") {
   out_dir         <- file.path(out_dir_base, src$subdir)
   out_dir_country <- file.path(out_dir, "by_country")
@@ -1961,11 +2066,13 @@ run_source_outputs <- function(src, src_pipelines, measures = "total") {
       stringsAsFactors = FALSE,
       KEEP.OUT.ATTRS   = FALSE
     )
+    message(sprintf("Building %d per-year cross-country chart(s).",
+                    nrow(yearly_jobs)))
     invisible(.par_apply(seq_len(nrow(yearly_jobs)), function(i) {
       make_chart(yearly_jobs$yr[i], yearly_jobs$denom[i],
                  pipelines_all = src_pipelines, out_dir = out_dir,
                  source_name = src$name)
-    }))
+    }, label = paste0(src$name, "/yearly")))
   }
   
   # (A2) per-year validation scatter — one SVG per year, a metrics CSV, a
@@ -1975,12 +2082,13 @@ run_source_outputs <- function(src, src_pipelines, measures = "total") {
     frame_dir <- if (do_scatter_gif) file.path(out_dir, ".scatter_frames")          else NULL
     if (!is.null(frame_dir)) dir.create(frame_dir, showWarnings = FALSE)
     
+    message(sprintf("Building %d per-year scatter(s).", length(available_years)))
     res <- .par_apply(available_years, function(yr) {
       make_scatter_chart(yr, pipelines_all = src_pipelines, out_dir = out_dir,
                          source_name = src$name,
                          svg_lim = scatter_year_lims[[as.character(yr)]],
                          gif_lim = xy_lim, frame_dir = frame_dir)
-    })
+    }, label = paste0(src$name, "/scatter"))
     res        <- Filter(is.list, res)              # .par_apply has warned already
     metrics_df <- dplyr::bind_rows(lapply(res, `[[`, "summary"))
     percc_df   <- dplyr::bind_rows(lapply(res, `[[`, "per_country"))
@@ -2001,37 +2109,72 @@ run_source_outputs <- function(src, src_pipelines, measures = "total") {
   }
   
   # (B) per-country time-series charts — one TOTAL figure per country plus,
-  # when `measures` includes them, one figure per VA component (family B').
-  if (do_country_charts) {
-    all_countries <- src_pipelines %>%
-      filter(year %in% available_years) %>%
-      distinct(iso3c) %>%
-      arrange(iso3c) %>%
-      pull(iso3c)
-    
-    country_jobs <- expand.grid(
-      iso     = all_countries,
-      measure = measures,
-      stringsAsFactors = FALSE,
-      KEEP.OUT.ATTRS   = FALSE
-    )
-    
-    message("Building per-country time-series charts for ",
-            length(all_countries), " countries x ",
-            length(measures), " measure(s) [",
-            paste(measures, collapse = ", "), "].")
-    
-    invisible(.par_apply(seq_len(nrow(country_jobs)), function(i) {
-      make_country_chart(country_jobs$iso[i],
-                         pipelines_all   = src_pipelines,
-                         out_dir_country = out_dir_country,
-                         source_name     = src$name,
-                         measure         = country_jobs$measure[i])
-    }))
+  # when the source and the run both allow it, one figure per VA component.
+  if (!do_country_charts) {
+    message("Per-country charts: OFF (set do_country_charts <- TRUE at the top).")
+    return(invisible(NULL))
   }
+  
+  all_countries <- src_pipelines %>%
+    filter(year %in% available_years) %>%
+    distinct(iso3c) %>%
+    arrange(iso3c) %>%
+    pull(iso3c)
+  
+  if (length(country_filter)) {
+    unknown <- setdiff(country_filter, all_countries)
+    if (length(unknown))
+      message("NOTE: country_filter lists ", paste(unknown, collapse = ", "),
+              " — not present in ", src$name, "; ignored.")
+    all_countries <- intersect(all_countries, country_filter)
+  }
+  
+  measures_country <- intersect(measures, country_measures)
+  
+  if (!length(all_countries) || !length(measures_country)) {
+    message("Per-country charts: nothing left after filtering; skipping.")
+    return(invisible(NULL))
+  }
+  
+  country_jobs <- expand.grid(
+    iso     = all_countries,
+    measure = measures_country,
+    stringsAsFactors = FALSE,
+    KEEP.OUT.ATTRS   = FALSE
+  )
+  
+  message(sprintf(
+    "Building per-country time-series charts: %d countries x %d measure(s) [%s] = %d figures.",
+    length(all_countries), length(measures_country),
+    paste(measures_country, collapse = ", "), nrow(country_jobs)))
+  
+  invisible(.par_apply(seq_len(nrow(country_jobs)), function(i) {
+    make_country_chart(country_jobs$iso[i],
+                       pipelines_all   = src_pipelines,
+                       out_dir_country = out_dir_country,
+                       source_name     = src$name,
+                       measure         = country_jobs$measure[i])
+  }, label = paste0(src$name, "/country")))
 }
 
 # ---- 8. run every source ---------------------------------------------------
+message("\n---- run plan ----------------------------------------------------")
+message("  sources         : ",
+        paste(vapply(sources, `[[`, character(1), "name"), collapse = ", "))
+message("  years           : ", length(available_years), " (",
+        min(available_years), "-", max(available_years), ")")
+message("  yearly charts   : ", do_yearly_charts)
+message("  scatter charts  : ", do_scatter_charts,
+        if (do_scatter_gif) " (+ GIF)" else "")
+message("  country charts  : ", do_country_charts,
+        if (do_country_charts && length(country_filter))
+          paste0(" [", paste(country_filter, collapse = ", "), "]") else "",
+        if (do_country_charts)
+          paste0(" measures: ", paste(country_measures, collapse = ", ")) else "")
+message("  parallel        : ", .fork_ok,
+        if (.fork_ok) paste0(" (", n_cores, " cores)") else "")
+message("------------------------------------------------------------------\n")
+
 for (src in sources) {
   measures_src <- if (do_component_charts && isTRUE(components_by_source[[src$name]])) {
     MEASURES
@@ -2042,4 +2185,4 @@ for (src in sources) {
                      measures = measures_src)
 }
 
-message("\nAll sources done.")
+message("\nAll sources finished.")

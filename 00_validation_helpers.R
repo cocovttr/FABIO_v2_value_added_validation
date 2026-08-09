@@ -15,6 +15,79 @@
 # ==============================================================================
 
 
+# ── Display vocabulary ───────────────────────────────────────────────────────
+#
+# Every figure plots one value-added extension against one reference, so both
+# axes name a dataset and the quantity read off it, and both are built from
+# va_axis_label().  "value added" is the noun, "value-added" the attributive
+# ("value-added component"); the unit and the scale go in one trailing
+# parenthetical, the scale named only where it is not linear.
+
+#' Base name of a value-added source, keyed by the script-03 source tags and by
+#' the `source`-column values scripts 01 / 02 carry.  An unmapped source falls
+#' through to itself.
+VA_SOURCE_BASE <- c(
+  # script 03 source tags
+  GLORIA                              = "GLORIA",
+  COMBINED_GLORIA                     = "COMBINED-GLORIA",
+  EXIOBASE                            = "EXIOBASE",
+  COMBINED_EXIOBASE                   = "COMBINED-EXIOBASE",
+  # script 01 `source` values (FABIO items aggregated up to BioSAM categories)
+  `GLORIA-FABIOv2 (agg.)`             = "GLORIA",
+  `COMBINED-GLORIA-FABIOv2 (agg.)`    = "COMBINED-GLORIA",
+  `EXIOBASE-FABIOv2 (agg.)`           = "EXIOBASE",
+  `COMBINED-EXIOBASE-FABIOv2 (agg.)`  = "COMBINED-EXIOBASE",
+  # script 02 `source` values (reference industries disaggregated to items)
+  `GLORIA-FABIOv2 (disagg.)`           = "GLORIA",
+  `COMBINED-GLORIA-FABIOv2 (disagg.)`  = "COMBINED-GLORIA",
+  `EXIOBASE-FABIOv2 (disagg.)`         = "EXIOBASE",
+  `COMBINED-EXIOBASE-FABIOv2 (disagg.)`= "COMBINED-EXIOBASE")
+
+#' Display name for a source: the axis form, "FABIO-v2 value-added extension,
+#' GLORIA", names the quantity itself, so the axis template leaves its measure
+#' slot empty on total figures; the title form, "GLORIA extension", is what a
+#' title needs once the axis carries the rest.
+#'
+#' The (agg.) / (disagg.) qualifier is a property of the comparison rather than
+#' of the extension — 01 aggregates the source up, 02 disaggregates the
+#' reference down — so it is stated in the subtitle (`note`) instead.
+va_source_label <- function(x, form = c("axis", "title")) {
+  form <- match.arg(form)
+  base <- unname(VA_SOURCE_BASE[as.character(x)])
+  base <- ifelse(is.na(base), as.character(x), base)
+  if (form == "axis") sprintf("FABIO-v2 value-added extension, %s", base)
+  else                sprintf("%s extension", base)
+}
+
+#' The scored measures, for axis titles, figure titles and the component legend
+#' alike.  `tls` is the production-side measure throughout (see the header of
+#' script 01); the qualifier lives in the subtitles rather than in the name.
+VA_MEASURE <- c(total   = "value added",
+                wages   = "wages",
+                capital = "capital",
+                tls     = "taxes less subsidies")
+
+#' Axis title: "<dataset>[, <measure>][, <scope>] (<unit>[, <scale>])".
+#' `measure` is left NULL where the dataset name already states the quantity,
+#' and `scope` is used only where the figure is scope-restricted — where it
+#' facets by scope the strip already says so.  The parenthetical is the unit and
+#' the scale alone; the scope belongs to the series, not to the unit.
+#'
+#' A log10 scale is returned as plotmath so the 10 sets as a true subscript,
+#' matching the scientific notation on the ticks.
+va_axis_label <- function(dataset, measure = NULL, scope = NULL,
+                          unit = "current US$", scale = NULL) {
+  txt <- sprintf("%s%s%s (%s)", dataset,
+                 if (is.null(measure)) "" else paste0(", ", measure),
+                 if (is.null(scope))   "" else paste0(", ", scope),
+                 paste(c(unit, scale), collapse = ", "))
+  if (!grepl("log10", txt, fixed = TRUE)) return(txt)
+  parse(text = sprintf('"%s"[10]*"%s"',
+                       sub("log10.*$", "log", txt),
+                       sub("^.*log10", "", txt)))[[1]]
+}
+
+
 # ── Cells ────────────────────────────────────────────────────────────────────
 #
 # A comparison table is long over (iso3c, year, source, isic, category,
@@ -248,18 +321,24 @@ va_write_ratio_frames <- function(dat, reference, sources, out_dir, prefix) {
 #
 # Wherever the cells resolve the ISIC sections (L3 / L4) the figure splits into
 # one panel per section, which stops the two clouds overplotting each other;
-# the axes stay shared, so the panels remain directly comparable.
+# the axes stay shared, so the panels remain directly comparable.  The sections
+# therefore never need a shape of their own: at L1 / L2 they are summed into a
+# single A+C cell and at L3 / L4 the panel strip already names them.  Points are
+# plain filled dots throughout — nothing is ever encoded as filled against
+# hollow, so an outlined shape would only invite the reader to look for it.
+#
+# The component legend is likewise carried only where the component varies, at
+# L2 and L4; L1 and L3 sum the components away and score a single `total` per
+# cell, so their key would have one entry restating the subtitle.
+#
+# `panel_country` extends the same treatment to a figure pooling several
+# national references (02): the countries take a panel row rather than an
+# interior shade, so the point stays a plain dot and each cloud is read against
+# its own reference instead of being told apart by lightness.
 
 VA_COMPONENT_COLOURS <- c(wages = "#1f77b4", capital = "#d62728",
                           tls   = "#2ca02c", total   = "#4d4d4d")
-VA_ISIC_SHAPES       <- c(A = 21, C = 24, `A+C` = 21)
-
-#' Neutral interior fills: the outline already carries the component, so
-#' countries separate by lightness alone.  Legible to about six.
-va_country_fills <- function(countries) {
-  countries <- sort(unique(as.character(countries)))
-  setNames(grey(seq(1, 0.3, length.out = length(countries))), countries)
-}
+VA_ISIC_LEVELS       <- c("A", "C", "A+C")
 
 #' TRUE where the cells carry both ISIC sections, and the figure therefore
 #' splits into one panel each.  At L1 / L2 the sections are summed away into a
@@ -321,8 +400,8 @@ va_symlog_axis <- function(v) {
        labels = va_sci_expr(lab))
 }
 
-va_symlog_plot <- function(matched, title, subtitle, reference,
-                           fill_country = FALSE) {
+va_symlog_plot <- function(matched, title, subtitle, reference, source_label,
+                           panel_country = FALSE) {
   # Cells empty on both sides sit exactly on the origin and carry no
   # disagreement to read; they are not plotted.
   d <- copy(matched[is.finite(ref) & is.finite(src) & (ref != 0 | src != 0)])
@@ -331,28 +410,27 @@ va_symlog_plot <- function(matched, title, subtitle, reference,
   d[, `:=`(xt        = va_symlog(ref),
            yt        = va_symlog(src),
            component = factor(component, levels = MEASURES),
-           isic      = factor(isic,      levels = names(VA_ISIC_SHAPES)))]
+           isic      = factor(isic,      levels = VA_ISIC_LEVELS))]
   ax  <- va_symlog_axis(c(d$ref, d$src))
   sz  <- if (nrow(d) > 2000L) 1.2 else 2.0     # L4 panels run to thousands of cells
+  # L1 / L3 sum the components away and leave a single `total` per cell, so
+  # their colour key would carry one entry and is dropped.
+  one_component <- uniqueN(as.character(d$component)) < 2L
   
   p <- ggplot(d, aes(x = xt, y = yt)) +
     geom_hline(yintercept = 0, linewidth = 0.3, colour = "grey75") +
     geom_vline(xintercept = 0, linewidth = 0.3, colour = "grey75") +
     geom_abline(slope = 1, intercept = 0, linetype = "dashed",
                 linewidth = 0.4, colour = "black") +
-    (if (fill_country)
-      geom_point(aes(colour = component, shape = isic, fill = iso3c),
-                 size = sz, stroke = 0.45, alpha = 0.8)
-     else
-       geom_point(aes(colour = component, shape = isic),
-                  fill = NA, size = sz, stroke = 0.45, alpha = 0.8)) +
+    geom_point(aes(colour = component), shape = 16, size = sz, alpha = 0.8) +
     scale_x_continuous(breaks = ax$breaks, labels = ax$labels) +
     scale_y_continuous(breaks = ax$breaks, labels = ax$labels) +
-    scale_colour_manual(values = VA_COMPONENT_COLOURS, name = "VA component") +
-    scale_shape_manual(values = VA_ISIC_SHAPES, name = "ISIC section") +
+    scale_colour_manual(values = VA_COMPONENT_COLOURS,
+                        labels = VA_MEASURE, name = "Value-added component") +
     labs(title = title, subtitle = subtitle,
-         x = sprintf("%s (current US$, symlog scale)", reference),
-         y = "FABIOv2 source (current US$, symlog scale)") +
+         x = va_axis_label(reference, VA_MEASURE[["total"]],
+                           scale = "symlog scale"),
+         y = va_axis_label(source_label, scale = "symlog scale")) +
     theme_minimal(base_size = 10) +
     theme(
       aspect.ratio        = 1,
@@ -361,54 +439,89 @@ va_symlog_plot <- function(matched, title, subtitle, reference,
       strip.text          = element_text(face = "bold", size = 9.5),
       legend.position     = "bottom",
       legend.box          = "vertical",
+      # Title + subtitle form a left-aligned top band, set off by whitespace so
+      # they can be cropped off cleanly when placing the figure in publication.
       plot.title.position = "plot",
-      plot.title          = element_text(face = "bold", size = 12),
-      plot.subtitle       = element_text(size = 8.5, lineheight = 1.2)
+      plot.title          = element_text(face = "bold", size = 12,
+                                         margin = margin(b = 4)),
+      plot.subtitle       = element_text(size = 8.5, lineheight = 1.2,
+                                         margin = margin(b = 16))
     ) +
-    guides(colour = guide_legend(override.aes = list(shape = 21, fill = NA, size = 2.8)),
-           shape  = guide_legend(override.aes = list(colour = "black", fill = NA, size = 2.8)))
+    guides(colour = if (one_component) "none" else
+      guide_legend(override.aes = list(shape = 16, size = 2.8)))
   
-  # The strips name the sections once the panels split, so the shape legend
-  # would only repeat them; the shapes themselves stay, so a panel read on its
-  # own still carries its section.
-  if (by_isic)
-    p <- p + facet_wrap(~ isic, nrow = 1, labeller = as_labeller(
-      function(x) paste("ISIC section", x))) +
-    guides(shape = "none")
-  
-  if (fill_country)
-    p <- p + scale_fill_manual(values = va_country_fills(d$iso3c),
-                               name = "Country") +
-    guides(fill = guide_legend(override.aes = list(shape = 21, colour = "black",
-                                                   size = 2.8)))
+  # The strips name the sections and the countries, so nothing else has to:
+  # sections across, countries down, and the axes shared throughout.
+  isic_lab <- as_labeller(function(x) paste("ISIC section", x))
+  if (by_isic && panel_country)
+    p <- p + facet_grid(iso3c ~ isic, labeller = labeller(isic = isic_lab))
+  else if (panel_country)
+    p <- p + facet_wrap(~ iso3c, nrow = 1)
+  else if (by_isic)
+    p <- p + facet_wrap(~ isic, nrow = 1, labeller = isic_lab)
   p
 }
 
 va_slug <- function(x) gsub("(^-|-$)", "", tolower(gsub("[^A-Za-z0-9]+", "-", x)))
 
-#' One SVG per (source, level) of `matched` into `out_dir`.
+#' ggplot draws ONE y-axis title centred across stacked facet rows; this
+#' replicates it so the label sits next to every row, as the ISIC rows of the
+#' per-country time series (03) need.  Returns the untouched grob if the layout
+#' is unexpected.  Not needed under coord_flip(), where the value axis is the
+#' horizontal one and its title is already drawn once at the foot.
+#'
+#' gtable and grid are reached through `::` and never through requireNamespace():
+#' ggplot2 imports both, so they are always loaded, and a namespace lookup inside
+#' a forked worker is one of the things that hangs the fan-out in 03.
+va_repeat_facet_ylab <- function(p) {
+  g          <- ggplot2::ggplotGrob(p)
+  yt         <- which(g$layout$name == "ylab-l")
+  panel_rows <- sort(unique(g$layout$t[grepl("^panel", g$layout$name)]))
+  if (!length(yt) || length(panel_rows) < 2L) return(g)
+  ylab_grob <- g$grobs[[yt]]
+  ylab_col  <- g$layout$l[yt]
+  g$grobs[[yt]] <- grid::nullGrob()
+  for (r in panel_rows) {
+    g <- gtable::gtable_add_grob(g, ylab_grob, t = r, b = r, l = ylab_col, r = ylab_col,
+                                 clip = "off", name = sprintf("ylab-l-%d", r))
+  }
+  g
+}
+
+#' One SVG per (source, level) of `matched` into `out_dir`.  `note` states what
+#' the caller did to make the two sides comparable, and is carried in the
+#' subtitle.
 va_write_symlog_plots <- function(matched, sources, out_dir, prefix,
-                                  dataset, reference, fill_country = FALSE) {
+                                  reference, scope = NULL, panel_country = FALSE,
+                                  note = NULL) {
   scale_note <- sprintf(
     paste0("Both axes symlog: linear within \u00b1US$%g and logarithmic beyond, ",
            "so the linear core and every decade outside it are equally wide ",
            "and the panels share a scale. Dashed line = identity; grey lines ",
            "mark zero, so sign disagreement reads off the off-diagonal ",
-           "quadrants."),
+           "quadrants. Taxes less subsidies is the production-side measure ",
+           "on both sides."),
     VA_SYMLOG_LIN)
   for (lv in names(matched)) {
     for (s in sources) {
       d <- matched[[lv]][source == s]
       if (!nrow(d)) next
       p <- va_symlog_plot(
-        d, reference = reference, fill_country = fill_country,
-        title    = sprintf("%s vs %s — %s", dataset, s, lv),
+        d, reference = reference,
+        source_label = va_source_label(s, "axis"),
+        panel_country = panel_country,
+        title    = sprintf("%s vs %s at %s%s",
+                           va_source_label(s, "title"), reference, lv,
+                           if (is.null(scope)) "" else sprintf(" (%s)", scope)),
         subtitle = paste0("One point per ", VA_LEVEL_DESC[[lv]], " cell. ",
+                          if (is.null(note)) "" else paste0(note, " "),
                           scale_note))
       out_file <- file.path(out_dir,
                             sprintf("%s_symlog_%s_%s.svg", prefix, va_slug(s), lv))
-      # Two panels side by side need the canvas wide rather than tall.
-      dim <- if (va_facets_isic(d)) c(10, 7) else c(8, 9)
+      # Two panels side by side need the canvas wide rather than tall; the
+      # panels are square, so each country row adds its own height.
+      nrow_panel <- if (panel_country) uniqueN(d$iso3c) else 1L
+      dim <- if (va_facets_isic(d)) c(10, 3 + 4.5 * nrow_panel) else c(8, 9)
       ggsave(out_file, p, width = dim[1], height = dim[2],
              limitsize = FALSE, device = "svg")
       message(sprintf("[symlog/%s/%s] wrote %s  (n=%d)", lv, s, out_file, nrow(d)))
