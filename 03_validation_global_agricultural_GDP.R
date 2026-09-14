@@ -1284,9 +1284,9 @@ make_chart <- function(year_select, denominator = c("raw", "reduced"),
       x = NULL,
       y = y_axis_label
     ) +
-    theme_minimal(base_size = 10) +
+    theme_minimal(base_size = 12) +
     theme(
-      axis.text.y         = element_text(size = 7),
+      axis.text.y         = element_text(size = 9),
       panel.grid.major.x  = element_blank(),
       panel.grid.minor.x  = element_blank(),
       panel.grid.major.y  = element_line(colour = "grey80", linewidth = 0.3),
@@ -1297,12 +1297,12 @@ make_chart <- function(year_select, denominator = c("raw", "reduced"),
       legend.position     = "bottom",
       legend.box          = "vertical",
       legend.key.size     = unit(0.35, "cm"),
-      legend.text         = element_text(size = 7),
+      legend.text         = element_text(size = 9),
       # Title + subtitle form a left-aligned top band, set off by whitespace so
       # they can be cropped off cleanly when placing the figure in publication.
       plot.title.position = "plot",
-      plot.title          = element_text(face = "bold", size = 13, margin = margin(b = 4)),
-      plot.subtitle       = element_text(size = 9, lineheight = 1.15, margin = margin(b = 16))
+      plot.title          = element_text(face = "bold", size = 15, margin = margin(b = 4)),
+      plot.subtitle       = element_text(size = 10.5, lineheight = 1.15, margin = margin(b = 16))
     ) +
     guides(fill   = guide_legend(ncol = legend_ncol, byrow = TRUE),
            colour = guide_legend(ncol = 3, order = 1,
@@ -1640,9 +1640,9 @@ make_country_chart <- function(iso_select, pipelines_all, out_dir_country,
       y = va_axis_label(va_source_label(source_name, "axis"),
                         if (measure == "total") NULL else VA_MEASURE[[measure]])
     ) +
-    theme_minimal(base_size = 10) +
+    theme_minimal(base_size = 12) +
     theme(
-      axis.text.x         = element_text(angle = 90, vjust = 0.5, hjust = 1, size = 7),
+      axis.text.x         = element_text(angle = 90, vjust = 0.5, hjust = 1, size = 9),
       panel.grid.major.x  = element_blank(),
       panel.spacing.y     = unit(1, "lines"),
       strip.text.y.left   = element_text(angle = 0, face = "bold"),
@@ -1650,12 +1650,12 @@ make_country_chart <- function(iso_select, pipelines_all, out_dir_country,
       legend.position     = "bottom",
       legend.box          = "vertical",
       legend.key.size     = unit(0.35, "cm"),
-      legend.text         = element_text(size = 7),
+      legend.text         = element_text(size = 9),
       # Title + subtitle form a left-aligned top band, set off by whitespace so
       # they can be cropped off cleanly when placing the figure in publication.
       plot.title.position = "plot",
-      plot.title          = element_text(face = "bold", size = 13, margin = margin(b = 4)),
-      plot.subtitle       = element_text(size = 9, lineheight = 1.15, margin = margin(b = 16))
+      plot.title          = element_text(face = "bold", size = 15, margin = margin(b = 4)),
+      plot.subtitle       = element_text(size = 10.5, lineheight = 1.15, margin = margin(b = 16))
     ) +
     guides(fill   = guide_legend(ncol = legend_ncol, byrow = TRUE),
            colour = guide_legend(ncol = 3, order = 1,
@@ -1861,15 +1861,15 @@ make_scatter_chart <- function(year_select, pipelines_all, out_dir, source_name,
       y = va_axis_label(va_source_label(source_name, "axis"),
                         scope = "ISIC-A", scale = "log10 scale")
     ) +
-    theme_minimal(base_size = 10) +
+    theme_minimal(base_size = 12) +
     theme(
       aspect.ratio        = 1,                      # square panel -> true 45 deg
       panel.grid.minor    = element_line(colour = "grey92", linewidth = 0.2),
       panel.grid.major    = element_line(colour = "grey85", linewidth = 0.3),
       legend.position     = "bottom",
       plot.title.position = "plot",
-      plot.title          = element_text(face = "bold", size = 13, margin = margin(b = 4)),
-      plot.subtitle       = element_text(size = 9, lineheight = 1.15, margin = margin(b = 16))
+      plot.title          = element_text(face = "bold", size = 15, margin = margin(b = 4)),
+      plot.subtitle       = element_text(size = 10.5, lineheight = 1.15, margin = margin(b = 16))
     ) +
     guides(colour = guide_legend(override.aes = list(size = 3)))
   
@@ -1885,13 +1885,13 @@ make_scatter_chart <- function(year_select, pipelines_all, out_dir, source_name,
   # per-year fan-out, where touching global RNG state is best avoided.
   p <- p + if (requireNamespace("ggrepel", quietly = TRUE)) {
     ggrepel::geom_text_repel(data = lab_df, aes(x = x, y = y, label = iso3c),
-                             size = 2.6, colour = "grey20", max.overlaps = Inf,
+                             size = 3.1, colour = "grey20", max.overlaps = Inf,
                              min.segment.length = 0, segment.size = 0.2,
                              seed = VA_REPEL_SEED,
                              inherit.aes = FALSE)
   } else {
     geom_text(data = lab_df, aes(x = x, y = y, label = iso3c),
-              size = 2.6, colour = "grey20", hjust = -0.15, vjust = -0.4,
+              size = 3.1, colour = "grey20", hjust = -0.15, vjust = -0.4,
               inherit.aes = FALSE)
   }
   
