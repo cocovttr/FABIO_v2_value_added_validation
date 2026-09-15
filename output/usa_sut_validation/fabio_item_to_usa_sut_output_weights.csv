@@ -1,0 +1,445 @@
+year,isic,fabio_item_code,code,item,output_usd,output_missing,weight
+2012,A,2558,1111A0,Oilseed farming,4.2373e+10,FALSE,1
+2012,A,2555,1111A0,Oilseed farming,4.2373e+10,FALSE,1
+2012,A,2552,1111A0,Oilseed farming,4.2373e+10,FALSE,1
+2012,A,2557,1111A0,Oilseed farming,4.2373e+10,FALSE,1
+2012,A,2561,1111A0,Oilseed farming,4.2373e+10,FALSE,1
+2012,A,2570,1111A0,Oilseed farming,4.2373e+10,FALSE,1
+2012,A,2511,1111B0,Grain farming,9.2045e+10,FALSE,1
+2012,A,2807,1111B0,Grain farming,9.2045e+10,FALSE,1
+2012,A,2513,1111B0,Grain farming,9.2045e+10,FALSE,1
+2012,A,2514,1111B0,Grain farming,9.2045e+10,FALSE,1
+2012,A,2515,1111B0,Grain farming,9.2045e+10,FALSE,1
+2012,A,2516,1111B0,Grain farming,9.2045e+10,FALSE,1
+2012,A,2517,1111B0,Grain farming,9.2045e+10,FALSE,1
+2012,A,2518,1111B0,Grain farming,9.2045e+10,FALSE,1
+2012,A,2520,1111B0,Grain farming,9.2045e+10,FALSE,1
+2012,A,2546,1111B0,Grain farming,9.2045e+10,FALSE,1
+2012,A,2547,1111B0,Grain farming,9.2045e+10,FALSE,1
+2012,A,2549,1111B0,Grain farming,9.2045e+10,FALSE,1
+2012,A,2531,111200,Vegetable and melon farming,1.4376e+10,FALSE,1
+2012,A,2532,111200,Vegetable and melon farming,1.4376e+10,FALSE,1
+2012,A,2535,111200,Vegetable and melon farming,1.4376e+10,FALSE,1
+2012,A,2533,111200,Vegetable and melon farming,1.4376e+10,FALSE,1
+2012,A,2534,111200,Vegetable and melon farming,1.4376e+10,FALSE,1
+2012,A,2601,111200,Vegetable and melon farming,1.4376e+10,FALSE,1
+2012,A,2602,111200,Vegetable and melon farming,1.4376e+10,FALSE,1
+2012,A,2605,111200,Vegetable and melon farming,1.4376e+10,FALSE,1
+2012,A,2551,111300,Fruit and tree nut farming,2.6489e+10,FALSE,1
+2012,A,2611,111300,Fruit and tree nut farming,2.6489e+10,FALSE,1
+2012,A,2612,111300,Fruit and tree nut farming,2.6489e+10,FALSE,1
+2012,A,2613,111300,Fruit and tree nut farming,2.6489e+10,FALSE,1
+2012,A,2614,111300,Fruit and tree nut farming,2.6489e+10,FALSE,1
+2012,A,2615,111300,Fruit and tree nut farming,2.6489e+10,FALSE,1
+2012,A,2616,111300,Fruit and tree nut farming,2.6489e+10,FALSE,1
+2012,A,2617,111300,Fruit and tree nut farming,2.6489e+10,FALSE,1
+2012,A,2618,111300,Fruit and tree nut farming,2.6489e+10,FALSE,1
+2012,A,2619,111300,Fruit and tree nut farming,2.6489e+10,FALSE,1
+2012,A,2620,111300,Fruit and tree nut farming,2.6489e+10,FALSE,1
+2012,A,2625,111300,Fruit and tree nut farming,2.6489e+10,FALSE,1
+2012,A,2560,111300,Fruit and tree nut farming,2.6489e+10,FALSE,1
+2012,A,2563,111300,Fruit and tree nut farming,2.6489e+10,FALSE,1
+2012,A,2672,111900,Other crop farming,2.841e+10,FALSE,1
+2012,A,2536,111900,Other crop farming,2.841e+10,FALSE,1
+2012,A,2537,111900,Other crop farming,2.841e+10,FALSE,1
+2012,A,328,111900,Other crop farming,2.841e+10,FALSE,1
+2012,A,254,111900,Other crop farming,2.841e+10,FALSE,1
+2012,A,677,111900,Other crop farming,2.841e+10,FALSE,1
+2012,A,2640,111900,Other crop farming,2.841e+10,FALSE,1
+2012,A,2641,111900,Other crop farming,2.841e+10,FALSE,1
+2012,A,2642,111900,Other crop farming,2.841e+10,FALSE,1
+2012,A,2645,111900,Other crop farming,2.841e+10,FALSE,1
+2012,A,2662,111900,Other crop farming,2.841e+10,FALSE,1
+2012,A,2663,111900,Other crop farming,2.841e+10,FALSE,1
+2012,A,2664,111900,Other crop farming,2.841e+10,FALSE,1
+2012,A,2665,111900,Other crop farming,2.841e+10,FALSE,1
+2012,A,2666,111900,Other crop farming,2.841e+10,FALSE,1
+2012,A,2667,111900,Other crop farming,2.841e+10,FALSE,1
+2012,A,2000,111900,Other crop farming,2.841e+10,FALSE,1
+2012,A,2671,111900,Other crop farming,2.841e+10,FALSE,1
+2012,A,2559,111900,Other crop farming,2.841e+10,FALSE,1
+2012,A,2562,111900,Other crop farming,2.841e+10,FALSE,1
+2012,A,2661,111900,Other crop farming,2.841e+10,FALSE,1
+2012,A,2848,112120,Dairy cattle and milk production,3.8013e+10,FALSE,1
+2012,A,866,1121A0,"Beef cattle ranching and farming, including feedlots and dual-purpose ranching and farming",7.8171e+10,FALSE,1
+2012,A,946,1121A0,"Beef cattle ranching and farming, including feedlots and dual-purpose ranching and farming",7.8171e+10,FALSE,1
+2012,A,2744,112300,Poultry and egg production,3.8743e+10,FALSE,1
+2012,A,2029,112300,Poultry and egg production,3.8743e+10,FALSE,1
+2012,A,1034,112A00,"Animal production, except cattle and poultry and eggs",3.228e+10,FALSE,1
+2012,A,976,112A00,"Animal production, except cattle and poultry and eggs",3.228e+10,FALSE,1
+2012,A,1016,112A00,"Animal production, except cattle and poultry and eggs",3.228e+10,FALSE,1
+2012,A,1096,112A00,"Animal production, except cattle and poultry and eggs",3.228e+10,FALSE,1
+2012,A,1107,112A00,"Animal production, except cattle and poultry and eggs",3.228e+10,FALSE,1
+2012,A,1110,112A00,"Animal production, except cattle and poultry and eggs",3.228e+10,FALSE,1
+2012,A,1126,112A00,"Animal production, except cattle and poultry and eggs",3.228e+10,FALSE,1
+2012,A,1157,112A00,"Animal production, except cattle and poultry and eggs",3.228e+10,FALSE,1
+2012,A,1140,112A00,"Animal production, except cattle and poultry and eggs",3.228e+10,FALSE,1
+2012,A,1150,112A00,"Animal production, except cattle and poultry and eggs",3.228e+10,FALSE,1
+2012,A,2746,112A00,"Animal production, except cattle and poultry and eggs",3.228e+10,FALSE,1
+2012,A,2745,112A00,"Animal production, except cattle and poultry and eggs",3.228e+10,FALSE,1
+2012,A,2747,112A00,"Animal production, except cattle and poultry and eggs",3.228e+10,FALSE,1
+2012,A,2960,114000,"Fishing, hunting and trapping",7.774e+09,FALSE,1
+2017,A,2558,1111A0,Oilseed farming,3.8216e+10,FALSE,1
+2017,A,2555,1111A0,Oilseed farming,3.8216e+10,FALSE,1
+2017,A,2552,1111A0,Oilseed farming,3.8216e+10,FALSE,1
+2017,A,2557,1111A0,Oilseed farming,3.8216e+10,FALSE,1
+2017,A,2561,1111A0,Oilseed farming,3.8216e+10,FALSE,1
+2017,A,2570,1111A0,Oilseed farming,3.8216e+10,FALSE,1
+2017,A,2511,1111B0,Grain farming,6.7413e+10,FALSE,1
+2017,A,2807,1111B0,Grain farming,6.7413e+10,FALSE,1
+2017,A,2513,1111B0,Grain farming,6.7413e+10,FALSE,1
+2017,A,2514,1111B0,Grain farming,6.7413e+10,FALSE,1
+2017,A,2515,1111B0,Grain farming,6.7413e+10,FALSE,1
+2017,A,2516,1111B0,Grain farming,6.7413e+10,FALSE,1
+2017,A,2517,1111B0,Grain farming,6.7413e+10,FALSE,1
+2017,A,2518,1111B0,Grain farming,6.7413e+10,FALSE,1
+2017,A,2520,1111B0,Grain farming,6.7413e+10,FALSE,1
+2017,A,2546,1111B0,Grain farming,6.7413e+10,FALSE,1
+2017,A,2547,1111B0,Grain farming,6.7413e+10,FALSE,1
+2017,A,2549,1111B0,Grain farming,6.7413e+10,FALSE,1
+2017,A,2531,111200,Vegetable and melon farming,1.8806e+10,FALSE,1
+2017,A,2532,111200,Vegetable and melon farming,1.8806e+10,FALSE,1
+2017,A,2535,111200,Vegetable and melon farming,1.8806e+10,FALSE,1
+2017,A,2533,111200,Vegetable and melon farming,1.8806e+10,FALSE,1
+2017,A,2534,111200,Vegetable and melon farming,1.8806e+10,FALSE,1
+2017,A,2601,111200,Vegetable and melon farming,1.8806e+10,FALSE,1
+2017,A,2602,111200,Vegetable and melon farming,1.8806e+10,FALSE,1
+2017,A,2605,111200,Vegetable and melon farming,1.8806e+10,FALSE,1
+2017,A,2551,111300,Fruit and tree nut farming,2.9958e+10,FALSE,1
+2017,A,2611,111300,Fruit and tree nut farming,2.9958e+10,FALSE,1
+2017,A,2612,111300,Fruit and tree nut farming,2.9958e+10,FALSE,1
+2017,A,2613,111300,Fruit and tree nut farming,2.9958e+10,FALSE,1
+2017,A,2614,111300,Fruit and tree nut farming,2.9958e+10,FALSE,1
+2017,A,2615,111300,Fruit and tree nut farming,2.9958e+10,FALSE,1
+2017,A,2616,111300,Fruit and tree nut farming,2.9958e+10,FALSE,1
+2017,A,2617,111300,Fruit and tree nut farming,2.9958e+10,FALSE,1
+2017,A,2618,111300,Fruit and tree nut farming,2.9958e+10,FALSE,1
+2017,A,2619,111300,Fruit and tree nut farming,2.9958e+10,FALSE,1
+2017,A,2620,111300,Fruit and tree nut farming,2.9958e+10,FALSE,1
+2017,A,2625,111300,Fruit and tree nut farming,2.9958e+10,FALSE,1
+2017,A,2560,111300,Fruit and tree nut farming,2.9958e+10,FALSE,1
+2017,A,2563,111300,Fruit and tree nut farming,2.9958e+10,FALSE,1
+2017,A,2672,111900,Other crop farming,2.716e+10,FALSE,1
+2017,A,2536,111900,Other crop farming,2.716e+10,FALSE,1
+2017,A,2537,111900,Other crop farming,2.716e+10,FALSE,1
+2017,A,328,111900,Other crop farming,2.716e+10,FALSE,1
+2017,A,254,111900,Other crop farming,2.716e+10,FALSE,1
+2017,A,677,111900,Other crop farming,2.716e+10,FALSE,1
+2017,A,2640,111900,Other crop farming,2.716e+10,FALSE,1
+2017,A,2641,111900,Other crop farming,2.716e+10,FALSE,1
+2017,A,2642,111900,Other crop farming,2.716e+10,FALSE,1
+2017,A,2645,111900,Other crop farming,2.716e+10,FALSE,1
+2017,A,2662,111900,Other crop farming,2.716e+10,FALSE,1
+2017,A,2663,111900,Other crop farming,2.716e+10,FALSE,1
+2017,A,2664,111900,Other crop farming,2.716e+10,FALSE,1
+2017,A,2665,111900,Other crop farming,2.716e+10,FALSE,1
+2017,A,2666,111900,Other crop farming,2.716e+10,FALSE,1
+2017,A,2667,111900,Other crop farming,2.716e+10,FALSE,1
+2017,A,2000,111900,Other crop farming,2.716e+10,FALSE,1
+2017,A,2671,111900,Other crop farming,2.716e+10,FALSE,1
+2017,A,2559,111900,Other crop farming,2.716e+10,FALSE,1
+2017,A,2562,111900,Other crop farming,2.716e+10,FALSE,1
+2017,A,2661,111900,Other crop farming,2.716e+10,FALSE,1
+2017,A,2848,112120,Dairy cattle and milk production,3.8538e+10,FALSE,1
+2017,A,866,1121A0,"Beef cattle ranching and farming, including feedlots and dual-purpose ranching and farming",8.8052e+10,FALSE,1
+2017,A,946,1121A0,"Beef cattle ranching and farming, including feedlots and dual-purpose ranching and farming",8.8052e+10,FALSE,1
+2017,A,2744,112300,Poultry and egg production,4.4568e+10,FALSE,1
+2017,A,2029,112300,Poultry and egg production,4.4568e+10,FALSE,1
+2017,A,1034,112A00,"Animal production, except cattle and poultry and eggs",3.3065e+10,FALSE,1
+2017,A,976,112A00,"Animal production, except cattle and poultry and eggs",3.3065e+10,FALSE,1
+2017,A,1016,112A00,"Animal production, except cattle and poultry and eggs",3.3065e+10,FALSE,1
+2017,A,1096,112A00,"Animal production, except cattle and poultry and eggs",3.3065e+10,FALSE,1
+2017,A,1107,112A00,"Animal production, except cattle and poultry and eggs",3.3065e+10,FALSE,1
+2017,A,1110,112A00,"Animal production, except cattle and poultry and eggs",3.3065e+10,FALSE,1
+2017,A,1126,112A00,"Animal production, except cattle and poultry and eggs",3.3065e+10,FALSE,1
+2017,A,1157,112A00,"Animal production, except cattle and poultry and eggs",3.3065e+10,FALSE,1
+2017,A,1140,112A00,"Animal production, except cattle and poultry and eggs",3.3065e+10,FALSE,1
+2017,A,1150,112A00,"Animal production, except cattle and poultry and eggs",3.3065e+10,FALSE,1
+2017,A,2746,112A00,"Animal production, except cattle and poultry and eggs",3.3065e+10,FALSE,1
+2017,A,2745,112A00,"Animal production, except cattle and poultry and eggs",3.3065e+10,FALSE,1
+2017,A,2747,112A00,"Animal production, except cattle and poultry and eggs",3.3065e+10,FALSE,1
+2017,A,2960,114000,"Fishing, hunting and trapping",8.48e+09,FALSE,1
+2012,C,2590,311119,Other animal food manufacturing,3.5178e+10,FALSE,0.465465227056208
+2012,C,2591,311119,Other animal food manufacturing,3.5178e+10,FALSE,0.465465227056208
+2012,C,2592,311119,Other animal food manufacturing,3.5178e+10,FALSE,0.465465227056208
+2012,C,2593,311119,Other animal food manufacturing,3.5178e+10,FALSE,0.465465227056208
+2012,C,2594,311119,Other animal food manufacturing,3.5178e+10,FALSE,0.465465227056208
+2012,C,2595,311119,Other animal food manufacturing,3.5178e+10,FALSE,0.465465227056208
+2012,C,2596,311119,Other animal food manufacturing,3.5178e+10,FALSE,0.465465227056208
+2012,C,2597,311119,Other animal food manufacturing,3.5178e+10,FALSE,0.465465227056208
+2012,C,2598,311119,Other animal food manufacturing,3.5178e+10,FALSE,0.465465227056208
+2012,C,2511,311210,Flour milling and malt manufacturing,2.0201e+10,FALSE,0.380698415091495
+2012,C,2807,311210,Flour milling and malt manufacturing,2.0201e+10,FALSE,0.380698415091495
+2012,C,2513,311210,Flour milling and malt manufacturing,2.0201e+10,FALSE,0.380698415091495
+2012,C,2514,311210,Flour milling and malt manufacturing,2.0201e+10,FALSE,0.306386786586383
+2012,C,2515,311210,Flour milling and malt manufacturing,2.0201e+10,FALSE,0.380698415091495
+2012,C,2516,311210,Flour milling and malt manufacturing,2.0201e+10,FALSE,0.380698415091495
+2012,C,2517,311210,Flour milling and malt manufacturing,2.0201e+10,FALSE,0.380698415091495
+2012,C,2518,311210,Flour milling and malt manufacturing,2.0201e+10,FALSE,0.380698415091495
+2012,C,2520,311210,Flour milling and malt manufacturing,2.0201e+10,FALSE,0.380698415091495
+2012,C,2514,311221,Wet corn milling,1.287e+10,FALSE,0.195198155703517
+2012,C,2582,311221,Wet corn milling,1.287e+10,FALSE,0.184442087764052
+2012,C,2590,311224,Soybean and other oilseed processing,4.0398e+10,FALSE,0.534534772943792
+2012,C,2591,311224,Soybean and other oilseed processing,4.0398e+10,FALSE,0.534534772943792
+2012,C,2592,311224,Soybean and other oilseed processing,4.0398e+10,FALSE,0.534534772943792
+2012,C,2593,311224,Soybean and other oilseed processing,4.0398e+10,FALSE,0.534534772943792
+2012,C,2594,311224,Soybean and other oilseed processing,4.0398e+10,FALSE,0.534534772943792
+2012,C,2595,311224,Soybean and other oilseed processing,4.0398e+10,FALSE,0.534534772943792
+2012,C,2596,311224,Soybean and other oilseed processing,4.0398e+10,FALSE,0.534534772943792
+2012,C,2597,311224,Soybean and other oilseed processing,4.0398e+10,FALSE,0.534534772943792
+2012,C,2598,311224,Soybean and other oilseed processing,4.0398e+10,FALSE,0.534534772943792
+2012,C,2571,311224,Soybean and other oilseed processing,4.0398e+10,FALSE,0.709882617558164
+2012,C,2572,311224,Soybean and other oilseed processing,4.0398e+10,FALSE,0.709882617558164
+2012,C,2573,311224,Soybean and other oilseed processing,4.0398e+10,FALSE,0.709882617558164
+2012,C,2574,311224,Soybean and other oilseed processing,4.0398e+10,FALSE,0.709882617558164
+2012,C,2575,311224,Soybean and other oilseed processing,4.0398e+10,FALSE,0.709882617558164
+2012,C,2576,311224,Soybean and other oilseed processing,4.0398e+10,FALSE,0.709882617558164
+2012,C,2577,311224,Soybean and other oilseed processing,4.0398e+10,FALSE,0.709882617558164
+2012,C,2578,311224,Soybean and other oilseed processing,4.0398e+10,FALSE,0.709882617558164
+2012,C,2579,311224,Soybean and other oilseed processing,4.0398e+10,FALSE,0.709882617558164
+2012,C,2580,311224,Soybean and other oilseed processing,4.0398e+10,FALSE,0.709882617558164
+2012,C,2581,311224,Soybean and other oilseed processing,4.0398e+10,FALSE,0.709882617558164
+2012,C,2582,311224,Soybean and other oilseed processing,4.0398e+10,FALSE,0.578950385508326
+2012,C,2586,311224,Soybean and other oilseed processing,4.0398e+10,FALSE,0.709882617558164
+2012,C,2571,311225,Fats and oils refining and blending,1.651e+10,FALSE,0.290117382441836
+2012,C,2572,311225,Fats and oils refining and blending,1.651e+10,FALSE,0.290117382441836
+2012,C,2573,311225,Fats and oils refining and blending,1.651e+10,FALSE,0.290117382441836
+2012,C,2574,311225,Fats and oils refining and blending,1.651e+10,FALSE,0.290117382441836
+2012,C,2575,311225,Fats and oils refining and blending,1.651e+10,FALSE,0.290117382441836
+2012,C,2576,311225,Fats and oils refining and blending,1.651e+10,FALSE,0.290117382441836
+2012,C,2577,311225,Fats and oils refining and blending,1.651e+10,FALSE,0.290117382441836
+2012,C,2578,311225,Fats and oils refining and blending,1.651e+10,FALSE,0.290117382441836
+2012,C,2579,311225,Fats and oils refining and blending,1.651e+10,FALSE,0.290117382441836
+2012,C,2580,311225,Fats and oils refining and blending,1.651e+10,FALSE,0.290117382441836
+2012,C,2581,311225,Fats and oils refining and blending,1.651e+10,FALSE,0.290117382441836
+2012,C,2582,311225,Fats and oils refining and blending,1.651e+10,FALSE,0.236607526727622
+2012,C,2586,311225,Fats and oils refining and blending,1.651e+10,FALSE,0.290117382441836
+2012,C,2511,311230,Breakfast cereal manufacturing,1.0906e+10,FALSE,0.205529276520363
+2012,C,2807,311230,Breakfast cereal manufacturing,1.0906e+10,FALSE,0.205529276520363
+2012,C,2513,311230,Breakfast cereal manufacturing,1.0906e+10,FALSE,0.205529276520363
+2012,C,2514,311230,Breakfast cereal manufacturing,1.0906e+10,FALSE,0.16541034080051
+2012,C,2515,311230,Breakfast cereal manufacturing,1.0906e+10,FALSE,0.205529276520363
+2012,C,2516,311230,Breakfast cereal manufacturing,1.0906e+10,FALSE,0.205529276520363
+2012,C,2517,311230,Breakfast cereal manufacturing,1.0906e+10,FALSE,0.205529276520363
+2012,C,2518,311230,Breakfast cereal manufacturing,1.0906e+10,FALSE,0.205529276520363
+2012,C,2520,311230,Breakfast cereal manufacturing,1.0906e+10,FALSE,0.205529276520363
+2012,C,2541,311300,Sugar and confectionery product manufacturing,3.2957e+10,FALSE,1
+2012,C,2542,311300,Sugar and confectionery product manufacturing,3.2957e+10,FALSE,1
+2012,C,2543,311300,Sugar and confectionery product manufacturing,3.2957e+10,FALSE,1
+2012,C,2633,311300,Sugar and confectionery product manufacturing,3.2957e+10,FALSE,1
+2012,C,2531,311410,Frozen food manufacturing,3.0321e+10,FALSE,0.477985339323717
+2012,C,2551,311410,Frozen food manufacturing,3.0321e+10,FALSE,0.477985339323717
+2012,C,2611,311410,Frozen food manufacturing,3.0321e+10,FALSE,0.477985339323717
+2012,C,2612,311410,Frozen food manufacturing,3.0321e+10,FALSE,0.477985339323717
+2012,C,2613,311410,Frozen food manufacturing,3.0321e+10,FALSE,0.477985339323717
+2012,C,2614,311410,Frozen food manufacturing,3.0321e+10,FALSE,0.477985339323717
+2012,C,2617,311410,Frozen food manufacturing,3.0321e+10,FALSE,0.477985339323717
+2012,C,2618,311410,Frozen food manufacturing,3.0321e+10,FALSE,0.477985339323717
+2012,C,2620,311410,Frozen food manufacturing,3.0321e+10,FALSE,0.477985339323717
+2012,C,2625,311410,Frozen food manufacturing,3.0321e+10,FALSE,0.477985339323717
+2012,C,2532,311410,Frozen food manufacturing,3.0321e+10,FALSE,0.477985339323717
+2012,C,2535,311410,Frozen food manufacturing,3.0321e+10,FALSE,0.477985339323717
+2012,C,2549,311410,Frozen food manufacturing,3.0321e+10,FALSE,0.355084259465283
+2012,C,2560,311410,Frozen food manufacturing,3.0321e+10,FALSE,0.477985339323717
+2012,C,2533,311410,Frozen food manufacturing,3.0321e+10,FALSE,0.477985339323717
+2012,C,2534,311410,Frozen food manufacturing,3.0321e+10,FALSE,0.477985339323717
+2012,C,2601,311410,Frozen food manufacturing,3.0321e+10,FALSE,0.477985339323717
+2012,C,2602,311410,Frozen food manufacturing,3.0321e+10,FALSE,0.477985339323717
+2012,C,2605,311410,Frozen food manufacturing,3.0321e+10,FALSE,0.477985339323717
+2012,C,2531,311420,"Fruit and vegetable canning, pickling, and drying",3.3114e+10,FALSE,0.522014660676283
+2012,C,2551,311420,"Fruit and vegetable canning, pickling, and drying",3.3114e+10,FALSE,0.522014660676283
+2012,C,2611,311420,"Fruit and vegetable canning, pickling, and drying",3.3114e+10,FALSE,0.522014660676283
+2012,C,2612,311420,"Fruit and vegetable canning, pickling, and drying",3.3114e+10,FALSE,0.522014660676283
+2012,C,2613,311420,"Fruit and vegetable canning, pickling, and drying",3.3114e+10,FALSE,0.522014660676283
+2012,C,2614,311420,"Fruit and vegetable canning, pickling, and drying",3.3114e+10,FALSE,0.522014660676283
+2012,C,2617,311420,"Fruit and vegetable canning, pickling, and drying",3.3114e+10,FALSE,0.522014660676283
+2012,C,2618,311420,"Fruit and vegetable canning, pickling, and drying",3.3114e+10,FALSE,0.522014660676283
+2012,C,2620,311420,"Fruit and vegetable canning, pickling, and drying",3.3114e+10,FALSE,0.522014660676283
+2012,C,2625,311420,"Fruit and vegetable canning, pickling, and drying",3.3114e+10,FALSE,0.522014660676283
+2012,C,2532,311420,"Fruit and vegetable canning, pickling, and drying",3.3114e+10,FALSE,0.522014660676283
+2012,C,2535,311420,"Fruit and vegetable canning, pickling, and drying",3.3114e+10,FALSE,0.522014660676283
+2012,C,2549,311420,"Fruit and vegetable canning, pickling, and drying",3.3114e+10,FALSE,0.387792624515464
+2012,C,2560,311420,"Fruit and vegetable canning, pickling, and drying",3.3114e+10,FALSE,0.522014660676283
+2012,C,2533,311420,"Fruit and vegetable canning, pickling, and drying",3.3114e+10,FALSE,0.522014660676283
+2012,C,2534,311420,"Fruit and vegetable canning, pickling, and drying",3.3114e+10,FALSE,0.522014660676283
+2012,C,2601,311420,"Fruit and vegetable canning, pickling, and drying",3.3114e+10,FALSE,0.522014660676283
+2012,C,2602,311420,"Fruit and vegetable canning, pickling, and drying",3.3114e+10,FALSE,0.522014660676283
+2012,C,2605,311420,"Fruit and vegetable canning, pickling, and drying",3.3114e+10,FALSE,0.522014660676283
+2012,C,2848,311513,Cheese manufacturing,4.0812e+10,FALSE,0.367745249101181
+2012,C,2848,311514,"Dry, condensed, and evaporated dairy product manufacturing",2.573e+10,FALSE,0.231845664495085
+2012,C,2740,31151A,Fluid milk and butter manufacturing,3.7634e+10,FALSE,1
+2012,C,2848,31151A,Fluid milk and butter manufacturing,3.7634e+10,FALSE,0.339109200839799
+2012,C,2848,311520,Ice cream and frozen dessert manufacturing,6.803e+09,FALSE,0.0612998855639355
+2012,C,2734,311615,Poultry processing,5.7874e+10,FALSE,1
+2012,C,2731,31161A,"Animal (except poultry) slaughtering, rendering, and processing",1.4061e+11,FALSE,1
+2012,C,2733,31161A,"Animal (except poultry) slaughtering, rendering, and processing",1.4061e+11,FALSE,1
+2012,C,2732,31161A,"Animal (except poultry) slaughtering, rendering, and processing",1.4061e+11,FALSE,1
+2012,C,2735,31161A,"Animal (except poultry) slaughtering, rendering, and processing",1.4061e+11,FALSE,1
+2012,C,2736,31161A,"Animal (except poultry) slaughtering, rendering, and processing",1.4061e+11,FALSE,1
+2012,C,2737,31161A,"Animal (except poultry) slaughtering, rendering, and processing",1.4061e+11,FALSE,1
+2012,C,2748,31161A,"Animal (except poultry) slaughtering, rendering, and processing",1.4061e+11,FALSE,1
+2012,C,2960,311700,Seafood product preparation and packaging,1.0696e+10,FALSE,1
+2012,C,2630,311920,Coffee and tea manufacturing,1.3021e+10,FALSE,1
+2012,C,2635,311920,Coffee and tea manufacturing,1.3021e+10,FALSE,1
+2012,C,2645,311930,Flavoring syrup and concentrate manufacturing,8.775e+09,FALSE,0.317027349253947
+2012,C,2645,311940,Seasoning and dressing manufacturing,1.8904e+10,FALSE,0.682972650746053
+2012,C,2511,311990,All other food manufacturing,2.1956e+10,FALSE,0.413772308388142
+2012,C,2807,311990,All other food manufacturing,2.1956e+10,FALSE,0.413772308388142
+2012,C,2513,311990,All other food manufacturing,2.1956e+10,FALSE,0.413772308388142
+2012,C,2514,311990,All other food manufacturing,2.1956e+10,FALSE,0.33300471690959
+2012,C,2515,311990,All other food manufacturing,2.1956e+10,FALSE,0.413772308388142
+2012,C,2516,311990,All other food manufacturing,2.1956e+10,FALSE,0.413772308388142
+2012,C,2517,311990,All other food manufacturing,2.1956e+10,FALSE,0.413772308388142
+2012,C,2518,311990,All other food manufacturing,2.1956e+10,FALSE,0.413772308388142
+2012,C,2520,311990,All other food manufacturing,2.1956e+10,FALSE,0.413772308388142
+2012,C,2549,311990,All other food manufacturing,2.1956e+10,FALSE,0.257123116019253
+2012,C,2656,312120,Breweries,2.8262e+10,FALSE,1
+2012,C,2655,312130,Wineries,1.5839e+10,FALSE,1
+2012,C,2657,312130,Wineries,1.5839e+10,FALSE,1
+2012,C,2658,312140,Distilleries,1.0756e+10,FALSE,1
+2012,C,2671,312200,Tobacco manufacturing,3.9794e+10,FALSE,1
+2012,C,2664,313100,"Fiber, yarn, and thread mills",7.726e+09,FALSE,1
+2012,C,2746,313100,"Fiber, yarn, and thread mills",7.726e+09,FALSE,1
+2012,C,2747,313100,"Fiber, yarn, and thread mills",7.726e+09,FALSE,1
+2017,C,2590,311119,Other animal food manufacturing,3.1524e+10,FALSE,0.491150442477876
+2017,C,2591,311119,Other animal food manufacturing,3.1524e+10,FALSE,0.491150442477876
+2017,C,2592,311119,Other animal food manufacturing,3.1524e+10,FALSE,0.491150442477876
+2017,C,2593,311119,Other animal food manufacturing,3.1524e+10,FALSE,0.491150442477876
+2017,C,2594,311119,Other animal food manufacturing,3.1524e+10,FALSE,0.491150442477876
+2017,C,2595,311119,Other animal food manufacturing,3.1524e+10,FALSE,0.491150442477876
+2017,C,2596,311119,Other animal food manufacturing,3.1524e+10,FALSE,0.491150442477876
+2017,C,2597,311119,Other animal food manufacturing,3.1524e+10,FALSE,0.491150442477876
+2017,C,2598,311119,Other animal food manufacturing,3.1524e+10,FALSE,0.491150442477876
+2017,C,2511,311210,Flour milling and malt manufacturing,1.6381e+10,FALSE,0.290804189597018
+2017,C,2807,311210,Flour milling and malt manufacturing,1.6381e+10,FALSE,0.290804189597018
+2017,C,2513,311210,Flour milling and malt manufacturing,1.6381e+10,FALSE,0.290804189597018
+2017,C,2514,311210,Flour milling and malt manufacturing,1.6381e+10,FALSE,0.247945267682807
+2017,C,2515,311210,Flour milling and malt manufacturing,1.6381e+10,FALSE,0.290804189597018
+2017,C,2516,311210,Flour milling and malt manufacturing,1.6381e+10,FALSE,0.290804189597018
+2017,C,2517,311210,Flour milling and malt manufacturing,1.6381e+10,FALSE,0.290804189597018
+2017,C,2518,311210,Flour milling and malt manufacturing,1.6381e+10,FALSE,0.290804189597018
+2017,C,2520,311210,Flour milling and malt manufacturing,1.6381e+10,FALSE,0.290804189597018
+2017,C,2514,311221,Wet corn milling,9.737e+09,FALSE,0.147380689300256
+2017,C,2582,311221,Wet corn milling,9.737e+09,FALSE,0.18772653659289
+2017,C,2590,311224,Soybean and other oilseed processing,3.266e+10,FALSE,0.508849557522124
+2017,C,2591,311224,Soybean and other oilseed processing,3.266e+10,FALSE,0.508849557522124
+2017,C,2592,311224,Soybean and other oilseed processing,3.266e+10,FALSE,0.508849557522124
+2017,C,2593,311224,Soybean and other oilseed processing,3.266e+10,FALSE,0.508849557522124
+2017,C,2594,311224,Soybean and other oilseed processing,3.266e+10,FALSE,0.508849557522124
+2017,C,2595,311224,Soybean and other oilseed processing,3.266e+10,FALSE,0.508849557522124
+2017,C,2596,311224,Soybean and other oilseed processing,3.266e+10,FALSE,0.508849557522124
+2017,C,2597,311224,Soybean and other oilseed processing,3.266e+10,FALSE,0.508849557522124
+2017,C,2598,311224,Soybean and other oilseed processing,3.266e+10,FALSE,0.508849557522124
+2017,C,2571,311224,Soybean and other oilseed processing,3.266e+10,FALSE,0.775201158291994
+2017,C,2572,311224,Soybean and other oilseed processing,3.266e+10,FALSE,0.775201158291994
+2017,C,2573,311224,Soybean and other oilseed processing,3.266e+10,FALSE,0.775201158291994
+2017,C,2574,311224,Soybean and other oilseed processing,3.266e+10,FALSE,0.775201158291994
+2017,C,2575,311224,Soybean and other oilseed processing,3.266e+10,FALSE,0.775201158291994
+2017,C,2576,311224,Soybean and other oilseed processing,3.266e+10,FALSE,0.775201158291994
+2017,C,2577,311224,Soybean and other oilseed processing,3.266e+10,FALSE,0.775201158291994
+2017,C,2578,311224,Soybean and other oilseed processing,3.266e+10,FALSE,0.775201158291994
+2017,C,2579,311224,Soybean and other oilseed processing,3.266e+10,FALSE,0.775201158291994
+2017,C,2580,311224,Soybean and other oilseed processing,3.266e+10,FALSE,0.775201158291994
+2017,C,2581,311224,Soybean and other oilseed processing,3.266e+10,FALSE,0.775201158291994
+2017,C,2582,311224,Soybean and other oilseed processing,3.266e+10,FALSE,0.629675329683042
+2017,C,2586,311224,Soybean and other oilseed processing,3.266e+10,FALSE,0.775201158291994
+2017,C,2571,311225,Fats and oils refining and blending,9.471e+09,FALSE,0.224798841708006
+2017,C,2572,311225,Fats and oils refining and blending,9.471e+09,FALSE,0.224798841708006
+2017,C,2573,311225,Fats and oils refining and blending,9.471e+09,FALSE,0.224798841708006
+2017,C,2574,311225,Fats and oils refining and blending,9.471e+09,FALSE,0.224798841708006
+2017,C,2575,311225,Fats and oils refining and blending,9.471e+09,FALSE,0.224798841708006
+2017,C,2576,311225,Fats and oils refining and blending,9.471e+09,FALSE,0.224798841708006
+2017,C,2577,311225,Fats and oils refining and blending,9.471e+09,FALSE,0.224798841708006
+2017,C,2578,311225,Fats and oils refining and blending,9.471e+09,FALSE,0.224798841708006
+2017,C,2579,311225,Fats and oils refining and blending,9.471e+09,FALSE,0.224798841708006
+2017,C,2580,311225,Fats and oils refining and blending,9.471e+09,FALSE,0.224798841708006
+2017,C,2581,311225,Fats and oils refining and blending,9.471e+09,FALSE,0.224798841708006
+2017,C,2582,311225,Fats and oils refining and blending,9.471e+09,FALSE,0.182598133724069
+2017,C,2586,311225,Fats and oils refining and blending,9.471e+09,FALSE,0.224798841708006
+2017,C,2511,311230,Breakfast cereal manufacturing,1.014e+10,FALSE,0.180010651517841
+2017,C,2807,311230,Breakfast cereal manufacturing,1.014e+10,FALSE,0.180010651517841
+2017,C,2513,311230,Breakfast cereal manufacturing,1.014e+10,FALSE,0.180010651517841
+2017,C,2514,311230,Breakfast cereal manufacturing,1.014e+10,FALSE,0.153480557615754
+2017,C,2515,311230,Breakfast cereal manufacturing,1.014e+10,FALSE,0.180010651517841
+2017,C,2516,311230,Breakfast cereal manufacturing,1.014e+10,FALSE,0.180010651517841
+2017,C,2517,311230,Breakfast cereal manufacturing,1.014e+10,FALSE,0.180010651517841
+2017,C,2518,311230,Breakfast cereal manufacturing,1.014e+10,FALSE,0.180010651517841
+2017,C,2520,311230,Breakfast cereal manufacturing,1.014e+10,FALSE,0.180010651517841
+2017,C,2541,311300,Sugar and confectionery product manufacturing,3.7006e+10,FALSE,1
+2017,C,2542,311300,Sugar and confectionery product manufacturing,3.7006e+10,FALSE,1
+2017,C,2543,311300,Sugar and confectionery product manufacturing,3.7006e+10,FALSE,1
+2017,C,2633,311300,Sugar and confectionery product manufacturing,3.7006e+10,FALSE,1
+2017,C,2531,311410,Frozen food manufacturing,3.2474e+10,FALSE,0.492112321750595
+2017,C,2551,311410,Frozen food manufacturing,3.2474e+10,FALSE,0.492112321750595
+2017,C,2611,311410,Frozen food manufacturing,3.2474e+10,FALSE,0.492112321750595
+2017,C,2612,311410,Frozen food manufacturing,3.2474e+10,FALSE,0.492112321750595
+2017,C,2613,311410,Frozen food manufacturing,3.2474e+10,FALSE,0.492112321750595
+2017,C,2614,311410,Frozen food manufacturing,3.2474e+10,FALSE,0.492112321750595
+2017,C,2617,311410,Frozen food manufacturing,3.2474e+10,FALSE,0.492112321750595
+2017,C,2618,311410,Frozen food manufacturing,3.2474e+10,FALSE,0.492112321750595
+2017,C,2620,311410,Frozen food manufacturing,3.2474e+10,FALSE,0.492112321750595
+2017,C,2625,311410,Frozen food manufacturing,3.2474e+10,FALSE,0.492112321750595
+2017,C,2532,311410,Frozen food manufacturing,3.2474e+10,FALSE,0.492112321750595
+2017,C,2535,311410,Frozen food manufacturing,3.2474e+10,FALSE,0.492112321750595
+2017,C,2549,311410,Frozen food manufacturing,3.2474e+10,FALSE,0.338984112403182
+2017,C,2560,311410,Frozen food manufacturing,3.2474e+10,FALSE,0.492112321750595
+2017,C,2533,311410,Frozen food manufacturing,3.2474e+10,FALSE,0.492112321750595
+2017,C,2534,311410,Frozen food manufacturing,3.2474e+10,FALSE,0.492112321750595
+2017,C,2601,311410,Frozen food manufacturing,3.2474e+10,FALSE,0.492112321750595
+2017,C,2602,311410,Frozen food manufacturing,3.2474e+10,FALSE,0.492112321750595
+2017,C,2605,311410,Frozen food manufacturing,3.2474e+10,FALSE,0.492112321750595
+2017,C,2531,311420,"Fruit and vegetable canning, pickling, and drying",3.3515e+10,FALSE,0.507887678249405
+2017,C,2551,311420,"Fruit and vegetable canning, pickling, and drying",3.3515e+10,FALSE,0.507887678249405
+2017,C,2611,311420,"Fruit and vegetable canning, pickling, and drying",3.3515e+10,FALSE,0.507887678249405
+2017,C,2612,311420,"Fruit and vegetable canning, pickling, and drying",3.3515e+10,FALSE,0.507887678249405
+2017,C,2613,311420,"Fruit and vegetable canning, pickling, and drying",3.3515e+10,FALSE,0.507887678249405
+2017,C,2614,311420,"Fruit and vegetable canning, pickling, and drying",3.3515e+10,FALSE,0.507887678249405
+2017,C,2617,311420,"Fruit and vegetable canning, pickling, and drying",3.3515e+10,FALSE,0.507887678249405
+2017,C,2618,311420,"Fruit and vegetable canning, pickling, and drying",3.3515e+10,FALSE,0.507887678249405
+2017,C,2620,311420,"Fruit and vegetable canning, pickling, and drying",3.3515e+10,FALSE,0.507887678249405
+2017,C,2625,311420,"Fruit and vegetable canning, pickling, and drying",3.3515e+10,FALSE,0.507887678249405
+2017,C,2532,311420,"Fruit and vegetable canning, pickling, and drying",3.3515e+10,FALSE,0.507887678249405
+2017,C,2535,311420,"Fruit and vegetable canning, pickling, and drying",3.3515e+10,FALSE,0.507887678249405
+2017,C,2549,311420,"Fruit and vegetable canning, pickling, and drying",3.3515e+10,FALSE,0.349850727572601
+2017,C,2560,311420,"Fruit and vegetable canning, pickling, and drying",3.3515e+10,FALSE,0.507887678249405
+2017,C,2533,311420,"Fruit and vegetable canning, pickling, and drying",3.3515e+10,FALSE,0.507887678249405
+2017,C,2534,311420,"Fruit and vegetable canning, pickling, and drying",3.3515e+10,FALSE,0.507887678249405
+2017,C,2601,311420,"Fruit and vegetable canning, pickling, and drying",3.3515e+10,FALSE,0.507887678249405
+2017,C,2602,311420,"Fruit and vegetable canning, pickling, and drying",3.3515e+10,FALSE,0.507887678249405
+2017,C,2605,311420,"Fruit and vegetable canning, pickling, and drying",3.3515e+10,FALSE,0.507887678249405
+2017,C,2848,311513,Cheese manufacturing,4.7785e+10,FALSE,0.38803218917229
+2017,C,2848,311514,"Dry, condensed, and evaporated dairy product manufacturing",2.3871e+10,FALSE,0.193841506492241
+2017,C,2740,31151A,Fluid milk and butter manufacturing,4.3719e+10,FALSE,1
+2017,C,2848,31151A,Fluid milk and butter manufacturing,4.3719e+10,FALSE,0.355014738483276
+2017,C,2848,311520,Ice cream and frozen dessert manufacturing,7.772e+09,FALSE,0.0631115658521929
+2017,C,2734,311615,Poultry processing,6.756e+10,FALSE,1
+2017,C,2731,31161A,"Animal (except poultry) slaughtering, rendering, and processing",1.48627e+11,FALSE,1
+2017,C,2733,31161A,"Animal (except poultry) slaughtering, rendering, and processing",1.48627e+11,FALSE,1
+2017,C,2732,31161A,"Animal (except poultry) slaughtering, rendering, and processing",1.48627e+11,FALSE,1
+2017,C,2735,31161A,"Animal (except poultry) slaughtering, rendering, and processing",1.48627e+11,FALSE,1
+2017,C,2736,31161A,"Animal (except poultry) slaughtering, rendering, and processing",1.48627e+11,FALSE,1
+2017,C,2737,31161A,"Animal (except poultry) slaughtering, rendering, and processing",1.48627e+11,FALSE,1
+2017,C,2748,31161A,"Animal (except poultry) slaughtering, rendering, and processing",1.48627e+11,FALSE,1
+2017,C,2960,311700,Seafood product preparation and packaging,1.3818e+10,FALSE,1
+2017,C,2630,311920,Coffee and tea manufacturing,1.377e+10,FALSE,1
+2017,C,2635,311920,Coffee and tea manufacturing,1.377e+10,FALSE,1
+2017,C,2645,311930,Flavoring syrup and concentrate manufacturing,1.1788e+10,FALSE,0.351723109055647
+2017,C,2645,311940,Seasoning and dressing manufacturing,2.1727e+10,FALSE,0.648276890944353
+2017,C,2511,311990,All other food manufacturing,2.9809e+10,FALSE,0.529185158885141
+2017,C,2807,311990,All other food manufacturing,2.9809e+10,FALSE,0.529185158885141
+2017,C,2513,311990,All other food manufacturing,2.9809e+10,FALSE,0.529185158885141
+2017,C,2514,311990,All other food manufacturing,2.9809e+10,FALSE,0.451193485401184
+2017,C,2515,311990,All other food manufacturing,2.9809e+10,FALSE,0.529185158885141
+2017,C,2516,311990,All other food manufacturing,2.9809e+10,FALSE,0.529185158885141
+2017,C,2517,311990,All other food manufacturing,2.9809e+10,FALSE,0.529185158885141
+2017,C,2518,311990,All other food manufacturing,2.9809e+10,FALSE,0.529185158885141
+2017,C,2520,311990,All other food manufacturing,2.9809e+10,FALSE,0.529185158885141
+2017,C,2549,311990,All other food manufacturing,2.9809e+10,FALSE,0.311165160024218
+2017,C,2656,312120,Breweries,2.9556e+10,FALSE,1
+2017,C,2655,312130,Wineries,2.1184e+10,FALSE,1
+2017,C,2657,312130,Wineries,2.1184e+10,FALSE,1
+2017,C,2658,312140,Distilleries,1.2167e+10,FALSE,1
+2017,C,2671,312200,Tobacco manufacturing,4.7425e+10,FALSE,1
+2017,C,2664,313100,"Fiber, yarn, and thread mills",7.085e+09,FALSE,1
+2017,C,2746,313100,"Fiber, yarn, and thread mills",7.085e+09,FALSE,1
+2017,C,2747,313100,"Fiber, yarn, and thread mills",7.085e+09,FALSE,1
