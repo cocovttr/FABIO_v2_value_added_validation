@@ -373,11 +373,11 @@ build_fabio_source <- function(source_label, va_path_fun, weights_a, weights_c,
                measure.vars = names(component_cols),
                variable.name = "component", value.name = "value_usd")
     va[, component := as.character(component)]
-    # Read off the availability lookup before the weights join, while the row
+    # Attach the availability lookup before the weights join, while the row
     # still names the FABIO item the figure was measured at; the split copies
-    # the reading onto each industry the item feeds.
+    # the reading onto each industry the item feeds.  After the join the item
+    # is gone and the question can no longer be asked.
     va_fao_attach(va)
-    va[, status := va_basis_status(value_usd, fao_status)]
     
     mapped  <- unique(weights[, .(year, fabio_item_code)])
     pre_tot <- va[mapped, on = c("year", "fabio_item_code"), nomatch = NULL][
@@ -386,6 +386,10 @@ build_fabio_source <- function(source_label, va_path_fun, weights_a, weights_c,
     out <- weights[va, on = c("year", "fabio_item_code"),
                    nomatch = NULL, allow.cartesian = TRUE]
     out[, value_usd := value_usd * weight]
+    # Read the status off the SPLIT figure, so a share that lands non-finite
+    # reads as missing rather than inheriting the item's reading.  The weights
+    # are strictly positive, so every other reading is the one the item carried.
+    out[, status := va_basis_status(value_usd, fao_status)]
     
     post_tot <- out[, na_sum(value_usd)]
     if (is.finite(pre_tot) && abs(pre_tot) > 0 &&
@@ -879,13 +883,12 @@ run_country <- function(spec) {
         status, partial)]
   # The national table carries no availability flags of its own, so a present
   # figure reads as observed; va_match() marks a cell the table does not carry
-  # as absent and re-reads an explicit zero.  A non-finite figure is marked
-  # rather than deleted — dropping the row took it out of `n` as well, so a
-  # source that produced nothing scored like one that produced a number.
+  # as absent, re-reads an explicit zero, and marks a cell whose total is
+  # non-finite as missing.  The reading here is per row, so an industry-year
+  # that mixes a figure with a non-finite one still reads as partial.
   dat_all[is.na(status),  status  := fifelse(is.finite(value_usd),
                                              "observed", "missing")]
   dat_all[is.na(partial), partial := FALSE]
-  dat_all[!is.finite(value_usd), status := "missing"]
   
   # Out of scope: the ISIC-C industries whose FABIO items the model uses at
   # ISIC-A.  Both sides go, so no industry is left facing a partial mapping.

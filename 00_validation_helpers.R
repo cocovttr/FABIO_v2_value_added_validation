@@ -120,15 +120,19 @@ if (!exists("na_sum", mode = "function"))
 #'   gap             zero, but the primary source reports a figure — a value
 #'                   lost between the source and the extension, not an absence
 #'   reported_zero   zero, and the primary source books an explicit zero
-#'   unknown         zero, and no primary source can adjudicate the cell
-#'                   (processed goods, RoW fishing)
+#'   unknown         zero, and no primary source can adjudicate the cell — an
+#'                   item neither FAOSTAT production nor the SUA carries, and
+#'                   RoW fishing, which has no reporter behind it
 #'   no_observation  zero, and the primary source books nothing
 #'   absent          the side carries no row for the cell at all
 VA_STATUS_LEVELS <- c("missing", "observed", "gap", "reported_zero",
                       "unknown", "no_observation", "absent")
 
-#' Statuses a zero cannot be read as a measurement: the two that are withheld.
-VA_UNOBSERVED <- c("absent", "no_observation")
+#' Statuses a zero cannot be read as a measurement: the three that are withheld.
+#' `missing` belongs here because va_match() fills a non-finite figure to zero
+#' AFTER the status is written, so by the time a panel or a metric sees the
+#' cell the status is the only surviving record that the zero is not a reading.
+VA_UNOBSERVED <- c("absent", "no_observation", "missing")
 
 va_status <- function(x) VA_STATUS_LEVELS[[
   min(match(as.character(x), VA_STATUS_LEVELS, nomatch = length(VA_STATUS_LEVELS)))]]
@@ -178,11 +182,18 @@ va_basis_status <- function(value, fao_status) {
                                           "no_observation")))))
 }
 
-#' Cells withheld from a panel: one side is zero with nothing behind it.  The
-#' test is the same on both sides, which is what keeps the exclusion symmetric.
+#' Cells withheld from a panel: one side is zero with nothing behind it, read
+#' off the status alone.  The test is the same on both sides, which is what
+#' keeps the exclusion symmetric, and it is returned per side because the
+#' panels report the two counts separately.
+va_withheld_sides <- function(ref, src, ref_status, src_status) {
+  list(src = src == 0 & src_status %chin% VA_UNOBSERVED,
+       ref = ref == 0 & ref_status %chin% VA_UNOBSERVED)
+}
+
 va_withheld <- function(ref, src, ref_status, src_status) {
-  (is.finite(src) & src == 0 & src_status %chin% VA_UNOBSERVED) |
-    (is.finite(ref) & ref == 0 & ref_status %chin% VA_UNOBSERVED)
+  w <- va_withheld_sides(ref, src, ref_status, src_status)
+  w$src | w$ref
 }
 
 
@@ -217,9 +228,9 @@ VA_LEVEL_DESC <- c(L1 = "country x year, items and components summed",
 #' their sum, where a component absent from a cell counts as zero.
 #'
 #' Non-finite rows are summed rather than filtered: na_sum() carries an all-NA
-#' cell out as NA instead of as 0, and `status` records that it happened, so a
-#' cell nobody measured is counted as missing coverage rather than deleted from
-#' `n`.  `partial` marks a cell whose sum mixes measured rows with rows that
+#' cell out as NA instead of as 0, so a cell nobody measured reaches va_match()
+#' as NA and is marked missing there, rather than being deleted from `n`.
+#' `partial` marks a cell whose sum mixes measured rows with rows that
 #' contributed nothing, and is therefore understated; where the caller has
 #' already aggregated once (01 folds FABIO items into BioSAM categories before
 #' the cells are built) its flag is carried forward rather than recomputed.
@@ -265,10 +276,13 @@ va_level_cells <- function(dat, level) {
 #' them a given statistic is defined over.  Without `expand` the pairing is an
 #' inner join.
 #'
-#' Both sides come out carrying a status.  `absent` is written here, and only
-#' here: it is the one reading that depends on the cell universe rather than on
-#' the figure, and the fill below is what would otherwise destroy it.  A side
-#' whose figure sums to exactly zero is re-read as an explicit zero, so a
+#' Both sides come out carrying a status, and it is settled here because the
+#' fill below is what would otherwise destroy it: `absent` is the one reading
+#' that depends on the cell universe rather than on the figure, and `missing`
+#' is the one the fill erases outright, since a non-finite figure and a
+#' measured zero are the same number once it has run.  Marking both before the
+#' fill is what lets every reader downstream work from the status alone.  A
+#' side whose figure sums to exactly zero is re-read as an explicit zero, so a
 #' reference table that books a zero is not confused with one that books
 #' nothing.
 va_match <- function(cells, ref, expand = TRUE) {
@@ -277,9 +291,9 @@ va_match <- function(cells, ref, expand = TRUE) {
     for (s in c("ref", "src")) {
       st <- paste0(s, "_status")
       if (!st %in% names(d)) next
+      d[!is.na(get(st)) & !is.finite(get(s)), (st) := "missing"]
       d[is.na(get(st)), (st) := "absent"]
-      d[is.finite(get(s)) & get(s) == 0 & get(st) == "observed",
-        (st) := "reported_zero"]
+      d[get(s) == 0 & get(st) == "observed", (st) := "reported_zero"]
     }
     pt <- intersect(c("ref_partial", "src_partial"), names(d))
     for (p in pt) d[is.na(get(p)), (p) := FALSE]
@@ -575,13 +589,15 @@ va_symlog_plot <- function(matched, title, subtitle, reference, source_label,
                            panel_country = FALSE) {
   # Cells empty on both sides sit exactly on the origin and carry no
   # disagreement to read; they are not plotted.
-  d <- copy(matched[is.finite(ref) & is.finite(src) & (ref != 0 | src != 0)])
+  d <- copy(matched[ref != 0 | src != 0])
   # A dot on an axis is only worth reading where the zero was measured.  Where
   # nothing observed the cell, the dot says nothing about agreement and is
-  # withheld, so the panel shows exactly the cells sign_agree conditions on.
+  # withheld, so the panel shows exactly the cells sign_agree conditions on —
+  # the same rule the metrics apply, from the same function.
   if (all(c("ref_status", "src_status") %in% names(d))) {
-    w_src <- d[, is.finite(src) & src == 0 & src_status %chin% VA_UNOBSERVED]
-    w_ref <- d[, is.finite(ref) & ref == 0 & ref_status %chin% VA_UNOBSERVED]
+    w     <- va_withheld_sides(d$ref, d$src, d$ref_status, d$src_status)
+    w_src <- w$src
+    w_ref <- w$ref
     n_all <- nrow(d)
     d     <- d[!(w_src | w_ref)]
     if (n_all > nrow(d))

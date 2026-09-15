@@ -1819,8 +1819,8 @@ make_scatter_chart <- function(year_select, pipelines_all, out_dir, source_name,
     message("[scatter ", year_select, "/", source_name, "] ", msg)
     list(summary = data.frame(
       source = source_name, year = year_select,
-      as.data.frame(va_metrics(numeric(0), numeric(0),
-                               character(0), character(0))),
+      as.data.frame(va_metrics(numeric(0), numeric(0))),
+      n_missing = 0L,
       pearson_log = NA_real_, ols_slope = NA_real_, ols_intercept = NA_real_),
       per_country = data.frame())
   }
@@ -1831,12 +1831,11 @@ make_scatter_chart <- function(year_select, pipelines_all, out_dir, source_name,
   # been in the grid — which made 03's `n` mean something different from 01's
   # and 02's.  It is filtered for the fit, but counted in `n` and in
   # n_missing, so a country that produced nothing reads as missing coverage.
-  dat <- dplyr::mutate(
-    dat,
-    ref_status = dplyr::if_else(is.finite(x), "observed", "missing"),
-    src_status = dplyr::if_else(is.finite(y), "observed", "missing"))
+  # The cell statuses 01 and 02 carry have no counterpart here: this figure is
+  # a country aggregate against a WB headline, with no per-item availability to
+  # read a zero against, so the pair is scored on the figures alone.
   fin <- dplyr::filter(dat, is.finite(x), is.finite(y))
-  fit <- va_metrics(fin$x, fin$y, fin$ref_status, fin$src_status)
+  fit <- va_metrics(fin$x, fin$y)
   fit$n         <- nrow(dat)
   fit$n_missing <- nrow(dat) - nrow(fin)
   # The plotted window is log-log, so the figure keeps the strictly positive

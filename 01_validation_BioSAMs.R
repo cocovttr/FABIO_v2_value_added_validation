@@ -495,7 +495,9 @@ build_biosam_source <- function(va_long, area_conc, item_isic, eur_per_usd) {
                # The reference carries no availability flags of its own, so a
                # present figure reads as observed and a cell the table does not
                # carry is marked absent by va_match().  A figure the BioSAM
-               # books as an explicit zero is re-read there too.
+               # books as an explicit zero is re-read there too.  The reading is
+               # taken per row, not per cell, so a category that mixes a figure
+               # with a non-finite one still reads as partial.
                status  = fifelse(is.finite(value_usd), "observed", "missing"),
                partial = FALSE)][]
 }
@@ -620,11 +622,6 @@ dat_all <- rbindlist(
        src_exiobase, src_combined_exiobase),
   use.names = TRUE, fill = TRUE
 )
-# A non-finite figure is a cell nobody measured, not a cell that is not there.
-# Deleting the row took it out of `n` as well, so a source that produced
-# nothing scored the same as one that produced a number; marking it leaves it
-# in the grid and counts it as missing coverage.
-dat_all[!is.finite(value_usd), status := "missing"]
 
 # Resolve ISIC the same way on both sides.  Only A_OANM is affected: its four
 # ISIC-C FABIO items are folded into the ISIC-A cell the majority vote gave the
