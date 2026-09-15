@@ -309,6 +309,10 @@ build_split_weights <- function(conc_by_year, out_tbl, isic_level, years) {
     merge(conc[, .(fabio_item_code, code, item)], out_tbl[year == yr],
           by = "code", allow.cartesian = TRUE)
   }))
+  # A zero weight can mean the industry reported no output or that the table
+  # carried no figure for it at all; the arithmetic is the same but the reason
+  # is not, so it is recorded rather than left to be inferred from a zero.
+  w[, output_missing := !is.finite(output_usd)]
   w[!is.finite(output_usd) | output_usd < 0, output_usd := 0]
   w[, tot_out := sum(output_usd), by = .(year, fabio_item_code)]
   w[, weight := fifelse(tot_out > 0, output_usd / tot_out, 1 / .N),
@@ -318,8 +322,14 @@ build_split_weights <- function(conc_by_year, out_tbl, isic_level, years) {
     message(sprintf(
       "  ISIC-%s: %d (year, item) cell(s) fell back to an equal split ",
       isic_level, n_eq), "(all mapped industries have zero output).")
+  n_mi <- w[output_missing == TRUE, .N]
+  if (n_mi > 0L)
+    message(sprintf(
+      "  ISIC-%s: %d (item, industry) weight(s) are zero because the table ",
+      isic_level, n_mi), "carries no output figure, not because output is nil.")
   w[, isic := isic_level]
-  w[, .(year, isic, fabio_item_code, code, item, output_usd, weight)]
+  w[, .(year, isic, fabio_item_code, code, item, output_usd, output_missing,
+        weight)]
 }
 
 #' GLORIA / COMBINED: melt the component columns of one ISIC level's VA RDS
@@ -363,16 +373,21 @@ build_fabio_source <- function(source_label, va_path_fun, weights_a, weights_c,
                measure.vars = names(component_cols),
                variable.name = "component", value.name = "value_usd")
     va[, component := as.character(component)]
+    # Read off the availability lookup before the weights join, while the row
+    # still names the FABIO item the figure was measured at; the split copies
+    # the reading onto each industry the item feeds.
+    va_fao_attach(va)
+    va[, status := va_basis_status(value_usd, fao_status)]
     
     mapped  <- unique(weights[, .(year, fabio_item_code)])
     pre_tot <- va[mapped, on = c("year", "fabio_item_code"), nomatch = NULL][
-      , sum(value_usd, na.rm = TRUE)]
+      , na_sum(value_usd)]
     
     out <- weights[va, on = c("year", "fabio_item_code"),
                    nomatch = NULL, allow.cartesian = TRUE]
     out[, value_usd := value_usd * weight]
     
-    post_tot <- out[, sum(value_usd, na.rm = TRUE)]
+    post_tot <- out[, na_sum(value_usd)]
     if (is.finite(pre_tot) && abs(pre_tot) > 0 &&
         abs(post_tot - pre_tot) > 1e-6 * abs(pre_tot))
       warning(source_label, " ISIC-", suffix, ": split does not conserve VA (",
@@ -384,7 +399,10 @@ build_fabio_source <- function(source_label, va_path_fun, weights_a, weights_c,
       label_number(scale_cut = cut_short_scale())(pre_tot),
       nrow(mapped), uniqueN(out$code)))
     
-    out[, .(value_usd = sum(value_usd, na.rm = TRUE)),
+    out[, .(value_usd = na_sum(value_usd),
+            status    = va_status(status),
+            partial   = any(status == "observed") &&
+              !all(status == "observed")),
         by = .(iso3c, year, code, item, component)][, isic := suffix][]
   }
   res <- rbindlist(list(one_level("A", weights_a),
@@ -465,7 +483,7 @@ load_oecd_benchmark <- function(iso3, years, lcu_per_usd,
                     nrow(dup)),
             "row after filtering and were summed — check OECD_SUT_FILTERS.")
   s <- s[TRANSACTION %in% tx_all,
-         .(value_usd = sum(value_usd, na.rm = TRUE)),
+         .(value_usd = na_sum(value_usd)),
          by = .(activity = as.character(ACTIVITY), year, TRANSACTION)]
   w <- dcast(s, activity + year ~ TRANSACTION, value.var = "value_usd")
   
@@ -857,8 +875,17 @@ run_country <- function(spec) {
                        spec$iso3, spec$years))
   
   dat_all <- rbindlist(c(list(ing$va), fabio), use.names = TRUE, fill = TRUE)[
-    , .(iso3c, year, source, isic, code, category = item, component, value_usd)]
-  dat_all <- dat_all[is.finite(value_usd)]
+    , .(iso3c, year, source, isic, code, category = item, component, value_usd,
+        status, partial)]
+  # The national table carries no availability flags of its own, so a present
+  # figure reads as observed; va_match() marks a cell the table does not carry
+  # as absent and re-reads an explicit zero.  A non-finite figure is marked
+  # rather than deleted — dropping the row took it out of `n` as well, so a
+  # source that produced nothing scored like one that produced a number.
+  dat_all[is.na(status),  status  := fifelse(is.finite(value_usd),
+                                             "observed", "missing")]
+  dat_all[is.na(partial), partial := FALSE]
+  dat_all[!is.finite(value_usd), status := "missing"]
   
   # Out of scope: the ISIC-C industries whose FABIO items the model uses at
   # ISIC-A.  Both sides go, so no industry is left facing a partial mapping.

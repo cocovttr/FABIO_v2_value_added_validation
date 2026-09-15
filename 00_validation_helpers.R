@@ -88,6 +88,104 @@ va_axis_label <- function(dataset, measure = NULL, scope = NULL,
 }
 
 
+# ── Primary-source availability ──────────────────────────────────────────────
+#
+# Two things put a cell on an axis: a figure measured as zero, and a figure
+# never measured at all.  Neither side can tell them apart on its own — the
+# extension because 01_1_tidy_fao.R fills the FAO NAs to zero long before
+# X.rds, the reference because va_match() carries an absent row as a structural
+# zero — so the evidence is collected before either step erases it, and the
+# same way on both sides.  A zero with an observation behind it stays on the
+# panel; a zero with nothing behind it is withheld from the panel and counted
+# in the metrics.
+#
+# Source side: the (iso3c, fabio_item_code, year) lookup built once by
+# 00_fao_availability.R from FAOSTAT production and the FAO global fisheries
+# quantities.  Reference side: whether the reference table carries the cell at
+# all, which va_match() records before it expands.
+
+#' FABIO's own NA-preserving sum (R/00_system_variables.R:48,
+#' R/01_tidy_functions.R:232), defined here only where the caller has not
+#' already attached it: all-NA sums to NA rather than to 0, so an empty cell
+#' stays empty instead of becoming a measured zero.
+if (!exists("na_sum", mode = "function"))
+  na_sum <- function(x) if (all(is.na(x))) NA_real_ else sum(x, na.rm = TRUE)
+
+#' Cell status, most informative first.  Aggregation takes the first level
+#' present among the rows it sums, so one measured row makes the cell measured
+#' and a single non-finite row makes it unusable.
+#'
+#'   missing         the figure is not finite
+#'   observed        a figure is present
+#'   gap             zero, but the primary source reports a figure — a value
+#'                   lost between the source and the extension, not an absence
+#'   reported_zero   zero, and the primary source books an explicit zero
+#'   unknown         zero, and no primary source can adjudicate the cell
+#'                   (processed goods, RoW fishing)
+#'   no_observation  zero, and the primary source books nothing
+#'   absent          the side carries no row for the cell at all
+VA_STATUS_LEVELS <- c("missing", "observed", "gap", "reported_zero",
+                      "unknown", "no_observation", "absent")
+
+#' Statuses a zero cannot be read as a measurement: the two that are withheld.
+VA_UNOBSERVED <- c("absent", "no_observation")
+
+va_status <- function(x) VA_STATUS_LEVELS[[
+  min(match(as.character(x), VA_STATUS_LEVELS, nomatch = length(VA_STATUS_LEVELS)))]]
+
+VA_FAO_AVAILABILITY <- NULL
+
+#' The availability lookup, read once per session.  Returns NULL when it has
+#' not been built, which leaves every zero unknown — withholding nothing —
+#' rather than failing.
+va_fao_availability <- function(path = NULL) {
+  if (is.null(path))
+    path <- if (exists("validation_path", mode = "function"))
+      validation_path("input", "fao_availability.rds") else
+        file.path("input", "fao_availability.rds")
+  if (is.null(VA_FAO_AVAILABILITY))
+    VA_FAO_AVAILABILITY <<- if (file.exists(path))
+      as.data.table(readRDS(path)) else NA
+  if (identical(VA_FAO_AVAILABILITY, NA)) NULL else VA_FAO_AVAILABILITY
+}
+
+#' Attach `fao_status` to an extension table keyed (iso3c, fabio_item_code,
+#' year), by reference.  Cells the lookup does not carry stay NA and read as
+#' unknown.  Warns once where the lookup is missing, since every zero then
+#' stays on the panel.
+va_fao_attach <- function(dat) {
+  av <- va_fao_availability()
+  if (is.null(av)) {
+    warning("input/fao_availability.rds not found — run 00_fao_availability.R. ",
+            "Zeros stay on the panels and coverage_obs is undefined.",
+            call. = FALSE)
+    dat[, fao_status := NA_character_]
+  } else {
+    dat[av, fao_status := i.fao_status,
+        on = .(iso3c, fabio_item_code, year)]
+  }
+  dat[]
+}
+
+#' Row status for one extension figure: a present figure is observed whatever
+#' the lookup says, and a zero takes its reading from the lookup.
+va_basis_status <- function(value, fao_status) {
+  fifelse(!is.finite(value), "missing",
+          fifelse(value != 0, "observed",
+                  fifelse(is.na(fao_status), "unknown",
+                          fifelse(fao_status == "reported", "gap",
+                                  fifelse(fao_status == "reported_zero", "reported_zero",
+                                          "no_observation")))))
+}
+
+#' Cells withheld from a panel: one side is zero with nothing behind it.  The
+#' test is the same on both sides, which is what keeps the exclusion symmetric.
+va_withheld <- function(ref, src, ref_status, src_status) {
+  (is.finite(src) & src == 0 & src_status %chin% VA_UNOBSERVED) |
+    (is.finite(ref) & ref == 0 & ref_status %chin% VA_UNOBSERVED)
+}
+
+
 # ── Cells ────────────────────────────────────────────────────────────────────
 #
 # A comparison table is long over (iso3c, year, source, isic, category,
@@ -117,13 +215,31 @@ VA_LEVEL_DESC <- c(L1 = "country x year, items and components summed",
 #' One value per (source, cell, component) at the resolution `keys`.
 #' `components` keeps the three VA components as separate rows; `total` appends
 #' their sum, where a component absent from a cell counts as zero.
+#'
+#' Non-finite rows are summed rather than filtered: na_sum() carries an all-NA
+#' cell out as NA instead of as 0, and `status` records that it happened, so a
+#' cell nobody measured is counted as missing coverage rather than deleted from
+#' `n`.  `partial` marks a cell whose sum mixes measured rows with rows that
+#' contributed nothing, and is therefore understated; where the caller has
+#' already aggregated once (01 folds FABIO items into BioSAM categories before
+#' the cells are built) its flag is carried forward rather than recomputed.
 va_cells <- function(dat, keys, components = TRUE, total = TRUE) {
-  s <- dat[is.finite(value_usd),
-           .(value = sum(value_usd, na.rm = TRUE)),
+  if (!all(c("status", "partial") %in% names(dat))) {
+    dat <- copy(dat)
+    if (!"status"  %in% names(dat))
+      dat[, status  := fifelse(is.finite(value_usd), "observed", "missing")]
+    if (!"partial" %in% names(dat)) dat[, partial := FALSE]
+  }
+  s <- dat[, .(value   = na_sum(value_usd),
+               status  = va_status(status),
+               partial = any(partial) ||
+                 (any(status == "observed") &&
+                    !all(status == "observed"))),
            by = c("source", keys, "component")]
   rbindlist(list(
     if (components) s,
-    if (total)      s[, .(component = "total", value = sum(value)),
+    if (total)      s[, .(component = "total", value = na_sum(value),
+                          status = va_status(status), partial = any(partial)),
                       by = c("source", keys)]
   ), use.names = TRUE)
 }
@@ -148,12 +264,32 @@ va_level_cells <- function(dat, level) {
 #' included, so `n` is the designed cell count; va_metrics() decides which of
 #' them a given statistic is defined over.  Without `expand` the pairing is an
 #' inner join.
+#'
+#' Both sides come out carrying a status.  `absent` is written here, and only
+#' here: it is the one reading that depends on the cell universe rather than on
+#' the figure, and the fill below is what would otherwise destroy it.  A side
+#' whose figure sums to exactly zero is re-read as an explicit zero, so a
+#' reference table that books a zero is not confused with one that books
+#' nothing.
 va_match <- function(cells, ref, expand = TRUE) {
-  keys <- setdiff(names(ref), "ref")
+  keys <- setdiff(names(ref), c("ref", "ref_status", "ref_partial"))
+  fix  <- function(d) {
+    for (s in c("ref", "src")) {
+      st <- paste0(s, "_status")
+      if (!st %in% names(d)) next
+      d[is.na(get(st)), (st) := "absent"]
+      d[is.finite(get(s)) & get(s) == 0 & get(st) == "observed",
+        (st) := "reported_zero"]
+    }
+    pt <- intersect(c("ref_partial", "src_partial"), names(d))
+    for (p in pt) d[is.na(get(p)), (p) := FALSE]
+    d[]
+  }
   if (!expand) {
     out <- merge(cells, ref, by = keys)
-    setnames(out, "value", "src")
-    return(out[])
+    setnames(out, c("value", "status", "partial"),
+             c("src", "src_status", "src_partial"), skip_absent = TRUE)
+    return(fix(out))
   }
   srcs <- sort(unique(cells$source))
   univ <- unique(rbindlist(list(ref[, ..keys], cells[, ..keys]), use.names = TRUE))
@@ -161,17 +297,21 @@ va_match <- function(cells, ref, expand = TRUE) {
                      source = rep(srcs, each = nrow(univ)))
   out  <- merge(merge(grid, ref, by = keys, all.x = TRUE),
                 cells, by = c(keys, "source"), all.x = TRUE)
-  out[is.na(ref),   ref   := 0]
-  out[is.na(value), value := 0]
-  setnames(out, "value", "src")
+  setnames(out, c("value", "status", "partial"),
+           c("src", "src_status", "src_partial"), skip_absent = TRUE)
+  out <- fix(out)
+  out[is.na(ref), ref := 0]
+  out[is.na(src), src := 0]
   out[]
 }
 
 #' va_match() where the reference is one of the sources in `cells`.
 va_match_source <- function(cells, reference, expand = TRUE) {
-  keys <- setdiff(names(cells), c("source", "value"))
-  ref  <- cells[source == reference, c(keys, "value"), with = FALSE]
-  setnames(ref, "value", "ref")
+  carry <- intersect(c("value", "status", "partial"), names(cells))
+  keys  <- setdiff(names(cells), c("source", carry))
+  ref   <- cells[source == reference, c(keys, carry), with = FALSE]
+  setnames(ref, carry, c(value = "ref", status = "ref_status",
+                         partial = "ref_partial")[carry])
   va_match(cells[source != reference], ref, expand = expand)
 }
 
@@ -240,13 +380,14 @@ va_crosslevel_c_units <- function(conc) {
 
 VA_MIN_USED <- 10L
 
-va_metrics <- function(ref, src) {
+va_metrics <- function(ref, src, ref_status = NULL, src_status = NULL,
+                       src_partial = NULL) {
   pop <- ref != 0 | src != 0
   nz  <- ref != 0 & src != 0
   use <- nz & sign(ref) == sign(src)
   l   <- log10(abs(src[use]) / abs(ref[use]))
   ok  <- length(l) >= VA_MIN_USED
-  data.table(
+  out <- data.table(
     n          = length(ref),
     n_pop      = sum(pop),
     n_used     = length(l),
@@ -255,23 +396,48 @@ va_metrics <- function(ref, src) {
     med_ratio  = if (ok) 10^median(l) else NA_real_,
     mad_fold   = if (ok) 10^median(abs(l - median(l))) else NA_real_,
     rmsle_dex  = if (ok) sqrt(mean(l^2)) else NA_real_)
+  if (is.null(ref_status) || is.null(src_status)) return(out)
+  # coverage over the cells a reader can hold either side responsible for:
+  # coverage restricted to populated cells that survive the withholding rule.
+  # Every column above keeps its published definition and value.
+  drop <- va_withheld(ref, src, ref_status, src_status)
+  keep <- pop & !drop
+  either <- function(x) sum(src_status == x | ref_status == x)
+  out[, `:=`(
+    n_obs        = sum(keep),
+    coverage_obs = if (any(keep)) sum(nz & keep) / sum(keep) else NA_real_,
+    n_withheld   = sum(pop & drop),
+    n_gap        = either("gap"),
+    n_unknown    = either("unknown"),
+    n_missing    = either("missing"),
+    n_zero_obs   = either("reported_zero"),
+    n_partial    = if (is.null(src_partial)) NA_integer_ else sum(src_partial))]
+  out[]
 }
 
 #' One metric row per (component, source) pooling all cells of `matched`, plus —
 #' with `by_item` — the same rows resolved within each item.
 va_score <- function(matched, sources, level, by_item = FALSE) {
   m    <- matched[source %in% sources]
-  rows <- m[, va_metrics(ref, src), by = .(component, source)]
+  # The status columns are optional so that a caller working from a plain
+  # matched frame still scores; without them the new columns are simply absent.
+  has  <- all(c("ref_status", "src_status") %in% names(m))
+  part <- "src_partial" %in% names(m)
+  score <- function(d) if (!has) va_metrics(d$ref, d$src) else
+    va_metrics(d$ref, d$src, d$ref_status, d$src_status,
+               if (part) d$src_partial else NULL)
+  rows <- m[, score(.SD), by = .(component, source)]
   rows[, item := NA_character_]
   if (by_item)
     rows <- rbindlist(list(
-      rows, m[, va_metrics(ref, src),
-              by = .(component, source, item = category)]),
+      rows, m[, score(.SD), by = .(component, source, item = category)]),
       use.names = TRUE)
   set(rows, j = "level", value = level)
-  setcolorder(rows, c("level", "item", "component", "source", "n", "n_pop",
-                      "n_used", "coverage", "sign_agree", "med_ratio",
-                      "mad_fold", "rmsle_dex"))
+  setcolorder(rows, intersect(
+    c("level", "item", "component", "source", "n", "n_pop", "n_used",
+      "coverage", "sign_agree", "med_ratio", "mad_fold", "rmsle_dex",
+      "n_obs", "coverage_obs", "n_withheld", "n_gap", "n_unknown",
+      "n_missing", "n_zero_obs", "n_partial"), names(rows)))
   rows[order(match(component, MEASURES), match(source, sources), item)]
 }
 
@@ -292,6 +458,11 @@ va_write_ratio_frames <- function(dat, reference, sources, out_dir, prefix) {
   frame <- function(keys, file) {
     m <- copy(va_match_source(va_cells(dat, keys), reference,
                               expand = FALSE)[source %in% fab])
+    # The status columns belong to the panels and the metrics; these frames are
+    # the published ratio exports and keep their existing columns.
+    drop <- intersect(c("ref_status", "src_status", "ref_partial",
+                        "src_partial"), names(m))
+    if (length(drop)) m[, (drop) := NULL]
     setnames(m, c("src", "ref", "component"),
              c("source_usd", "ref_usd", "measure"))
     m[, ratio := source_usd / ref_usd]
@@ -405,6 +576,22 @@ va_symlog_plot <- function(matched, title, subtitle, reference, source_label,
   # Cells empty on both sides sit exactly on the origin and carry no
   # disagreement to read; they are not plotted.
   d <- copy(matched[is.finite(ref) & is.finite(src) & (ref != 0 | src != 0)])
+  # A dot on an axis is only worth reading where the zero was measured.  Where
+  # nothing observed the cell, the dot says nothing about agreement and is
+  # withheld, so the panel shows exactly the cells sign_agree conditions on.
+  if (all(c("ref_status", "src_status") %in% names(d))) {
+    w_src <- d[, is.finite(src) & src == 0 & src_status %chin% VA_UNOBSERVED]
+    w_ref <- d[, is.finite(ref) & ref == 0 & ref_status %chin% VA_UNOBSERVED]
+    n_all <- nrow(d)
+    d     <- d[!(w_src | w_ref)]
+    if (n_all > nrow(d))
+      subtitle <- paste0(
+        subtitle,
+        sprintf(paste0(" %d of %d cells withheld: one side is zero with no ",
+                       "primary observation behind it (%d extension-side, ",
+                       "%d reference-side). "),
+                n_all - nrow(d), n_all, sum(w_src), sum(w_ref)))
+  }
   by_isic <- va_facets_isic(d)
   if (!"isic" %in% names(d)) d[, isic := "A+C"]
   d[, `:=`(xt        = va_symlog(ref),

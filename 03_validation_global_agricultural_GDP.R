@@ -460,6 +460,18 @@ read_pipeline <- function(path, label) {
              ~ if (all(is.na(.x))) NA_real_ else sum(.x, na.rm = TRUE)),
       .groups = "drop"
     )
+  # Whether a zero here was measured or never observed is not in the extension
+  # (01_1_tidy_fao.R fills the FAO NAs to zero long before X.rds), so it is
+  # read off the availability lookup while the rows still carry the FABIO item.
+  av  <- va_fao_availability()
+  out <- if (is.null(av))
+    dplyr::mutate(out, status = va_basis_status(value_usd, NA_character_))
+  else out %>%
+    dplyr::left_join(
+      dplyr::rename(as.data.frame(av), item_code = fabio_item_code),
+      by = c("iso3c", "item_code", "year")) %>%
+    dplyr::mutate(status = va_basis_status(value_usd, fao_status)) %>%
+    dplyr::select(-fao_status, -dplyr::any_of("fabio_area_code"))
   attr(out, "has_components") <- has_components
   out
 }
@@ -949,7 +961,7 @@ comm_group_lookup <- pipelines_union %>%
 # palette still has a slot for them.
 all_items_meta <- pipelines_union %>%
   group_by(item_code) %>%
-  summarise(total = sum(value_usd, na.rm = TRUE), .groups = "drop") %>%
+  summarise(total = na_sum(value_usd), .groups = "drop") %>%
   left_join(items_map,         by = "item_code") %>%
   left_join(comm_group_lookup, by = "item_code") %>%
   mutate(
@@ -964,7 +976,7 @@ all_items_meta <- pipelines_union %>%
 # get the most distinct base hues.
 group_totals <- all_items_meta %>%
   group_by(comm_group) %>%
-  summarise(group_total = sum(total, na.rm = TRUE), .groups = "drop") %>%
+  summarise(group_total = na_sum(total), .groups = "drop") %>%
   arrange(desc(group_total))
 
 group_base_hues <- setNames(
@@ -1075,6 +1087,14 @@ make_chart <- function(year_select, denominator = c("raw", "reduced"),
     # equivalent).  `forestry_route` records which path was taken so the chart
     # can flag it per country.  share_non_fabio stays unclamped, as before.
     mutate(
+      # A country with no GLORIA share gets zero here, which silently hands it
+      # a different WB denominator from every other country.  The number is
+      # left alone; which countries it happened to is recorded, as
+      # forestry_route already does for the forestry side.
+      gloria_share_route    = factor(
+        if_else(is.na(share_seeds_gloria) & is.na(share_forestry_gloria),
+                "no GLORIA share", "measured"),
+        levels = c("measured", "no GLORIA share")),
       share_seeds_gloria    = coalesce(share_seeds_gloria, 0),
       share_forestry_gloria = coalesce(share_forestry_gloria, 0),
       use_external_forestry = is.finite(forestry_total_usd) & wb_ag_va_usd != 0,
@@ -1123,7 +1143,7 @@ make_chart <- function(year_select, denominator = c("raw", "reduced"),
   dat_grouped <- dat %>%
     mutate(item_grp = if_else(abs(share) < threshold, "Other", item)) %>%
     group_by(pipeline, iso3c, item_grp) %>%
-    summarise(share = sum(share, na.rm = TRUE), .groups = "drop") %>%
+    summarise(share = na_sum(share), .groups = "drop") %>%
     rename(item = item_grp)
   
   # Legend order: follow the canonical comm_group order (groups by total
@@ -1435,7 +1455,7 @@ make_country_chart <- function(iso_select, pipelines_all, out_dir_country,
   dat_grouped <- pipelines %>%
     mutate(item = if_else(item %in% keep_items, item, "Other")) %>%
     group_by(pipeline, year, item) %>%
-    summarise(value_plot = sum(value_plot, na.rm = TRUE), .groups = "drop")
+    summarise(value_plot = na_sum(value_plot), .groups = "drop")
   
   # Legend order: same canonical comm_group ordering as the per-year
   # charts (groups by total value_added desc, items within each group by
@@ -1541,6 +1561,14 @@ make_country_chart <- function(iso_select, pipelines_all, out_dir_country,
     # GLORIA.  `forestry_route` colours the reduced-WB points so the time series
     # shows, year by year, where the forestry deduction came from.
     mutate(
+      # A country with no GLORIA share gets zero here, which silently hands it
+      # a different WB denominator from every other country.  The number is
+      # left alone; which countries it happened to is recorded, as
+      # forestry_route already does for the forestry side.
+      gloria_share_route    = factor(
+        if_else(is.na(share_seeds_gloria) & is.na(share_forestry_gloria),
+                "no GLORIA share", "measured"),
+        levels = c("measured", "no GLORIA share")),
       share_seeds_gloria    = coalesce(share_seeds_gloria, 0),
       share_forestry_gloria = coalesce(share_forestry_gloria, 0),
       use_external_forestry = is.finite(forestry_total_usd) & wb_ag_va_usd != 0,
@@ -1694,6 +1722,13 @@ reduced_wb_for_year <- function(year_select) {
     dplyr::left_join(dplyr::filter(share_by_iso, year == year_select),
                      by = "iso3c") %>%
     dplyr::mutate(
+      # Same silent zero as the per-year charts; the number is unchanged and
+      # the countries it applies to are recorded.
+      gloria_share_route    = factor(
+        dplyr::if_else(is.na(share_seeds_gloria) &
+                         is.na(share_forestry_gloria),
+                       "no GLORIA share", "measured"),
+        levels = c("measured", "no GLORIA share")),
       share_seeds_gloria    = dplyr::coalesce(share_seeds_gloria, 0),
       share_forestry_gloria = dplyr::coalesce(share_forestry_gloria, 0),
       use_external_forestry = is.finite(forestry_total_usd) & wb_ag_va_usd != 0,
@@ -1709,7 +1744,7 @@ reduced_wb_for_year <- function(year_select) {
       wb_ag_va_reduced      = wb_ag_va_usd * (1 - share_non_fabio)
     ) %>%
     dplyr::select(iso3c, wb_ag_va_usd, wb_ag_va_reduced,
-                  share_non_fabio, forestry_route)
+                  share_non_fabio, forestry_route, gloria_share_route)
 }
 
 # FABIO ISIC-A aggregate joined to reduced WB for one year (x = WB, y = FABIO).
@@ -1717,7 +1752,7 @@ scatter_pairs <- function(year_select, pipelines_all) {
   fabio_isic_a <- pipelines_all %>%
     dplyr::filter(year == year_select, grepl("ISIC-A", pipeline)) %>%
     dplyr::group_by(iso3c) %>%
-    dplyr::summarise(fabio_usd = sum(value_usd, na.rm = TRUE), .groups = "drop")
+    dplyr::summarise(fabio_usd = na_sum(value_usd), .groups = "drop")
   dplyr::inner_join(fabio_isic_a, reduced_wb_for_year(year_select), by = "iso3c") %>%
     dplyr::mutate(x = wb_ag_va_reduced, y = fabio_usd)
 }
@@ -1778,20 +1813,32 @@ make_scatter_chart <- function(year_select, pipelines_all, out_dir, source_name,
   
   dat <- scatter_pairs(year_select, pipelines_all)
   
+  # Built from va_metrics() on empty input rather than enumerated, so the
+  # skipped years carry exactly the columns the scored years do.
   na_row <- function(msg) {
     message("[scatter ", year_select, "/", source_name, "] ", msg)
     list(summary = data.frame(
-      source = source_name, year = year_select, n = 0L, n_pop = 0L,
-      n_used = 0L,
-      coverage = NA_real_, sign_agree = NA_real_, med_ratio = NA_real_,
-      mad_fold = NA_real_, rmsle_dex = NA_real_, pearson_log = NA_real_,
-      ols_slope = NA_real_, ols_intercept = NA_real_),
+      source = source_name, year = year_select,
+      as.data.frame(va_metrics(numeric(0), numeric(0),
+                               character(0), character(0))),
+      pearson_log = NA_real_, ols_slope = NA_real_, ols_intercept = NA_real_),
       per_country = data.frame())
   }
   if (!nrow(dat)) return(invisible(na_row("no joinable rows; skipping.")))
   
+  # A country with a non-finite figure on either side was dropped here before
+  # the metrics saw it, so it left `n` as well and scored as if it had never
+  # been in the grid — which made 03's `n` mean something different from 01's
+  # and 02's.  It is filtered for the fit, but counted in `n` and in
+  # n_missing, so a country that produced nothing reads as missing coverage.
+  dat <- dplyr::mutate(
+    dat,
+    ref_status = dplyr::if_else(is.finite(x), "observed", "missing"),
+    src_status = dplyr::if_else(is.finite(y), "observed", "missing"))
   fin <- dplyr::filter(dat, is.finite(x), is.finite(y))
-  fit <- va_metrics(fin$x, fin$y)
+  fit <- va_metrics(fin$x, fin$y, fin$ref_status, fin$src_status)
+  fit$n         <- nrow(dat)
+  fit$n_missing <- nrow(dat) - nrow(fin)
   # The plotted window is log-log, so the figure keeps the strictly positive
   # pairs; the rest are counted by coverage.
   pos <- dplyr::filter(fin, x > 0, y > 0)
@@ -1833,10 +1880,19 @@ make_scatter_chart <- function(year_select, pipelines_all, out_dir, source_name,
   lab_df <- dplyr::distinct(dplyr::bind_rows(
     top_df, pos[lr < qr[1] - fence | lr > qr[2] + fence, , drop = FALSE]))
   
+  # The log-log window cannot hold a zero or a negative, so those countries are
+  # off the panel rather than at an axis; the count says so instead of leaving
+  # the reader to infer it from a gap between `n` and the dots on the page.
+  n_off <- nrow(dat) - nrow(pos)
   subtitle_txt <- paste0(
     "One dot per country. Dashed line = identity (y = x). Point colour = ",
     "forestry source of the reduced WB. Log-log axes; the ", label_top_n,
-    " largest economies and identity-line outliers are labelled.")
+    " largest economies and identity-line outliers are labelled.",
+    if (n_off > 0L) sprintf(
+      paste0(" %d of %d countries are not on the panel: %d carry a non-finite",
+             " figure, %d are zero or negative on one side. Coverage counts",
+             " them; the fit does not."),
+      n_off, nrow(dat), nrow(dat) - nrow(fin), nrow(fin) - nrow(pos)) else "")
   
   log_lab <- scales::trans_format("log10", scales::math_format(10^.x))
   

@@ -365,7 +365,11 @@ align_source_isic <- function(dat, item_isic) {
     message("  ISIC alignment: folded the off-level rows of ",
             paste(moved, collapse = ", "), " onto their assigned level.")
   out[!is.na(aligned_isic), isic := aligned_isic]
-  out[, .(value_usd = sum(value_usd, na.rm = TRUE)),
+  out[, .(value_usd = na_sum(value_usd),
+          status    = va_status(status),
+          partial   = any(partial) ||
+            (any(status == "observed") &&
+               !all(status == "observed"))),
       by = .(iso3c, year, source, isic, biosam_item_code, biosam_item,
              component)]
 }
@@ -442,11 +446,21 @@ build_fabio_source <- function(source_label, va_path_fun,
                measure.vars = names(component_cols),
                variable.name = "component", value.name = "value_usd")
     va[, component := as.character(component)]
+    # Whether a zero here was measured or never observed is not in the
+    # extension — 01_1_tidy_fao.R fills the FAO NAs to zero long before X.rds
+    # — so it is read off the availability lookup while the rows still carry
+    # the FABIO item they were measured at.  After the join below the item is
+    # gone and the question can no longer be asked.
+    va_fao_attach(va)
+    va[, status := va_basis_status(value_usd, fao_status)]
     # FABIO items with no BioSAM mapping at this level are dropped by the join
     # (outside the BioSAM agricultural scope).
     out <- conc[va, on = "fabio_item_code", nomatch = NULL,
                 allow.cartesian = TRUE]
-    out[, .(value_usd = sum(value_usd, na.rm = TRUE)),
+    out[, .(value_usd = na_sum(value_usd),
+            status    = va_status(status),
+            partial   = any(status == "observed") &&
+              !all(status == "observed")),
         by = .(iso3c, year, biosam_item_code, biosam_item, component)][
           , isic := suffix][]
   }
@@ -461,7 +475,7 @@ build_fabio_source <- function(source_label, va_path_fun,
 #' convert EUR -> USD, map area -> iso3c, restrict to mapped (agricultural)
 #' categories, assign ISIC via the majority rule, attach the BioSAM label.
 build_biosam_source <- function(va_long, area_conc, item_isic, eur_per_usd) {
-  agg <- va_long[, .(va_eur = sum(va_value_eur, na.rm = TRUE)),
+  agg <- va_long[, .(va_eur = na_sum(va_value_eur)),
                  by = .(year, biosam_area_code, biosam_item_code, component)]
   agg[, rate := eur_per_usd[as.character(year)]]
   miss_rate <- agg[!is.finite(rate), sort(unique(year))]
@@ -475,9 +489,15 @@ build_biosam_source <- function(va_long, area_conc, item_isic, eur_per_usd) {
   # restrict to mapped categories + attach ISIC level and label.
   agg <- item_isic[agg, on = "biosam_item_code", nomatch = NULL]
   
-  agg[, .(value_usd = sum(value_usd, na.rm = TRUE)),
+  agg[, .(value_usd = na_sum(value_usd)),
       by = .(iso3c, year, biosam_item_code, biosam_item, isic, component)][
-        , source := "BioSAMs"][]
+        , `:=`(source  = "BioSAMs",
+               # The reference carries no availability flags of its own, so a
+               # present figure reads as observed and a cell the table does not
+               # carry is marked absent by va_match().  A figure the BioSAM
+               # books as an explicit zero is re-read there too.
+               status  = fifelse(is.finite(value_usd), "observed", "missing"),
+               partial = FALSE)][]
 }
 
 
@@ -539,7 +559,7 @@ load_eurostat_benchmark <- function(eur_per_usd, nace = EU_NACE_BENCH) {
     return(NULL)
   }
   
-  a <- nama[, .(meur = sum(values, na.rm = TRUE)), by = .(iso3c, year, na_item)]
+  a <- nama[, .(meur = na_sum(values)), by = .(iso3c, year, na_item)]
   a[, rate := eur_per_usd[as.character(year)]]
   a[, usd := fifelse(is.finite(rate) & rate > 0, meur * 1e6 / rate, NA_real_)]
   w <- dcast(a, iso3c + year ~ na_item, value.var = "usd")
@@ -600,7 +620,11 @@ dat_all <- rbindlist(
        src_exiobase, src_combined_exiobase),
   use.names = TRUE, fill = TRUE
 )
-dat_all <- dat_all[is.finite(value_usd)]
+# A non-finite figure is a cell nobody measured, not a cell that is not there.
+# Deleting the row took it out of `n` as well, so a source that produced
+# nothing scored the same as one that produced a number; marking it leaves it
+# in the grid and counts it as missing coverage.
+dat_all[!is.finite(value_usd), status := "missing"]
 
 # Resolve ISIC the same way on both sides.  Only A_OANM is affected: its four
 # ISIC-C FABIO items are folded into the ISIC-A cell the majority vote gave the
@@ -610,7 +634,7 @@ dat_all <- dat_all[is.finite(value_usd)]
 message("Aligning source ISIC to the BioSAM category assignment ...")
 dat_all <- align_source_isic(dat_all, item_isic)[
   , .(iso3c, year, source, isic, biosam_item_code, category = biosam_item,
-      component, value_usd)]
+      component, value_usd, status, partial)]
 
 # Out of scope: the ISIC-C categories whose FABIO items the model uses at
 # ISIC-A (A_DAIR from 2848 milk, A_RICE from 2807 rice).  Both sides go, so the
